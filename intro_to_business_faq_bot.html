@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intro to Business — Course FAQ Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #1A1F36;
+    --teal:   #0F7173;
+    --amber:  #D97706;
+    --coral:  #C0392B;
+    --sage:   #2D6A4F;
+    --muted:  #64748B;
+    --light:  #94A3B8;
+    --bg:     #F0F4F8;
+    --white:  #FFFFFF;
+    --card:   #FFFFFF;
+    --border: #E2E8F0;
+    --user-bg:#0F7173;
+    --bot-bg: #1A1F36;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+  }
+
+  .header {
+    width: 100%;
+    max-width: 720px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 4vw, 30px);
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .header p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .chips {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .chip {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+  .chip:hover {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+    transform: translateY(-1px);
+  }
+
+  .chat-wrap {
+    width: 100%;
+    max-width: 720px;
+    background: var(--card);
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 340px;
+    max-height: 480px;
+  }
+
+  .msg {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: fadeUp 0.25s ease;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .msg.user { flex-direction: row-reverse; }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .avatar.bot { background: var(--navy); color: #fff; font-size: 16px; }
+  .avatar.user { background: var(--teal); color: #fff; font-size: 12px; letter-spacing: -0.5px; }
+
+  .bubble {
+    max-width: 82%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .msg.bot .bubble {
+    background: #F8FAFC;
+    border: 1.5px solid var(--border);
+    color: var(--navy);
+    border-top-left-radius: 4px;
+  }
+  .msg.user .bubble {
+    background: var(--teal);
+    color: #fff;
+    border-top-right-radius: 4px;
+  }
+  .bubble strong { font-weight: 600; }
+  .bubble ul { padding-left: 18px; margin-top: 6px; }
+  .bubble li { margin-bottom: 3px; }
+  .bubble a { color: var(--teal); }
+  .msg.user .bubble a { color: #A7F3D0; }
+
+  .typing-dots {
+    display: flex;
+    gap: 5px;
+    padding: 4px 0;
+    align-items: center;
+  }
+  .typing-dots span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--light);
+    animation: bounce 1.2s infinite;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30%            { transform: translateY(-6px); }
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    padding: 14px 16px;
+    border-top: 1.5px solid var(--border);
+    background: #FAFBFC;
+  }
+  .input-row input {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--navy);
+    outline: none;
+    background: #fff;
+    transition: border-color 0.18s;
+  }
+  .input-row input:focus { border-color: var(--teal); }
+  .input-row input::placeholder { color: var(--light); }
+  .send-btn {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: var(--teal);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s, transform 0.12s;
+    flex-shrink: 0;
+  }
+  .send-btn:hover { background: #0A5557; transform: scale(1.05); }
+  .send-btn:disabled { background: var(--border); cursor: not-allowed; transform: none; }
+  .send-btn svg { width: 18px; height: 18px; fill: #fff; }
+
+  .footer {
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--light);
+    text-align: center;
+    max-width: 720px;
+  }
+  .footer a { color: var(--teal); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">📚 Introduction to Business</div>
+  <h1>Course FAQ Assistant</h1>
+  <p>These topics are the most common questions related to course policies, due dates, grading, or requirements. For questions not covered here, refer to the Course Syllabus for a comprehensive review of the course policies and procedures.</p>
+</div>
+
+<div class="chips" id="chips">
+  <button class="chip" onclick="askChip('When are assignments due?')">📅 Due dates</button>
+  <button class="chip" onclick="askChip('What is the late assignment policy?')">⏰ Late policy</button>
+  <button class="chip" onclick="askChip('What is the grading scale?')">📊 Grading scale</button>
+  <button class="chip" onclick="askChip('How do I get in touch with my instructor?')">✉️ Contact info</button>
+  <button class="chip" onclick="askChip('What is the required textbook?')">📖 Textbook</button>
+  <button class="chip" onclick="askChip('What are the word count requirements for written assignments?')">✍️ Word count</button>
+  <button class="chip" onclick="askChip('When will I hear back from my instructor?')">💬 Email response time</button>
+  <button class="chip" onclick="askChip('Can I use AI or ChatGPT on assignments?')">🤖 AI policy</button>
+  <button class="chip" onclick="askChip('What happens if I plagiarize or cheat?')">⚠️ Academic integrity</button>
+  <button class="chip" onclick="askChip('How should I format my emails to the instructor?')">📧 Email format rules</button>
+  <button class="chip" onclick="askChip('How do I format and submit written assignments?')">📝 Assignment formatting</button>
+  <button class="chip" onclick="askChip('What are FN, FW, and W grades?')">🚨 FN/FW/Withdraw</button>
+  <button class="chip" onclick="askChip('What happens if I forget to include a link on an assignment?')">🔗 Citation/link rule</button>
+  <button class="chip" onclick="askChip('What file formats are accepted for assignments?')">💾 File format rules</button>
+</div>
+
+<div class="chat-wrap">
+  <div class="chat-messages" id="messages">
+    <div class="msg bot">
+      <div class="avatar bot">🎓</div>
+      <div class="bubble">
+        <strong>Hi! I'm your Intro to Business course assistant.</strong><br><br>
+        I can answer questions about course policies, due dates, grading, textbooks, late work, and more. Tap a quick question above or type your own below!
+      </div>
+    </div>
+  </div>
+
+  <div class="input-row">
+    <input type="text" id="userInput" placeholder="Ask a course question..." autocomplete="off"
+           onkeydown="if(event.key==='Enter') sendMessage()" />
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="footer">
+  Responses are based on your official course syllabus. Always verify critical details with your instructor.<br>
+  Questions not answered here? Email <a href="mailto:michelle.ebsen@minnesota.edu">michelle.ebsen@minnesota.edu</a> — response within 24 hrs (Mon–Fri by noon).
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  STEP 1: Paste your Groq API key below
+//  Get a free key at: console.groq.com
+//  It starts with: gsk_
+// ─────────────────────────────────────────────
+const API_KEY = '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';
+
+const SYSTEM_PROMPT = `You are a friendly and helpful course FAQ assistant for an Introduction to Business course taught by Michelle Ebsen at Minnesota State Community and Technical College. You answer student questions based strictly on the course policies below.
+
+COURSE POLICIES:
+
+CONTACT INFORMATION:
+- Instructor: Michelle Ebsen
+- Email: michelle.ebsen@minnesota.edu
+- Phone: 218-299-6874
+- Office Hours: By appointment only. Email to schedule.
+
+REQUIRED TEXTBOOK:
+- Title: Introduction to Business (OpenStax) — FREE, no cost to students
+- URL: https://openstax.org/details/books/introduction-business
+- Has audio functionality built in
+
+TECHNOLOGY REQUIREMENTS:
+- Students need a working computer and reliable internet access
+- Mac Users: ALL files must be converted to Microsoft Office compatibility. Any assignment that cannot be opened using Microsoft Windows will receive 0 points.
+- Students should plan to take notes on all lectures and videos.
+
+HOW TO PREPARE FOR ASSIGNMENTS AND QUIZZES:
+- Read the chapter
+- Listen to the recorded lecture
+- Review the chapter study guide key terms and concepts before graded assessments
+
+DUE DATES:
+- Online assignments post every Tuesday at 8:00 AM
+- Online assignments close every Monday at 11:59 PM
+- Unless otherwise stated on the assignment
+
+LATE ASSIGNMENT POLICY:
+- Students are allowed to make up 4 assignments (this excludes the Introductory assignments in Week 1)
+- No makeup requests will be granted after July 21, 2026
+- To request a makeup: email the instructor no later than 7 days past the due date
+- Do NOT start working on the assignment until you receive approval via email
+
+EMAIL RESPONSE TIMES:
+- Monday through Friday: instructor responds within 24 hours (by noon)
+- Weekend emails: replied to by Monday at noon
+- If you have not heard back within 24 hours, email again to confirm receipt
+
+WRITTEN ASSIGNMENT WORD COUNT:
+- If a written assignment does not meet the minimum word count: automatic 50% grade deduction, applied before any other grading
+
+PROFESSIONAL COMMUNICATION EXPECTATIONS:
+- Always use a professional greeting in emails (e.g., "Hello")
+- All assignments and emails must use complete sentences
+- Proper grammar and capitalization required
+- No texting shorthand or abbreviations (no "u", "lol", "idk", etc.)
+
+GRADING SCALE:
+- A: 90% – 100%
+- B: 80% – 89%
+- C: 70% – 79%
+- D: 60% – 69%
+- F: 59% or lower
+
+EMAIL FORMAT RULES:
+- Email is the preferred contact method
+- Subject line must include: I2B (short for Intro to Business) — Example: "I2B Ch 1 LQ. Please Respond"
+- Type "Please Respond" in the subject line if you need a reply — this lets the instructor prioritize your email
+- Begin every email with a professional greeting: "Hi Professor Ebsen..."
+- Sign your name at the end of every email
+- Use complete sentences, proper grammar, and capitalization — no texting shorthand
+- Include relevant details in the body: chapter number, question number, assignment name, etc.
+
+AI POLICY:
+- AI use (ChatGPT, Claude, etc.) is NOT permitted on assignments unless the assignment specifically states it is allowed
+- Using AI when not permitted is considered cheating and academic dishonesty
+- AI-generated submissions are treated as plagiarism
+- Consequences: first offense = 0 on the assignment; second offense = F in the course
+- The instructor uses software to detect AI-generated and plagiarized content
+- Getting caught is part of your permanent academic record and may be referred to the Dean
+
+ACADEMIC INTEGRITY / PLAGIARISM:
+- Plagiarism, cheating, and academic dishonesty are not tolerated
+- Examples of academic dishonesty: cheating, plagiarism, reusing a previous assignment without approval, fabrication, helping another student cheat, unauthorized AI use
+- It is also plagiarism to change just a few words even if you cite the source
+- First offense: ZERO (0) points on the assignment
+- Second offense: immediate F in the course — posted to transcript
+- Infractions are tracked across ALL classes the instructor teaches, not just this one
+- Students who share their work with another student who cheats will also receive a zero or failing grade
+
+ASSIGNMENT FORMATTING RULES:
+- All assignments must be typed directly on the worksheet/template provided
+- Type your answers underneath each question using a different color font if possible (so answers are easy to match to questions)
+- Include your name AND date at the top of every assignment
+- All assignments must be submitted as .doc or .docx (Word format)
+- Single-spaced, size 12 font
+- If an assignment asks you to find a video or article, you MUST paste the link/URL below your summary — failure to include the link = 0 points
+- Keep a copy of all assignments for the entire semester
+- Grammar and spelling are graded — use complete sentences, proper capitalization, no run-on sentences
+
+CITATION / LINK RULE:
+- Formal APA or MLA citation is NOT required
+- Simply copy and paste the URL/link of the source — that is sufficient
+- If an assignment requires you to find a video or article and you do not paste the link: automatic 0 points for the entire assignment
+- When answering questions about textbook, lecture, article, or video content: reference that source in your response to show you reviewed it
+
+FILE FORMAT RULES:
+- All assignments must be submitted in Microsoft Office format (.docx, .pptx, etc.)
+- Mac users: .pages files cannot be opened and will receive 0 points — convert to .docx before submitting
+- Mac users who submit in .pages may resubmit as .docx using one of their 4 late exceptions
+- Canva submissions require prior instructor approval via email — do not assume Canva is acceptable
+- Google Docs must be converted/downloaded as .docx before submitting
+- Students may need to use a variety of tools including Zoom, Teams, Canva, Snorkl, and publisher websites
+
+FN / FW / WITHDRAW POLICY:
+- FN (Failure for Non-Attendance): If you do not actively participate and complete designated assignments by the deadline early in the semester, you will be withdrawn and receive an FN on your transcript. Federal regulations require this.
+- FW (Failure to Withdraw): If you stop participating for 14 consecutive calendar days (including holidays) before the end of the term, a FW grade is submitted and your last date of attendance is recorded. Federal regulations require this.
+- W (Withdraw): If you choose to withdraw from the summer course after the free drop date of June 5, 2026, you must do so by the end of the 39th day of the semester. A grade of W will post to your transcript. Check Eservices for your specific deadline.
+- No makeup requests are granted after July 21, 2026
+
+INSTRUCTIONS FOR RESPONDING:
+- Be warm, clear, and student-friendly — like a helpful TA, not a robot
+- Keep responses concise but complete
+- If a student asks something not covered in the policies above, say you don't have that information and direct them to email michelle.ebsen@minnesota.edu
+- Never make up policies or guess — only answer from what is in the policies above
+- Use bullet points or bold text to make answers easy to scan when helpful
+- Always encourage students when appropriate`;
+
+const history = [];
+
+function scrollBottom() {
+  const m = document.getElementById('messages');
+  m.scrollTop = m.scrollHeight;
+}
+
+function addMessage(role, html) {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+
+  const avatar = document.createElement('div');
+  avatar.className = `avatar ${role}`;
+  avatar.textContent = role === 'bot' ? '🎓' : 'You';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = html;
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  messages.appendChild(div);
+  scrollBottom();
+  return bubble;
+}
+
+function showTyping() {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.id = 'typing-indicator';
+
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar bot';
+  avatar.textContent = '🎓';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  messages.appendChild(div);
+  scrollBottom();
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+function formatResponse(text) {
+  text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  const lines = text.split('\n');
+  let html = '', inList = false;
+  for (let line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
+      if (!inList) { html += '<ul>'; inList = true; }
+      html += `<li>${trimmed.slice(2)}</li>`;
+    } else {
+      if (inList) { html += '</ul>'; inList = false; }
+      if (trimmed) html += `<p style="margin-bottom:6px">${trimmed}</p>`;
+    }
+  }
+  if (inList) html += '</ul>';
+  return html;
+}
+
+async function sendMessage(overrideText) {
+  const input = document.getElementById('userInput');
+  const btn = document.getElementById('sendBtn');
+  const text = (overrideText || input.value).trim();
+  if (!text) return;
+
+  if (!API_KEY || API_KEY === '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') {
+    addMessage('bot', 'The assistant is not yet configured. Please contact <a href="mailto:michelle.ebsen@minnesota.edu">michelle.ebsen@minnesota.edu</a> for help.');
+    return;
+  }
+
+  input.value = '';
+  btn.disabled = true;
+
+  addMessage('user', text);
+  history.push({ role: 'user', content: text });
+
+  showTyping();
+
+  try {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + API_KEY
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 600,
+        temperature: 0.4,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...history.slice(-16).map(m => ({
+            role: m.role === 'assistant' ? 'assistant' : 'user',
+            content: m.content
+          }))
+        ]
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error.message || 'API error');
+    }
+
+    const reply = data.choices?.[0]?.message?.content
+      || "I'm sorry, I couldn't retrieve an answer. Please email michelle.ebsen@minnesota.edu directly.";
+
+    history.push({ role: 'assistant', content: reply });
+
+    removeTyping();
+    addMessage('bot', formatResponse(reply));
+  } catch (err) {
+    removeTyping();
+    addMessage('bot', 'Sorry, I ran into a connection issue. Please try again or email <a href="mailto:michelle.ebsen@minnesota.edu">michelle.ebsen@minnesota.edu</a> directly.');
+    history.pop();
+  }
+
+  btn.disabled = false;
+  input.focus();
+}
+
+function askChip(question) {
+  document.getElementById('userInput').value = question;
+  sendMessage(question);
+}
+</script>
+</body>
+</html>
