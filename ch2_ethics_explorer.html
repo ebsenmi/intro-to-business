@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 2 | Ethics & Social Responsibility Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1a1a2e;--paper:#f5f0e8;--accent:#c84b31;--gold:#e8a045;--sage:#4a7c6f;--muted:#8a8070;--card-bg:#fffdf7;--border:#d4cdc0;--warn:#b05a1a;--teal:#2a7d70;--purple:#5b4fcf;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background-color:var(--paper);color:var(--ink);min-height:100vh;
+    background-image:radial-gradient(circle at 10% 60%,rgba(200,75,49,.05) 0%,transparent 50%),
+    radial-gradient(circle at 90% 15%,rgba(74,124,111,.06) 0%,transparent 50%);}
+  .gate-screen,.lock-screen{display:none;position:fixed;inset:0;background:var(--ink);z-index:9999;
+    align-items:center;justify-content:center;padding:2rem;flex-direction:column;text-align:center;}
+  .gate-screen.show,.lock-screen.show{display:flex;}
+  .gate-inner,.lock-inner{max-width:440px;width:100%;}
+  .gate-screen h2,.lock-screen h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--paper);margin-bottom:.5rem;}
+  .gate-screen p,.lock-screen p{color:#94a3b8;font-size:.9rem;margin-bottom:1.5rem;line-height:1.6;}
+  .gate-input{width:100%;padding:.85rem 1rem;font-size:1rem;border:2px solid rgba(255,255,255,.15);border-radius:8px;background:rgba(255,255,255,.07);color:#fff;text-align:center;letter-spacing:.15em;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+  .gate-input:focus{border-color:rgba(232,160,69,.6);}
+  .gate-input::placeholder{color:#475569;letter-spacing:0;}
+  .gate-btn{margin-top:.85rem;width:100%;padding:.85rem;background:var(--gold);color:var(--ink);border:none;border-radius:8px;font-size:.95rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;}
+  .gate-btn:hover{opacity:.88;}
+  .gate-err{color:#f87171;font-size:.8rem;margin-top:.5rem;min-height:1.2em;}
+  .gate-closed{display:none;color:#fbbf24;font-size:.85rem;margin-top:.75rem;}
+  .lock-icon{font-size:2.5rem;margin-bottom:1rem;}
+  .lock-time{color:#64748b;font-size:.78rem;margin-top:.5rem;}
+  .progress-bar{position:sticky;top:0;z-index:100;background:var(--card-bg);border-bottom:1px solid var(--border);padding:.6rem 1.5rem;display:flex;align-items:center;gap:.75rem;}
+  .dots{display:flex;gap:.4rem;}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .3s;}
+  .dot.active{background:var(--accent);}
+  .progress-label{font-size:.75rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-left:auto;}
+  .main{max-width:720px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+  .screen{display:none;}
+  .screen.active{display:block;}
+  .story-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.5rem 1.75rem;margin-bottom:1.25rem;line-height:1.7;}
+  .story-card p{margin-bottom:.85rem;font-size:.95rem;}
+  .story-card p:last-child{margin-bottom:0;}
+  .story-label{font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;}
+  .story-card h2{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;margin-bottom:.75rem;}
+  .highlight-box{background:rgba(232,160,69,.1);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:.85rem 1rem;margin-top:1rem;font-size:.88rem;line-height:1.65;}
+  .question-label{font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
+  .question-text{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;margin-bottom:1.25rem;line-height:1.4;}
+  .phil-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem;}
+  @media(max-width:520px){.phil-grid{grid-template-columns:1fr;}}
+  .phil-card{background:var(--card-bg);border:2px solid var(--border);border-radius:10px;padding:1rem 1.15rem;cursor:pointer;transition:border-color .2s,transform .15s;}
+  .phil-card:hover{transform:translateY(-2px);}
+  .phil-card.selected{border-color:var(--accent);background:rgba(200,75,49,.05);}
+  .phil-name{font-weight:600;font-size:.9rem;margin-bottom:.2rem;}
+  .scenario-box{background:rgba(91,79,207,.07);border:1px solid rgba(91,79,207,.2);border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:1rem;font-size:.92rem;line-height:1.65;}
+  .sub-prompts{display:flex;flex-direction:column;gap:1.1rem;margin-bottom:1rem;}
+  .sub-prompt{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.25rem;}
+  .sub-prompt-num{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;}
+  .sub-prompt-q{font-size:.9rem;font-weight:500;line-height:1.55;margin-bottom:.75rem;}
+  textarea{width:100%;padding:.7rem .85rem;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.6;resize:vertical;min-height:90px;background:#fffef9;color:var(--ink);outline:none;transition:border-color .2s;}
+  textarea:focus{border-color:var(--teal);}
+  textarea.too-short{border-color:var(--warn);}
+  .char-count{font-size:.73rem;color:var(--muted);margin-top:.3rem;}
+  .wc-warn{color:var(--warn);font-weight:500;}
+  .notice-row{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.1rem;}
+  .notice{font-size:.8rem;padding:.6rem .9rem;border-radius:7px;line-height:1.55;}
+  .notice.info{background:rgba(42,125,112,.08);border:1px solid rgba(42,125,112,.2);color:#1e4d45;}
+  .notice.warn{background:rgba(176,90,26,.07);border:1px solid rgba(176,90,26,.22);color:#7a3d0e;}
+  .btn-row{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.25rem;}
+  .btn{padding:.7rem 1.4rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;border:none;transition:opacity .2s,transform .15s;}
+  .btn:hover{opacity:.88;transform:translateY(-1px);}
+  .btn-primary{background:var(--ink);color:var(--paper);}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border);}
+  .section-divider{display:flex;align-items:center;gap:.75rem;margin:1.25rem 0;}
+  .section-divider-line{flex:1;height:1px;background:var(--border);}
+  .section-divider-text{font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;}
+  .csr-btn{display:inline-flex;align-items:center;padding:.45rem .9rem;border-radius:20px;background:var(--ink);color:var(--paper);font-size:.78rem;font-weight:500;cursor:pointer;border:2px solid transparent;transition:background .2s,border-color .2s;font-family:'DM Sans',sans-serif;}
+  .csr-btn.selected{background:var(--teal);border-color:var(--teal);}
+  .result-header{text-align:center;padding:1.5rem 0 1rem;}
+  .result-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.4rem;}
+  .result-header p{color:var(--muted);font-size:.88rem;}
+  .result-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1rem;}
+  .result-card-header{background:var(--ink);padding:1rem 1.25rem;display:flex;align-items:center;gap:.85rem;}
+  .result-card-header .icon{font-size:1.5rem;}
+  .result-card-header .q-label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;}
+  .result-card-header .role-name{font-size:1rem;font-weight:600;color:#fff;}
+  .result-card-body{padding:1.1rem 1.25rem;}
+  .summary-section{margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+  .summary-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .summary-label{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;}
+  .summary-answer{font-size:.88rem;line-height:1.65;color:var(--ink);white-space:pre-wrap;}
+  .result-insight{background:rgba(42,125,112,.07);border:1px solid rgba(42,125,112,.2);border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:1rem;}
+  .result-insight h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.4rem;}
+  .result-insight p{font-size:.85rem;line-height:1.65;color:#2d5a4e;}
+  .pdf-submit-box{background:var(--card-bg);border:1.5px solid var(--border);border-radius:10px;padding:1.25rem;text-align:center;margin-bottom:1rem;}
+  .pdf-submit-box div:first-child{font-size:1.5rem;margin-bottom:.4rem;}
+  .pdf-submit-box strong{display:block;font-size:.95rem;margin-bottom:.4rem;}
+  .pdf-submit-box p{font-size:.82rem;color:var(--muted);margin-bottom:.9rem;line-height:1.6;}
+  .error-msg{color:var(--accent);font-size:.8rem;margin-top:.4rem;display:none;}
+  .error-msg.show{display:block;}
+  .personal-anchor{background:rgba(200,75,49,.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:.85rem 1rem;margin-bottom:1rem;font-size:.88rem;line-height:1.65;}
+  .quiz-progress{font-size:.75rem;color:var(--muted);margin-bottom:.75rem;font-style:italic;}
+  .print-header{display:none;}
+  @media print{
+    .gate-screen,.lock-screen,.progress-bar,.btn-row,.pdf-submit-box,.notice-row{display:none!important;}
+    .print-header{display:block;text-align:center;border-bottom:2px solid var(--ink);padding-bottom:.75rem;margin-bottom:1.25rem;}
+    .print-header h2{font-family:'Playfair Display',serif;font-size:1.2rem;}
+    .print-header p{font-size:.78rem;color:#555;}
+    body{background:#fff!important;}
+    .screen{display:block!important;}
+    .screen:not(.active){display:none!important;}
+  }
+  .shake{animation:shake .35s ease;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+</style>
+</head>
+<body>
+
+<div class="gate-screen" id="gateScreen">
+  <div class="gate-inner">
+    <h2>Chapter 2<br>Ethics &amp; Social Responsibility</h2>
+    <p>Enter the access code provided by your instructor in D2L to begin this activity.</p>
+    <input class="gate-input" id="gateInput" type="text" placeholder="Enter access code" autocomplete="off" onkeydown="if(event.key==='Enter')checkCode()">
+    <button class="gate-btn" onclick="checkCode()">Enter &rarr;</button>
+    <div class="gate-err" id="gateErr"></div>
+    <div class="gate-closed" id="gateClosed">This activity is not yet open. Check D2L for the access code.</div>
+  </div>
+</div>
+
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-inner">
+    <div class="lock-icon">&#128274;</div>
+    <h2>Already submitted</h2>
+    <p>You have already completed this activity. Your submission has been recorded. Upload your saved PDF to the Chapter 2 Assignment Dropbox in D2L.</p>
+    <div class="lock-time" id="lockTime"></div>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <div class="dots">
+    <div class="dot active" id="dot-0"></div>
+    <div class="dot" id="dot-1"></div>
+    <div class="dot" id="dot-2"></div>
+    <div class="dot" id="dot-3"></div>
+    <div class="dot" id="dot-4"></div>
+    <div class="dot" id="dot-5"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">Step 1 of 6</div>
+</div>
+
+<div class="main">
+
+<!-- SCREEN 0: Intro -->
+<div class="screen active" id="screen-0">
+  <div class="story-card">
+    <div class="story-label">The Opening Story</div>
+    <h2>When a Company Named "Honest" Wasn&apos;t</h2>
+    <p>In 2015, a company called <strong>The Honest Company</strong> &mdash; co-founded by actress Jessica Alba &mdash; was accused of a serious problem. Customers claimed its laundry detergent contained sodium lauryl sulfate (SLS), a harsh chemical the company had publicly said its products were free of.</p>
+    <p>Honest&apos;s first move was to call the reporting "reckless" and deny everything. Later, with no public announcement, the company quietly reformulated the detergent and changed the label. No admission. No apology. Just silence and a different formula.</p>
+    <p>Then more trouble came: baby powder potentially linked to infections, discolored diaper wipes, more product recalls. The company&apos;s planned IPO fell through. Acquisition talks with Unilever and Clorox both collapsed. A brand built on the promise of honesty had damaged its reputation by being anything but.</p>
+    <div class="highlight-box">&#128161; <strong>What this activity covers:</strong> Chapter 2 gives you the frameworks to understand why this happened &mdash; and what businesses can do to make better decisions. You will work through ethical philosophies, decision-making tools, corporate social responsibility, and stakeholder obligations.</div>
+  </div>
+  <div style="text-align:center;margin:.75rem 0 .5rem;font-size:.8rem;color:var(--muted);">&#8595; Scroll down to continue &#8595;</div>
+  <div class="btn-row"><button class="btn btn-primary" onclick="goTo(1)">I&apos;ve read the intro &rarr;</button></div>
+</div>
+
+<!-- SCREEN 1: Philosophy Quiz -->
+<div class="screen" id="screen-1">
+  <div class="question-label">Step 2 &mdash; Apply It</div>
+  <div class="question-text">Which ethical framework fits each situation?</div>
+  <div class="story-card" style="margin-bottom:1rem;">
+    <div class="story-label">Four frameworks from Chapter 2 &mdash; review before answering</div>
+    <ul style="font-size:.87rem;line-height:1.9;padding-left:1.2rem;">
+      <li><strong>Utilitarianism</strong> &mdash; Choose the action that creates the greatest good for the greatest number of people.</li>
+      <li><strong>Justice / Fairness</strong> &mdash; Choose the action that distributes burdens and rewards fairly according to accepted societal standards.</li>
+      <li><strong>Deontology</strong> &mdash; Follow your obligations and duties regardless of the outcome. Do what you are obligated to do.</li>
+      <li><strong>Individual Rights</strong> &mdash; Protect the fundamental rights every person is born with: life, freedom, and the pursuit of happiness.</li>
+    </ul>
+  </div>
+  <div id="philQuizArea"></div>
+  <p id="philError" class="error-msg">Please select an answer for every scenario before continuing.</p>
+  <div class="btn-row">
+    <button class="btn btn-ghost" onclick="goTo(0)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="validatePhil()">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- SCREEN 2: Decision Tools -->
+<div class="screen" id="screen-2">
+  <div class="question-label">Step 3 &mdash; Making the Right Call</div>
+  <div class="question-text">How do organizations encourage ethical behavior?</div>
+  <div class="story-card" style="margin-bottom:1rem;">
+    <div class="story-label">Three tools &mdash; and two self-tests</div>
+    <ul style="font-size:.87rem;line-height:1.9;padding-left:1.2rem;">
+      <li><strong>Leading by example</strong> &mdash; Managers set the ethical tone. Employees follow what they see, not just what they are told.</li>
+      <li><strong>Ethics training programs</strong> &mdash; Formal training helps employees recognize questionable situations and practice appropriate responses.</li>
+      <li><strong>Code of ethics</strong> &mdash; A written document telling employees exactly what the company expects in terms of behavior toward coworkers, customers, and suppliers.</li>
+    </ul>
+    <p style="font-size:.87rem;margin-top:.85rem;">When facing a tough individual decision, two self-tests help:</p>
+    <ul style="font-size:.87rem;line-height:1.9;padding-left:1.2rem;">
+      <li><strong>The Feeling Test</strong> &mdash; How does this action make you feel? If something feels off, it probably is.</li>
+      <li><strong>The Newspaper / Social Media Test</strong> &mdash; How would an objective reporter describe this decision in a front-page story? Would you be proud of that headline?</li>
+    </ul>
+  </div>
+  <div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-text">Now apply it</div><div class="section-divider-line"></div></div>
+  <div class="scenario-box">
+    <strong>The situation:</strong> You are a manager at a regional grocery chain. You discover that a loyal 11-year employee has been taking small amounts of food home &mdash; about $15&ndash;$20 worth per week. Nothing shows up in audits. His family is going through financial hardship. Your company has a written code of ethics that explicitly prohibits taking company property without authorization. HR has never been notified.
+  </div>
+  <div class="notice-row">
+    <div class="notice warn">&#9888;&#65039; <strong>AI Plagiarism Notice:</strong> Written responses will be checked for AI-generated content. Your answers must reflect your own thinking.</div>
+  </div>
+  <div class="sub-prompts">
+    <div class="sub-prompt">
+      <div class="sub-prompt-num">Prompt 1 of 2 &mdash; minimum 30 words</div>
+      <div class="sub-prompt-q">Apply <strong>both</strong> self-tests to this situation. What does the Feeling Test tell you? What headline might the Newspaper Test produce &mdash; and does imagining that headline change how you think about the right call?</div>
+      <textarea id="dec1" maxlength="700" placeholder="The Feeling Test tells me... The Newspaper Test headline might read..." oninput="updateCount('dec1','dc1','dwc1','deErr1')"></textarea>
+      <div class="char-count" style="display:flex;justify-content:space-between;"><span id="deErr1" class="wc-warn"></span><span><span id="dwc1">0</span> words &nbsp;&middot;&nbsp; <span id="dc1">0</span>/700 chars</span></div>
+    </div>
+    <div class="sub-prompt">
+      <div class="sub-prompt-num">Prompt 2 of 2 &mdash; minimum 30 words</div>
+      <div class="sub-prompt-q">What would you actually do &mdash; and why? Then identify which of the three organizational tools (leading by example, ethics training, or a code of ethics) could have prevented this situation from arising. Explain your reasoning.</div>
+      <textarea id="dec2" maxlength="700" placeholder="I would... The tool that could have helped most is... because..." oninput="updateCount('dec2','dc2','dwc2','deErr2')"></textarea>
+      <div class="char-count" style="display:flex;justify-content:space-between;"><span id="deErr2" class="wc-warn"></span><span><span id="dwc2">0</span> words &nbsp;&middot;&nbsp; <span id="dc2">0</span>/700 chars</span></div>
+    </div>
+  </div>
+  <p id="decError" class="error-msg">Each prompt requires at least 30 words. Check the warnings above.</p>
+  <div class="btn-row">
+    <button class="btn btn-ghost" onclick="goTo(1)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="validateDec()">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- SCREEN 3: CSR Categories -->
+<div class="screen" id="screen-3">
+  <div class="question-label">Step 4 &mdash; CSR Spectrum</div>
+  <div class="question-text">Where does each company behavior fall?</div>
+  <div class="story-card" style="margin-bottom:1rem;">
+    <div class="story-label">Three zones of corporate social responsibility</div>
+    <p style="font-size:.88rem;">CSR is the concern of businesses for the welfare of society &mdash; going beyond profit and legal requirements. Chapter 2 identifies three categories:</p>
+    <ul style="font-size:.87rem;line-height:1.9;padding-left:1.2rem;margin-top:.4rem;">
+      <li><strong>Illegal &amp; Irresponsible</strong> &mdash; Breaks the law and harms society.</li>
+      <li><strong>Legal but Irresponsible</strong> &mdash; Follows the law, but acts in ways most people consider harmful or unfair.</li>
+      <li><strong>Legal &amp; Responsible</strong> &mdash; Acts lawfully and actively contributes to stakeholder and societal welfare.</li>
+    </ul>
+  </div>
+  <p style="font-size:.87rem;color:var(--muted);margin-bottom:.85rem;">For each behavior below, click the category that best fits. You can change your answer before submitting.</p>
+  <div id="csrQuizArea"></div>
+  <p id="csrError" class="error-msg">Please categorize all five behaviors before continuing.</p>
+  <div class="btn-row">
+    <button class="btn btn-ghost" onclick="goTo(2)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="validateCsr()">Next &rarr;</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: Stakeholders -->
+<div class="screen" id="screen-4">
+  <div class="question-label">Step 5 &mdash; Stakeholder Responsibility</div>
+  <div class="question-text">Who does a business owe something to?</div>
+  <div class="story-card" style="margin-bottom:1rem;">
+    <div class="story-label">Four stakeholder groups from Chapter 2</div>
+    <ul style="font-size:.87rem;line-height:1.9;padding-left:1.2rem;">
+      <li><strong>Employees</strong> &mdash; Safe working conditions, fair pay, empowerment, job security.</li>
+      <li><strong>Customers</strong> &mdash; Honest products and services, warranties honored, no deceptive claims.</li>
+      <li><strong>Society / the public</strong> &mdash; Environmental protection, corporate philanthropy, community investment.</li>
+      <li><strong>Investors</strong> &mdash; Reasonable return on investment and ethical, financially sound management.</li>
+    </ul>
+    <p style="font-size:.87rem;margin-top:.85rem;">One growing trend: <strong>strategic philanthropy</strong> &mdash; aligning charitable giving with the company&apos;s own mission and the communities where it operates, rather than simply donating to whoever asks.</p>
+  </div>
+  <div class="personal-anchor"><strong>Think about a company you interact with regularly</strong> &mdash; a store, restaurant, streaming service, or employer. You do not need to name it. What you have observed about how it treats people is what matters here.</div>
+  <div class="notice-row">
+    <div class="notice info">&#128196; <strong>Submission reminder:</strong> After this step you will see your full summary. Click <strong>Save as PDF</strong>, download it, then upload to the <strong>Chapter 2 Assignment Dropbox</strong> in D2L.</div>
+    <div class="notice warn">&#9888;&#65039; <strong>AI Plagiarism Notice:</strong> Written responses will be checked for AI-generated content. Your answers must reflect your own thinking.</div>
+  </div>
+  <div class="sub-prompts">
+    <div class="sub-prompt">
+      <div class="sub-prompt-num">Prompt 1 of 2 &mdash; minimum 40 words</div>
+      <div class="sub-prompt-q">Pick <strong>two</strong> of the four stakeholder groups. For each one, describe a specific way the company you are thinking of either meets or falls short of its responsibility to that group. Be specific &mdash; general statements do not earn full credit.</div>
+      <textarea id="stake1" maxlength="800" placeholder="Stakeholder group 1 (e.g., customers): ...&#10;Stakeholder group 2 (e.g., employees): ..." oninput="updateCount('stake1','sc1','swc1','seErr1')"></textarea>
+      <div class="char-count" style="display:flex;justify-content:space-between;"><span id="seErr1" class="wc-warn"></span><span><span id="swc1">0</span> words &nbsp;&middot;&nbsp; <span id="sc1">0</span>/800 chars</span></div>
+    </div>
+    <div class="sub-prompt">
+      <div class="sub-prompt-num">Prompt 2 of 2 &mdash; minimum 30 words</div>
+      <div class="sub-prompt-q">Return to The Honest Company from the opening story. Which stakeholder group do you think was most harmed by its actions &mdash; and what specifically should the new CEO do to rebuild trust with that group?</div>
+      <textarea id="stake2" maxlength="700" placeholder="The stakeholder group most harmed was... The CEO should..." oninput="updateCount('stake2','sc2','swc2','seErr2')"></textarea>
+      <div class="char-count" style="display:flex;justify-content:space-between;"><span id="seErr2" class="wc-warn"></span><span><span id="swc2">0</span> words &nbsp;&middot;&nbsp; <span id="sc2">0</span>/700 chars</span></div>
+    </div>
+  </div>
+  <p id="stakeError" class="error-msg">Please meet the word minimums for both prompts before continuing.</p>
+  <div class="btn-row">
+    <button class="btn btn-ghost" onclick="goTo(3)">&larr; Back</button>
+    <button class="btn btn-primary" onclick="validateStake()">Submit my answers &rarr;</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: Results -->
+<div class="screen" id="screen-5">
+  <div class="print-header">
+    <h2>Chapter 2 Activity &mdash; Ethics &amp; Social Responsibility Explorer</h2>
+    <p>Chapter 2 &nbsp;&middot;&nbsp; Introduction to Business &nbsp;&middot;&nbsp; Student Submission</p>
+  </div>
+  <div class="result-header">
+    <div style="font-size:2.5rem;margin-bottom:.5rem;">&#9878;&#65039;</div>
+    <h2>Activity Complete</h2>
+    <p>Here is a summary of your responses. Save as a PDF and upload to D2L.</p>
+  </div>
+
+  <div class="result-card">
+    <div class="result-card-header"><span class="icon">&#9878;&#65039;</span><div><div class="q-label">Part 1 &mdash; Ethical Frameworks</div><div class="role-name">Philosophy Quiz</div></div></div>
+    <div class="result-card-body">
+      <div class="summary-section"><div class="summary-label">Your score</div><div class="summary-answer" id="philScore"></div></div>
+      <div class="summary-section"><div class="summary-label">Answer breakdown</div><div class="summary-answer" id="philSummary"></div></div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-card-header"><span class="icon">&#128203;</span><div><div class="q-label">Part 2 &mdash; Making the Right Call</div><div class="role-name">Decision Tools &amp; Written Response</div></div></div>
+    <div class="result-card-body">
+      <div class="summary-section"><div class="summary-label">Feeling Test &amp; Newspaper Test</div><div class="summary-answer" id="sDec1"></div></div>
+      <div class="summary-section"><div class="summary-label">Your decision &amp; prevention tool</div><div class="summary-answer" id="sDec2"></div></div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-card-header"><span class="icon">&#127970;</span><div><div class="q-label">Part 3 &mdash; CSR Spectrum</div><div class="role-name">Categorization Results</div></div></div>
+    <div class="result-card-body">
+      <div class="summary-section"><div class="summary-label">Your score</div><div class="summary-answer" id="csrScore"></div></div>
+      <div class="summary-section"><div class="summary-label">Answer breakdown</div><div class="summary-answer" id="csrSummary"></div></div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-card-header"><span class="icon">&#129309;</span><div><div class="q-label">Part 4 &mdash; Stakeholder Responsibility</div><div class="role-name">Written Reflection</div></div></div>
+    <div class="result-card-body">
+      <div class="summary-section"><div class="summary-label">Two stakeholder groups observed</div><div class="summary-answer" id="sStake1"></div></div>
+      <div class="summary-section"><div class="summary-label">Most harmed stakeholder &mdash; Honest Company</div><div class="summary-answer" id="sStake2"></div></div>
+    </div>
+  </div>
+
+  <div class="result-insight">
+    <h3>The bigger picture</h3>
+    <p>Ethics and social responsibility show up in every business decision &mdash; from how a company responds to a bad product review, to whether it honors a supplier contract, to who it hires and how it pays them. The Honest Company&apos;s story is a reminder that reputation, once damaged, is expensive to rebuild. The frameworks you practiced today are the same tools real managers use when the stakes are real.</p>
+  </div>
+
+  <div class="pdf-submit-box">
+    <div>&#128196;</div>
+    <strong>Save your work and submit to D2L</strong>
+    <p>Click below. When the print dialog opens, set the destination to <strong>&ldquo;Save as PDF&rdquo;</strong> and click Save. Then upload the PDF to the <strong>Chapter 2 Assignment Dropbox</strong> in D2L.</p>
+    <button class="btn btn-primary" onclick="triggerPrint()">&#128190;&nbsp; Save as PDF</button>
+    <div id="printFallback" style="display:none;margin-top:.75rem;background:rgba(232,160,69,.08);border:1px solid rgba(232,160,69,.25);border-radius:6px;padding:.85rem 1rem;font-size:.8rem;line-height:1.7;color:var(--ink);text-align:left;">
+      <strong style="color:var(--gold);">&#128161; If the dialog did not open:</strong><br>
+      &bull; <strong>Windows:</strong> Ctrl + P &nbsp;&nbsp;&bull; <strong>Mac:</strong> Cmd + P<br>
+      Set destination to <strong>&ldquo;Save as PDF&rdquo;</strong> and click Save.
+    </div>
+  </div>
+  <p style="font-size:.8rem;color:var(--muted);text-align:center;">Activity complete &#10003; &nbsp;&middot;&nbsp; Chapter 2 &nbsp;&middot;&nbsp; Introduction to Business</p>
+</div>
+
+</div>
+
+<script>
+const ACCESS_CODE="ETHICS2";
+const INSTRUCTOR_CODE="INSTRUCTOR";
+const LOCK_KEY="ch2_ethics_v1";
+let instructorMode=false;
+
+(function(){
+  try{var s=localStorage.getItem(LOCK_KEY);if(s){var d=JSON.parse(s);var lt=document.getElementById('lockTime');if(lt)lt.textContent='Completed: '+d.timestamp;document.getElementById('lockScreen').classList.add('show');return;}}catch(e){}
+  document.getElementById('gateScreen').classList.add('show');
+})();
+
+function checkCode(){
+  var input=document.getElementById('gateInput'),err=document.getElementById('gateErr'),val=input.value.trim().toUpperCase();
+  if(val===INSTRUCTOR_CODE){
+    instructorMode=true;document.getElementById('gateScreen').classList.remove('show');
+    var bar=document.createElement('div');bar.style.cssText='position:fixed;bottom:0;left:0;right:0;background:rgba(232,160,69,.12);border-top:1px solid rgba(232,160,69,.3);padding:.4rem 1rem;font-size:.72rem;color:rgba(232,160,69,.9);text-align:center;z-index:999;letter-spacing:.08em;';
+    bar.textContent='INSTRUCTOR MODE — activity will not lock on completion';document.body.appendChild(bar);return;
+  }
+  if(!ACCESS_CODE){document.getElementById('gateClosed').style.display='block';input.disabled=true;return;}
+  if(val===ACCESS_CODE){document.getElementById('gateScreen').classList.remove('show');err.textContent='';}
+  else{err.textContent='Incorrect code. Check D2L for the correct code.';input.classList.add('shake');input.value='';setTimeout(function(){input.classList.remove('shake');},400);input.focus();}
+}
+
+function setLock(){
+  if(instructorMode)return;
+  try{var now=new Date();var ts=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' at '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});localStorage.setItem(LOCK_KEY,JSON.stringify({timestamp:ts}));}catch(e){}
+}
+
+let cur=0;
+function goTo(n){
+  document.getElementById('screen-'+cur).classList.remove('active');
+  cur=n;document.getElementById('screen-'+cur).classList.add('active');
+  for(var i=0;i<6;i++)document.getElementById('dot-'+i).classList.toggle('active',i<=n);
+  document.getElementById('progressLabel').textContent='Step '+(n+1)+' of 6';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// PHILOSOPHY QUIZ
+var philScenarios=[
+  {q:"A pharmaceutical company is deciding whether to price a life-saving drug at cost — losing money — or at a high markup. They choose to price it at cost because they believe no one should be denied access to medicine they need to survive.",
+   opts:["Utilitarianism","Justice / Fairness","Deontology","Individual Rights"],ans:"Individual Rights",
+   explain:"Individual Rights — the company is protecting a fundamental right (life) that every person is born with, regardless of what is financially optimal."},
+  {q:"A restaurant owner learns her supplier pays workers slightly below what she considers a fair wage — technically legal, but not equitable by her standards. She switches suppliers even though it raises her costs, because she believes people deserve fair compensation for their work.",
+   opts:["Utilitarianism","Justice / Fairness","Deontology","Individual Rights"],ans:"Justice / Fairness",
+   explain:"Justice / Fairness focuses on equitable distribution of burdens and rewards according to accepted societal standards. Fair wages for fair work reflects this framework."},
+  {q:"A city approves a highway project through a small neighborhood. The highway will cut commute times for 200,000 commuters. Only 85 families will be displaced. The city approves because the benefit to the many outweighs the harm to the few.",
+   opts:["Utilitarianism","Justice / Fairness","Deontology","Individual Rights"],ans:"Utilitarianism",
+   explain:"Utilitarianism seeks the greatest good for the greatest number. More people benefit from the highway than are harmed — a classic utilitarian calculation."},
+  {q:"A sales manager is pressured by her boss to slightly exaggerate product claims in a pitch to win a major contract. She refuses — even knowing the company will likely lose the deal — because her professional duty is to represent products honestly.",
+   opts:["Utilitarianism","Justice / Fairness","Deontology","Individual Rights"],ans:"Deontology",
+   explain:"Deontology means following your obligations and duties regardless of the outcome. She refuses because honesty is her professional duty — the financial consequences do not change that."}
+];
+var philAnswers={};
+
+function buildPhilQuiz(){
+  var html='';
+  philScenarios.forEach(function(s,i){
+    html+='<div class="story-card" style="margin-bottom:1rem;">';
+    html+='<div class="quiz-progress">Scenario '+(i+1)+' of '+philScenarios.length+'</div>';
+    html+='<p style="font-size:.9rem;line-height:1.65;margin-bottom:.9rem;">'+s.q+'</p>';
+    html+='<div class="phil-grid">';
+    s.opts.forEach(function(opt){
+      var id='pc_'+i+'_'+opt.replace(/[\s\/]+/g,'_');
+      html+='<div class="phil-card" id="'+id+'" onclick="selectPhil('+i+',\''+opt+'\',this)"><div class="phil-name">'+opt+'</div></div>';
+    });
+    html+='</div></div>';
+  });
+  document.getElementById('philQuizArea').innerHTML=html;
+}
+buildPhilQuiz();
+
+function selectPhil(idx,opt,el){
+  var cards=el.parentElement.querySelectorAll('.phil-card');
+  cards.forEach(function(c){c.classList.remove('selected');});
+  el.classList.add('selected');
+  philAnswers[idx]=opt;
+}
+
+function validatePhil(){
+  var allDone=philScenarios.every(function(_,i){return philAnswers[i]!==undefined;});
+  if(!allDone){document.getElementById('philError').classList.add('show');return;}
+  document.getElementById('philError').classList.remove('show');
+  goTo(2);
+}
+
+// WORD COUNT
+function countWords(s){return s.trim()===''?0:s.trim().split(/\s+/).length;}
+function updateCount(id,cid,wcid,errId,min){
+  min=min||30;
+  var val=document.getElementById(id).value,words=countWords(val);
+  if(cid)document.getElementById(cid).textContent=val.length;
+  if(wcid)document.getElementById(wcid).textContent=words;
+  if(errId){
+    var err=document.getElementById(errId),ta=document.getElementById(id);
+    if(val.trim().length>0&&words<min){err.textContent='⚠ '+words+'/'+min+' words minimum';ta.classList.add('too-short');}
+    else{err.textContent='';ta.classList.remove('too-short');}
+  }
+}
+
+function validateDec(){
+  var w1=countWords(document.getElementById('dec1').value),w2=countWords(document.getElementById('dec2').value),ok=true;
+  if(w1<30){ok=false;document.getElementById('deErr1').textContent='⚠ '+w1+'/30 words minimum';document.getElementById('dec1').classList.add('too-short');}else{document.getElementById('deErr1').textContent='';document.getElementById('dec1').classList.remove('too-short');}
+  if(w2<30){ok=false;document.getElementById('deErr2').textContent='⚠ '+w2+'/30 words minimum';document.getElementById('dec2').classList.add('too-short');}else{document.getElementById('deErr2').textContent='';document.getElementById('dec2').classList.remove('too-short');}
+  if(!ok){document.getElementById('decError').classList.add('show');return;}
+  document.getElementById('decError').classList.remove('show');goTo(3);
+}
+
+// CSR QUIZ
+var csrItems=[
+  {label:"A tobacco company legally sells cigarettes but specifically targets its advertising at teenagers.",ans:"Legal but Irresponsible",
+   explain:"Selling tobacco is legal. Targeting teenagers with addictive product advertising is legal in some contexts but widely considered irresponsible."},
+  {label:"A tech startup donates 2% of annual revenue to fund computer science programs in underserved local schools — in the same communities where it recruits employees.",ans:"Legal & Responsible",
+   explain:"This is strategic philanthropy — charitable giving tied to the company's mission and the communities it operates in. Legal and responsible."},
+  {label:"A food manufacturer falsifies safety test results to get a product to market faster, hiding data showing contamination.",ans:"Illegal & Irresponsible",
+   explain:"Falsifying safety data is fraud — illegal and dangerous to consumers. Clearly illegal and irresponsible."},
+  {label:"A clothing retailer pays all workers the legal minimum wage, but knowingly sources from overseas suppliers that use child labor.",ans:"Legal but Irresponsible",
+   explain:"The retailer breaks no laws in its home country. But profiting from child labor in its supply chain is widely considered irresponsible, even when technically legal."},
+  {label:"A regional bank offers free financial literacy workshops to first-generation college students in the communities it serves.",ans:"Legal & Responsible",
+   explain:"This is a clear example of corporate social responsibility in action — benefiting society while aligning with the bank's long-term mission."}
+];
+var csrCats=["Illegal & Irresponsible","Legal but Irresponsible","Legal & Responsible"];
+var csrAnswers={};
+
+function buildCsrQuiz(){
+  var html='';
+  csrItems.forEach(function(item,i){
+    html+='<div class="story-card" style="margin-bottom:1rem;">';
+    html+='<div class="quiz-progress">Behavior '+(i+1)+' of '+csrItems.length+'</div>';
+    html+='<p style="font-size:.9rem;line-height:1.65;margin-bottom:.9rem;">'+item.label+'</p>';
+    html+='<div style="display:flex;flex-wrap:wrap;gap:.55rem;">';
+    csrCats.forEach(function(cat){
+      var sid=cat.replace(/[^a-z0-9]/gi,'_');
+      html+='<button class="csr-btn" id="csrb_'+i+'_'+sid+'" onclick="selectCsr('+i+',\''+cat+'\',\''+sid+'\')">'+cat+'</button>';
+    });
+    html+='</div></div>';
+  });
+  document.getElementById('csrQuizArea').innerHTML=html;
+}
+buildCsrQuiz();
+
+function selectCsr(idx,cat,sid){
+  csrCats.forEach(function(c){
+    var s=c.replace(/[^a-z0-9]/gi,'_');
+    var btn=document.getElementById('csrb_'+idx+'_'+s);
+    if(btn)btn.classList.remove('selected');
+  });
+  var el=document.getElementById('csrb_'+idx+'_'+sid);
+  if(el)el.classList.add('selected');
+  csrAnswers[idx]=cat;
+}
+
+function validateCsr(){
+  if(Object.keys(csrAnswers).length<csrItems.length){document.getElementById('csrError').classList.add('show');return;}
+  document.getElementById('csrError').classList.remove('show');goTo(4);
+}
+
+function validateStake(){
+  var w1=countWords(document.getElementById('stake1').value),w2=countWords(document.getElementById('stake2').value),ok=true;
+  if(w1<40){ok=false;document.getElementById('seErr1').textContent='⚠ '+w1+'/40 words minimum';document.getElementById('stake1').classList.add('too-short');}else{document.getElementById('seErr1').textContent='';document.getElementById('stake1').classList.remove('too-short');}
+  if(w2<30){ok=false;document.getElementById('seErr2').textContent='⚠ '+w2+'/30 words minimum';document.getElementById('stake2').classList.add('too-short');}else{document.getElementById('seErr2').textContent='';document.getElementById('stake2').classList.remove('too-short');}
+  if(!ok){document.getElementById('stakeError').classList.add('show');return;}
+  document.getElementById('stakeError').classList.remove('show');
+  buildResults();goTo(5);
+}
+
+function buildResults(){
+  setLock();
+  var correct=0,philLines='';
+  philScenarios.forEach(function(s,i){
+    var ans=philAnswers[i]||'(no answer)',right=ans===s.ans;
+    if(right)correct++;
+    philLines+='Scenario '+(i+1)+': '+ans+' '+(right?'✓':'✗  Correct answer: '+s.ans)+(right?'':'\n  Why: '+s.explain)+'\n\n';
+  });
+  document.getElementById('philScore').textContent=correct+' of '+philScenarios.length+' correct';
+  document.getElementById('philSummary').textContent=philLines.trim();
+  document.getElementById('sDec1').textContent=document.getElementById('dec1').value.trim();
+  document.getElementById('sDec2').textContent=document.getElementById('dec2').value.trim();
+  var csrCorrect=0,csrLines='';
+  csrItems.forEach(function(item,i){
+    var ans=csrAnswers[i]||'(no answer)',right=ans===item.ans;
+    if(right)csrCorrect++;
+    csrLines+='Behavior '+(i+1)+': '+ans+' '+(right?'✓':'✗  Correct answer: '+item.ans)+(right?'':'\n  Why: '+item.explain)+'\n\n';
+  });
+  document.getElementById('csrScore').textContent=csrCorrect+' of '+csrItems.length+' correct';
+  document.getElementById('csrSummary').textContent=csrLines.trim();
+  document.getElementById('sStake1').textContent=document.getElementById('stake1').value.trim();
+  document.getElementById('sStake2').textContent=document.getElementById('stake2').value.trim();
+}
+
+function triggerPrint(){
+  var fb=document.getElementById('printFallback');fb.style.display='none';
+  try{var before=Date.now();window.print();setTimeout(function(){if(Date.now()-before<500)fb.style.display='block';},300);}
+  catch(e){fb.style.display='block';}
+}
+</script>
+</body>
+</html>
