@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 4 · Forms of Business Ownership · M-State</title>
+<style>
+  :root {
+    --coal: #1c1c1e;
+    --charcoal: #2c2c2e;
+    --slate: #3a3a3c;
+    --gold: #d4a017;
+    --gold-light: #f0c94a;
+    --cream: #f5f0e8;
+    --muted: #8e8e93;
+    --correct: #2ecc71;
+    --wrong: #e74c3c;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: var(--coal);
+    color: var(--cream);
+    min-height: 100vh;
+  }
+
+  /* ── GATE ─────────────────────────────────────── */
+  #gate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: var(--coal);
+  }
+
+  .gate-inner {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .gate-rule {
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin-bottom: 1.5rem;
+  }
+
+  .gate-mono {
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .gate-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .gate-subtitle {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .gate-field {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: var(--charcoal);
+    border: 1px solid var(--slate);
+    border-radius: 4px;
+    color: var(--cream);
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    outline: none;
+  }
+
+  .gate-field:focus { border-color: var(--gold); }
+
+  .gate-submit {
+    width: 100%;
+    padding: 0.85rem;
+    background: var(--gold);
+    color: var(--coal);
+    border: none;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .gate-submit:hover { background: var(--gold-light); }
+
+  .gate-error {
+    color: var(--wrong);
+    font-size: 0.82rem;
+    margin-top: 0.6rem;
+    min-height: 1.2rem;
+  }
+
+  .gate-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 1.5rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── APP ──────────────────────────────────────── */
+  #app { display: none; }
+
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--charcoal);
+    border-bottom: 1px solid var(--slate);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .app-header-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .app-header-sub {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.1rem;
+  }
+
+  .score-pill {
+    background: var(--gold);
+    color: var(--coal);
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: var(--slate);
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── CASE INTRO ───────────────────────────────── */
+  .case-intro {
+    background: var(--charcoal);
+    border: 1px solid var(--slate);
+    border-top: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .case-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .case-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .case-body p {
+    font-size: 0.92rem;
+    color: var(--cream);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .case-body p:last-child { margin-bottom: 0; }
+
+  /* ── SECTION HEADERS ──────────────────────────── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.5rem 0 1.25rem;
+  }
+
+  .section-number {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: var(--coal);
+    background: var(--gold);
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--slate);
+  }
+
+  /* ── SCENARIO CARD ────────────────────────────── */
+  .scenario-card {
+    background: var(--charcoal);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--cream);
+  }
+
+  .scenario-card strong { color: var(--gold-light); }
+
+  /* ── QUESTION BLOCK ───────────────────────────── */
+  .q-block {
+    background: var(--charcoal);
+    border: 1px solid var(--slate);
+    border-radius: 4px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .q-number {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .q-text {
+    font-size: 0.95rem;
+    color: var(--white);
+    line-height: 1.55;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.65rem 0.9rem;
+    background: var(--slate);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: var(--cream);
+    line-height: 1.45;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: left;
+  }
+
+  .opt:hover:not(.locked) { border-color: var(--gold); }
+
+  .opt-letter {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    font-weight: 700;
+    min-width: 1rem;
+    margin-top: 0.05rem;
+  }
+
+  .opt.correct { background: #1a3a25; border-color: var(--correct); }
+  .opt.wrong   { background: #3a1a1a; border-color: var(--wrong); }
+  .opt.locked  { cursor: default; }
+
+  .feedback {
+    display: none;
+    margin-top: 0.85rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 4px;
+    font-size: 0.83rem;
+    line-height: 1.6;
+  }
+
+  .feedback.correct { background: #1a3a25; border-left: 3px solid var(--correct); color: #a8e6c0; }
+  .feedback.wrong   { background: #3a1a1a; border-left: 3px solid var(--wrong);   color: #f4a0a0; }
+
+  /* ── RESULTS ──────────────────────────────────── */
+  #results {
+    display: none;
+    background: var(--charcoal);
+    border: 1px solid var(--slate);
+    border-top: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 2rem;
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+
+  .results-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .results-score {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .results-denom {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pdf-btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: var(--charcoal);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .pdf-btn:hover { background: var(--gold); color: var(--coal); }
+
+  @media (max-width: 580px) {
+    .main { padding: 1rem 1rem 3rem; }
+    .app-header { padding: 0.75rem 1rem; }
+    .case-intro { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ GATE ══════════════════════════════════════════════════ -->
+<div id="gate">
+  <div class="gate-inner">
+    <div class="gate-rule"></div>
+    <div class="gate-mono">Chapter 4 · Introduction to Business · M-State</div>
+    <div class="gate-title">Forms of Business<br>Ownership</div>
+    <div class="gate-subtitle">A 15-question case activity following three entrepreneurs as they choose, change, and grow their business structures.</div>
+    <input class="gate-field" id="codeInput" type="text" placeholder="ACCESS CODE" maxlength="20" autocomplete="off">
+    <button class="gate-submit" onclick="checkCode()">Enter Activity</button>
+    <div class="gate-error" id="gateError"></div>
+    <div class="gate-note">15 points · 1 point per question · Save PDF to submit to D2L</div>
+    <div class="gate-rule" style="margin-top:2rem;margin-bottom:0;"></div>
+  </div>
+</div>
+
+<!-- ══ APP ════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <header class="app-header">
+    <div class="app-header-left">
+      <div class="app-header-title">Forms of Business Ownership</div>
+      <div class="app-header-sub">Chapter 4 · Case Activity · M-State</div>
+    </div>
+    <div class="score-pill" id="scoreDisplay">SCORE: 0 / 15</div>
+  </header>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+  <div class="main" id="mainContent">
+
+    <!-- ── CASE INTRO ────────────────────────────────────── -->
+    <div class="case-intro">
+      <div class="case-label">Case Study · Three Entrepreneurs · One Chapter</div>
+      <div class="case-title">Starting, Growing, and Restructuring a Business</div>
+      <div class="case-body">
+        <p>Meet three entrepreneurs whose stories run through this activity. <strong>Jordan</strong> starts a food truck alone in Fargo. <strong>Sam and Riley</strong> open a fitness studio together in Moorhead. <strong>Nova Tech</strong> is a software company navigating rapid growth and structural change.</p>
+        <p>Each question puts you inside a real business decision. Apply what you learned in Chapter 4 to guide them through sole proprietorships, partnerships, corporations, LLCs, mergers, and everything in between.</p>
+        <p>Answer all 15 questions. Each correct answer is worth <strong>1 point</strong>. Your final score will appear at the bottom — save it as a PDF to submit to D2L.</p>
+      </div>
+    </div>
+
+    <!-- ══ SECTION 1: SOLE PROPRIETORSHIP ════════════════ -->
+    <div class="section-header">
+      <div class="section-number">SECTION 1</div>
+      <div class="section-title">Jordan's Food Truck — Sole Proprietorship</div>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="scenario-card">
+      <strong>Jordan's situation:</strong> Jordan is 24 years old and wants to launch a food truck in downtown Fargo serving locally sourced tacos. Jordan plans to operate alone, keep costs low, and make all decisions independently. Jordan has $8,000 in personal savings to invest.
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-block" id="q1">
+      <div class="q-number">Question 1 of 15</div>
+      <div class="q-text">Jordan decides to operate the food truck entirely on their own, with no partners or investors. Which form of business ownership best describes Jordan's business?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q1','A','B')"><span class="opt-letter">A</span> General partnership</div>
+        <div class="opt" onclick="answer('q1','B','B')"><span class="opt-letter">B</span> Sole proprietorship</div>
+        <div class="opt" onclick="answer('q1','C','B')"><span class="opt-letter">C</span> S corporation</div>
+        <div class="opt" onclick="answer('q1','D','B')"><span class="opt-letter">D</span> Limited liability company</div>
+      </div>
+      <div class="feedback" id="q1-fb"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-block" id="q2">
+      <div class="q-number">Question 2 of 15</div>
+      <div class="q-text">After six months, the food truck is involved in an accident and a customer sues Jordan for $40,000. Jordan only has $8,000 in the business account. What is the most likely outcome for Jordan under a sole proprietorship?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q2','A','C')"><span class="opt-letter">A</span> Jordan is protected because the business is a separate legal entity</div>
+        <div class="opt" onclick="answer('q2','B','C')"><span class="opt-letter">B</span> Jordan can only be sued up to the amount invested in the business</div>
+        <div class="opt" onclick="answer('q2','C','C')"><span class="opt-letter">C</span> Jordan's personal assets — savings, car, belongings — could be used to satisfy the judgment</div>
+        <div class="opt" onclick="answer('q2','D','C')"><span class="opt-letter">D</span> Jordan's liability is limited to $8,000 because that is all the business has</div>
+      </div>
+      <div class="feedback" id="q2-fb"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-block" id="q3">
+      <div class="q-number">Question 3 of 15</div>
+      <div class="q-text">Jordan's food truck earns $62,000 in profit during its first year. How will this income most likely be taxed under a sole proprietorship?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q3','A','A')"><span class="opt-letter">A</span> It flows directly to Jordan's personal tax return and is taxed as personal income</div>
+        <div class="opt" onclick="answer('q3','B','A')"><span class="opt-letter">B</span> The business pays corporate income tax on the $62,000 before Jordan receives any</div>
+        <div class="opt" onclick="answer('q3','C','A')"><span class="opt-letter">C</span> The income is split between the business and Jordan, each paying taxes separately</div>
+        <div class="opt" onclick="answer('q3','D','A')"><span class="opt-letter">D</span> Sole proprietorships are exempt from federal income tax in the first two years</div>
+      </div>
+      <div class="feedback" id="q3-fb"></div>
+    </div>
+
+    <!-- ══ SECTION 2: PARTNERSHIPS ════════════════════════ -->
+    <div class="section-header">
+      <div class="section-number">SECTION 2</div>
+      <div class="section-title">Sam & Riley's Fitness Studio — Partnerships</div>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="scenario-card">
+      <strong>Sam & Riley's situation:</strong> Best friends Sam and Riley decide to open "CoreFit Studio" in Moorhead. Sam has the fitness expertise and will run daily operations. Riley is a silent investor who contributes $25,000 but does not want to be involved in management decisions — and wants limited personal liability.
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-block" id="q4">
+      <div class="q-number">Question 4 of 15</div>
+      <div class="q-text">Sam and Riley want a formal business structure. Given that Riley wants limited liability and no management role, which partnership structure fits them best?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q4','A','B')"><span class="opt-letter">A</span> General partnership, with Sam and Riley as co-equal general partners</div>
+        <div class="opt" onclick="answer('q4','B','B')"><span class="opt-letter">B</span> Limited partnership, with Sam as the general partner and Riley as a limited partner</div>
+        <div class="opt" onclick="answer('q4','C','B')"><span class="opt-letter">C</span> Sole proprietorship under Sam's name, with Riley as an informal investor</div>
+        <div class="opt" onclick="answer('q4','D','B')"><span class="opt-letter">D</span> C corporation, because only corporations can offer limited liability</div>
+      </div>
+      <div class="feedback" id="q4-fb"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-block" id="q5">
+      <div class="q-number">Question 5 of 15</div>
+      <div class="q-text">Six months in, Sam and Riley have a major disagreement about pricing strategy. Sam wants to raise prices; Riley refuses to approve the change. Which is the most important reason attorneys recommend a written partnership agreement before starting a business?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q5','A','D')"><span class="opt-letter">A</span> It is required by law before any partnership can open a bank account</div>
+        <div class="opt" onclick="answer('q5','B','D')"><span class="opt-letter">B</span> It protects against competition from other fitness studios in the area</div>
+        <div class="opt" onclick="answer('q5','C','D')"><span class="opt-letter">C</span> It guarantees the business will be profitable within the first year</div>
+        <div class="opt" onclick="answer('q5','D','D')"><span class="opt-letter">D</span> It establishes in advance how decisions are made, profits are split, and disputes are resolved — reducing conflict and legal risk</div>
+      </div>
+      <div class="feedback" id="q5-fb"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-block" id="q6">
+      <div class="q-number">Question 6 of 15</div>
+      <div class="q-text">CoreFit Studio earns $80,000 in profit. Sam and Riley agreed to split profits 60/40. Which statement about how partnership income is taxed is correct?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q6','A','C')"><span class="opt-letter">A</span> The partnership pays corporate tax on the full $80,000, then distributes what remains</div>
+        <div class="opt" onclick="answer('q6','B','C')"><span class="opt-letter">B</span> Only the managing partner (Sam) pays taxes; silent investors are exempt</div>
+        <div class="opt" onclick="answer('q6','C','C')"><span class="opt-letter">C</span> Profits pass through to each partner's personal tax return — Sam pays tax on $48,000 and Riley on $32,000</div>
+        <div class="opt" onclick="answer('q6','D','C')"><span class="opt-letter">D</span> The partnership pays a flat 21% federal partnership tax before splitting profits</div>
+      </div>
+      <div class="feedback" id="q6-fb"></div>
+    </div>
+
+    <!-- ══ SECTION 3: CORPORATIONS ════════════════════════ -->
+    <div class="section-header">
+      <div class="section-number">SECTION 3</div>
+      <div class="section-title">Nova Tech — Corporations</div>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="scenario-card">
+      <strong>Nova Tech's situation:</strong> Nova Tech is a software startup founded by three college friends. The company has grown fast, now employs 40 people, and needs to raise $2 million in capital. The founders want to protect their personal assets and are considering incorporating.
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-block" id="q7">
+      <div class="q-number">Question 7 of 15</div>
+      <div class="q-text">Nova Tech's founders want to raise $2 million by selling ownership stakes to many investors. Which feature of a corporation makes this possible?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q7','A','B')"><span class="opt-letter">A</span> Corporations can apply for unlimited government grants unavailable to other business types</div>
+        <div class="opt" onclick="answer('q7','B','B')"><span class="opt-letter">B</span> Corporations can issue stock, allowing them to raise large amounts of capital from many investors</div>
+        <div class="opt" onclick="answer('q7','C','B')"><span class="opt-letter">C</span> Corporations automatically receive bank loans at lower interest rates than other structures</div>
+        <div class="opt" onclick="answer('q7','D','B')"><span class="opt-letter">D</span> Corporations do not have to pay back investors if the business fails</div>
+      </div>
+      <div class="feedback" id="q7-fb"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-block" id="q8">
+      <div class="q-number">Question 8 of 15</div>
+      <div class="q-text">One of Nova Tech's early investors becomes angry when the product launch is delayed and threatens to sue the three founders personally for his $50,000 investment loss. Which corporate principle best protects the founders?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q8','A','A')"><span class="opt-letter">A</span> Limited liability — a corporation is a separate legal entity, so the founders' personal assets are generally protected</div>
+        <div class="opt" onclick="answer('q8','B','A')"><span class="opt-letter">B</span> Double taxation — the corporation absorbs the loss and the founders owe nothing</div>
+        <div class="opt" onclick="answer('q8','C','A')"><span class="opt-letter">C</span> Perpetual existence — the corporation cannot be sued as long as it is still operating</div>
+        <div class="opt" onclick="answer('q8','D','A')"><span class="opt-letter">D</span> Proxy voting — shareholders can vote to dismiss the lawsuit on the founders' behalf</div>
+      </div>
+      <div class="feedback" id="q8-fb"></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-block" id="q9">
+      <div class="q-number">Question 9 of 15</div>
+      <div class="q-text">Nova Tech earns $500,000 in profit. The company pays corporate income tax on that amount, then distributes $200,000 as dividends to shareholders — who then pay personal income tax on those dividends. What is this tax situation called?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q9','A','C')"><span class="opt-letter">A</span> Pass-through taxation</div>
+        <div class="opt" onclick="answer('q9','B','C')"><span class="opt-letter">B</span> Progressive taxation</div>
+        <div class="opt" onclick="answer('q9','C','C')"><span class="opt-letter">C</span> Double taxation</div>
+        <div class="opt" onclick="answer('q9','D','C')"><span class="opt-letter">D</span> Corporate sheltering</div>
+      </div>
+      <div class="feedback" id="q9-fb"></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-block" id="q10">
+      <div class="q-number">Question 10 of 15</div>
+      <div class="q-text">Nova Tech's board of directors votes to replace the CEO. One of the founders argues that as a 20% shareholder, they should make this decision alone. Who actually has the legal authority to hire and fire the CEO?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q10','A','B')"><span class="opt-letter">A</span> The largest individual shareholder has final authority over all major decisions</div>
+        <div class="opt" onclick="answer('q10','B','B')"><span class="opt-letter">B</span> The board of directors — elected by shareholders — is responsible for major decisions like hiring and firing the CEO</div>
+        <div class="opt" onclick="answer('q10','C','B')"><span class="opt-letter">C</span> The state government that issued the corporate charter must approve all executive changes</div>
+        <div class="opt" onclick="answer('q10','D','B')"><span class="opt-letter">D</span> All employees vote equally on executive leadership decisions in a corporation</div>
+      </div>
+      <div class="feedback" id="q10-fb"></div>
+    </div>
+
+    <!-- ══ SECTION 4: LLCs & FRANCHISES ══════════════════ -->
+    <div class="section-header">
+      <div class="section-number">SECTION 4</div>
+      <div class="section-title">LLCs & Franchises</div>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="scenario-card">
+      <strong>Two new developments:</strong> Jordan (the food truck owner) is considering converting to an LLC for better liability protection while keeping a simple tax setup. Meanwhile, a national fitness brand called <strong>IronCore</strong> approaches Sam with a franchise offer to expand CoreFit into three more cities.
+    </div>
+
+    <!-- Q11 -->
+    <div class="q-block" id="q11">
+      <div class="q-number">Question 11 of 15</div>
+      <div class="q-text">Jordan wants liability protection like a corporation but does not want the complexity of a full corporation or double taxation. Which business structure is the best fit?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q11','A','C')"><span class="opt-letter">A</span> C corporation — it offers the strongest liability protection available</div>
+        <div class="opt" onclick="answer('q11','B','C')"><span class="opt-letter">B</span> General partnership — adding a partner removes Jordan's personal liability</div>
+        <div class="opt" onclick="answer('q11','C','C')"><span class="opt-letter">C</span> LLC (Limited Liability Company) — it combines liability protection with pass-through taxation and less administrative burden</div>
+        <div class="opt" onclick="answer('q11','D','C')"><span class="opt-letter">D</span> S corporation — it is always the simplest and cheapest structure for a single owner</div>
+      </div>
+      <div class="feedback" id="q11-fb"></div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-block" id="q12">
+      <div class="q-number">Question 12 of 15</div>
+      <div class="q-text">IronCore offers Sam the right to open three new fitness locations using the IronCore name, systems, and equipment — in exchange for an upfront fee and ongoing royalties. What type of business arrangement is this?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q12','A','D')"><span class="opt-letter">A</span> A merger — IronCore and CoreFit would combine into one company</div>
+        <div class="opt" onclick="answer('q12','B','D')"><span class="opt-letter">B</span> A joint venture — two companies temporarily sharing a project</div>
+        <div class="opt" onclick="answer('q12','C','D')"><span class="opt-letter">C</span> An acquisition — IronCore would purchase Sam's business outright</div>
+        <div class="opt" onclick="answer('q12','D','D')"><span class="opt-letter">D</span> A franchise — Sam (franchisee) pays IronCore (franchisor) for the right to operate under their brand and system</div>
+      </div>
+      <div class="feedback" id="q12-fb"></div>
+    </div>
+
+    <!-- ══ SECTION 5: MERGERS, ACQUISITIONS & S-CORPS ════ -->
+    <div class="section-header">
+      <div class="section-number">SECTION 5</div>
+      <div class="section-title">Nova Tech — Mergers, Acquisitions & S-Corps</div>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="scenario-card">
+      <strong>Nova Tech's next chapter:</strong> Nova Tech has grown to 200 employees and is now considering major structural moves — including a potential merger with a competitor, an acquisition offer from a large tech firm, and advice from their accountant about switching to S corporation status.
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-block" id="q13">
+      <div class="q-number">Question 13 of 15</div>
+      <div class="q-text">Nova Tech's biggest competitor, DataStream, proposes combining both companies into one new, larger organization where both sets of owners share control. What type of corporate restructuring is this?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q13','A','B')"><span class="opt-letter">A</span> Acquisition — Nova Tech is purchasing DataStream outright</div>
+        <div class="opt" onclick="answer('q13','B','B')"><span class="opt-letter">B</span> Merger — two companies combine to form one entity, with shared ownership</div>
+        <div class="opt" onclick="answer('q13','C','B')"><span class="opt-letter">C</span> Divestiture — Nova Tech is selling off part of its operations</div>
+        <div class="opt" onclick="answer('q13','D','B')"><span class="opt-letter">D</span> Leveraged buyout — employees are purchasing Nova Tech using borrowed funds</div>
+      </div>
+      <div class="feedback" id="q13-fb"></div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-block" id="q14">
+      <div class="q-number">Question 14 of 15</div>
+      <div class="q-text">A large technology firm offers to purchase Nova Tech completely — paying the founders and shareholders a set price per share so the firm gains full ownership and control. What is this called?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q14','A','C')"><span class="opt-letter">A</span> Merger</div>
+        <div class="opt" onclick="answer('q14','B','C')"><span class="opt-letter">B</span> Joint venture</div>
+        <div class="opt" onclick="answer('q14','C','C')"><span class="opt-letter">C</span> Acquisition</div>
+        <div class="opt" onclick="answer('q14','D','C')"><span class="opt-letter">D</span> Franchise agreement</div>
+      </div>
+      <div class="feedback" id="q14-fb"></div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-block" id="q15">
+      <div class="q-number">Question 15 of 15</div>
+      <div class="q-text">Nova Tech's accountant recommends converting to an S corporation to avoid double taxation. Which of the following is a key requirement that limits whether a corporation can elect S corporation status?</div>
+      <div class="options">
+        <div class="opt" onclick="answer('q15','A','A')"><span class="opt-letter">A</span> S corporations are limited to 100 shareholders and shareholders must be U.S. citizens or residents</div>
+        <div class="opt" onclick="answer('q15','B','A')"><span class="opt-letter">B</span> S corporations must be publicly traded on a stock exchange to qualify</div>
+        <div class="opt" onclick="answer('q15','C','A')"><span class="opt-letter">C</span> S corporations must have at least 500 shareholders to be approved by the IRS</div>
+        <div class="opt" onclick="answer('q15','D','A')"><span class="opt-letter">D</span> S corporation status is only available to non-profit organizations</div>
+      </div>
+      <div class="feedback" id="q15-fb"></div>
+    </div>
+
+    <!-- ══ RESULTS ══════════════════════════════════════════ -->
+    <div id="results">
+      <div class="results-label">Activity Complete · Chapter 4 · M-State</div>
+      <div class="results-score" id="finalScore">0</div>
+      <div class="results-denom">out of 15 points</div>
+      <button class="pdf-btn" onclick="savePDF()">⬇ Save PDF for D2L Submission</button>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+// ══ CONFIG ══════════════════════════════════════════════════
+const VALID_CODES = ['INTRO2026', 'INSTRUCTOR'];
+const TOTAL_Q = 15;
+
+const FEEDBACK = {
+  q1: {
+    correct: 'Correct! A sole proprietorship is owned and operated by one person with no legal distinction between the owner and the business.',
+    wrong: 'Not quite. A sole proprietorship is the correct answer — it is the simplest structure, owned and run by one individual with no separation between owner and business.'
+  },
+  q2: {
+    correct: 'Correct! Sole proprietors have unlimited personal liability — the business and owner are legally the same, so personal assets can be used to pay business debts and judgments.',
+    wrong: 'Not quite. In a sole proprietorship, there is no legal separation between Jordan and the business. Jordan faces unlimited personal liability — all personal assets are at risk.'
+  },
+  q3: {
+    correct: 'Correct! Sole proprietorships use pass-through taxation — profit flows directly to the owner\'s personal tax return and is taxed as personal income. There is no separate business tax.',
+    wrong: 'Not quite. Sole proprietorships have pass-through taxation, meaning all profit is reported on Jordan\'s personal tax return and taxed at personal income tax rates — no corporate tax is involved.'
+  },
+  q4: {
+    correct: 'Correct! A limited partnership allows one general partner (Sam) to manage the business while limited partners (Riley) contribute capital and receive limited liability protection — as long as they stay out of management.',
+    wrong: 'Not quite. A limited partnership is the best fit. Sam is the general partner running operations; Riley is a limited partner who invests money, stays out of management, and has personal liability limited to the amount invested.'
+  },
+  q5: {
+    correct: 'Correct! A partnership agreement is critical because it pre-establishes the rules for decision-making, profit sharing, and conflict resolution — preventing costly legal disputes down the road.',
+    wrong: 'Not quite. The most important reason is that a written partnership agreement defines in advance how decisions, profits, and disputes will be handled — protecting both partners if conflicts arise later.'
+  },
+  q6: {
+    correct: 'Correct! Partnerships use pass-through taxation — no tax at the business level. Each partner reports their share of profit on their personal return. Sam reports $48,000 (60%) and Riley reports $32,000 (40%).',
+    wrong: 'Not quite. Partnerships use pass-through taxation. The $80,000 is not taxed at the business level — it passes through to each partner\'s personal tax return based on their ownership split.'
+  },
+  q7: {
+    correct: 'Correct! One of the biggest advantages of a corporation is the ability to issue stock (shares of ownership), which allows the business to raise large amounts of capital from many investors.',
+    wrong: 'Not quite. The ability to issue stock is a major advantage of corporations — it allows them to raise significant capital by selling ownership shares to many investors.'
+  },
+  q8: {
+    correct: 'Correct! Limited liability is a core protection of the corporate structure. Because the corporation is a separate legal entity, the founders\' personal assets are generally shielded from business debts and lawsuits.',
+    wrong: 'Not quite. Limited liability is the key protection here. A corporation is a separate legal entity from its owners, which generally shields the founders\' personal assets from business-related lawsuits.'
+  },
+  q9: {
+    correct: 'Correct! Double taxation occurs when corporate profits are taxed once at the corporate level, then taxed again when distributed to shareholders as dividends — a key disadvantage of C corporations.',
+    wrong: 'Not quite. This is double taxation — the corporation pays tax on profits, and then shareholders pay personal tax again on dividends received from those same profits.'
+  },
+  q10: {
+    correct: 'Correct! In a corporation, the board of directors — elected by shareholders — has legal authority over major decisions like hiring and firing the CEO. No single shareholder has unilateral control.',
+    wrong: 'Not quite. The board of directors holds legal authority over executive decisions. Shareholders elect the board, but individual shareholders — regardless of ownership percentage — do not have direct control over management decisions.'
+  },
+  q11: {
+    correct: 'Correct! An LLC is the ideal fit — it gives Jordan liability protection (personal assets are shielded) while keeping taxes simple through pass-through taxation, without the complexity of a full corporation.',
+    wrong: 'Not quite. An LLC (Limited Liability Company) is the best answer. It combines the liability protection of a corporation with the tax simplicity of a sole proprietorship, and requires far less administrative overhead than a C corporation.'
+  },
+  q12: {
+    correct: 'Correct! This is a franchise arrangement. Sam would be the franchisee, paying IronCore (the franchisor) an upfront fee and ongoing royalties for the right to use their brand, systems, and business model.',
+    wrong: 'Not quite. This is a franchise. IronCore is the franchisor (the brand owner), and Sam would be the franchisee — paying fees and royalties in exchange for the right to operate under IronCore\'s proven brand and system.'
+  },
+  q13: {
+    correct: 'Correct! A merger occurs when two companies combine to form one new entity — with both sets of owners sharing control. This differs from an acquisition, where one company purchases and takes over another.',
+    wrong: 'Not quite. This describes a merger — two companies voluntarily combining into a single new entity, with shared ownership. In an acquisition, one company buys and takes over another outright.'
+  },
+  q14: {
+    correct: 'Correct! This is an acquisition — one company (the large tech firm) purchases another company (Nova Tech) outright, taking full ownership and control.',
+    wrong: 'Not quite. This is an acquisition. One company purchases another completely, gaining full ownership and control. In a merger, both companies combine as relative equals; here, Nova Tech is being bought out entirely.'
+  },
+  q15: {
+    correct: 'Correct! S corporations are restricted to a maximum of 100 shareholders, and all shareholders must be U.S. citizens or permanent residents. These rules limit who can elect S corporation status.',
+    wrong: 'Not quite. The key restriction is that S corporations are limited to 100 shareholders, all of whom must be U.S. citizens or residents. These limits make S corp status unavailable to many larger or internationally-owned businesses.'
+  }
+};
+
+// ══ STATE ═══════════════════════════════════════════════════
+let answered = {};
+let score = 0;
+
+// ══ GATE ════════════════════════════════════════════════════
+function checkCode() {
+  const val = document.getElementById('codeInput').value.trim().toUpperCase();
+  if (VALID_CODES.includes(val)) {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  } else {
+    document.getElementById('gateError').textContent = 'Incorrect access code. Check with your instructor.';
+  }
+}
+
+document.getElementById('codeInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkCode();
+});
+
+// ══ ANSWER HANDLER ══════════════════════════════════════════
+function answer(qId, chosen, correct) {
+  if (answered[qId]) return;
+  answered[qId] = { chosen, correct };
+
+  const block = document.getElementById(qId);
+  const opts = block.querySelectorAll('.opt');
+  const fb = document.getElementById(qId + '-fb');
+  const isCorrect = chosen === correct;
+
+  opts.forEach(opt => {
+    opt.classList.add('locked');
+    const letter = opt.querySelector('.opt-letter').textContent.trim();
+    if (letter === correct) opt.classList.add('correct');
+    if (letter === chosen && !isCorrect) opt.classList.add('wrong');
+  });
+
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+  fb.textContent = isCorrect ? FEEDBACK[qId].correct : FEEDBACK[qId].wrong;
+  fb.style.display = 'block';
+
+  if (isCorrect) score++;
+  updateDisplay();
+
+  if (Object.keys(answered).length === TOTAL_Q) {
+    setTimeout(() => {
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('finalScore').textContent = score;
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }, 600);
+  }
+}
+
+function updateDisplay() {
+  const n = Object.keys(answered).length;
+  document.getElementById('scoreDisplay').textContent = `SCORE: ${score} / 15`;
+  document.getElementById('progressFill').style.width = (n / TOTAL_Q * 100) + '%';
+}
+
+// ══ PDF ═════════════════════════════════════════════════════
+function savePDF() {
+  const rows = Object.entries(answered).map(([qId, data]) => {
+    const num = qId.replace('q', '');
+    const isCorrect = data.chosen === data.correct;
+    return `<tr><td>Q${num}</td><td style="text-align:center;">${isCorrect ? '✓' : '✗'}</td><td style="text-align:center;">${isCorrect ? 1 : 0}</td></tr>`;
+  }).join('');
+
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Ch4 Business Ownership – Score Report</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 600px; margin: 2rem auto; color: #1c1c1e; font-size: 14px; line-height: 1.6; }
+    h1 { font-size: 1.6rem; border-bottom: 3px double #d4a017; padding-bottom: 0.5rem; margin-bottom: 0.2rem; }
+    .meta { color: #555; font-size: 0.82rem; font-style: italic; margin-bottom: 1.5rem; }
+    h2 { font-size: 1rem; color: #b8860b; margin-top: 1.5rem; border-left: 4px solid #d4a017; padding-left: 0.6rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; }
+    th { background: #1c1c1e; color: #f5f0e8; padding: 0.45rem 0.5rem; font-size: 12px; text-align: left; }
+    td { padding: 0.4rem 0.5rem; border-bottom: 1px solid #ddd; font-size: 13px; }
+    .total-row td { font-weight: 700; border-top: 2px solid #8B7355; border-bottom: none; font-size: 1rem; }
+    .score-box { background: #1c1c1e; color: #f5f0e8; padding: 1.25rem; text-align: center; margin-top: 1.5rem; }
+    .score-box .big { font-size: 2.5rem; color: #d4a017; font-weight: 700; }
+    .note { font-size: 0.78rem; color: #6B5E4A; font-style: italic; margin-top: 1.5rem; }
+    @media print { body { margin: 0.5rem; } }
+  </style></head><body>
+  <h1>Forms of Business Ownership</h1>
+  <div class="meta">Chapter 4 Case Activity · Introduction to Business · Minnesota State Community and Technical College · ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+  <h2>Score Breakdown</h2>
+  <table>
+    <thead><tr><th>Question</th><th style="text-align:center;">Result</th><th style="text-align:center;">Points</th></tr></thead>
+    <tbody>${rows}
+    <tr class="total-row"><td colspan="2">Total Score</td><td style="text-align:center;">${score} / 15</td></tr>
+    </tbody>
+  </table>
+  <div class="score-box"><div class="big">${score} / 15</div><div style="font-size:0.85rem;opacity:0.8;margin-top:0.3rem;">Forms of Business Ownership · Chapter 4 Case Activity</div></div>
+  <div class="note">Save using your browser's print dialog (Ctrl+P or Cmd+P → Save as PDF) and submit to D2L.</div>
+  </body></html>`);
+  win.document.close();
+  setTimeout(() => win.print(), 500);
+}
+</script>
+</body>
+</html>
