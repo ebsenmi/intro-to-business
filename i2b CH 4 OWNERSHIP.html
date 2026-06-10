@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Advisor's Inbox — Ch. 4 Business Ownership</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --desk:      #EDE8DF;
+  --desk-dark: #D8D0C4;
+  --paper:     #FAFAF7;
+  --ink:       #2B2B2B;
+  --mid:       #6B6560;
+  --light:     #A09890;
+  --navy:      #1B3A6B;
+  --navy-lt:   #2A5299;
+  --orange:    #C8570A;
+  --orange-lt: #E8703A;
+  --sticky:    #F5E642;
+  --sticky-dk: #D4C520;
+  --green:     #1A5C2A;
+  --green-lt:  #E8F5EC;
+  --red:       #8B1A1A;
+  --red-lt:    #FBE8E8;
+  --gold:      #B8860B;
+  --rule:      #D0C8BC;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lora', Georgia, serif;
+  background: var(--desk);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ══ GATE ══════════════════════════════════════════════════ */
+#gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy);
+  padding: 2rem;
+}
+.gate-wrap {
+  background: var(--paper);
+  max-width: 480px;
+  width: 100%;
+  padding: 2.5rem 2.5rem 2rem;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+}
+.gate-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--orange);
+}
+.gate-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 0.75rem;
+}
+.gate-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+.gate-sub {
+  font-size: 0.92rem;
+  color: var(--mid);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+.gate-divider { height: 1px; background: var(--rule); margin: 1.25rem 0; }
+.gate-brief {
+  background: var(--desk);
+  border-left: 3px solid var(--navy);
+  padding: 0.85rem 1rem;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--mid);
+  margin-bottom: 1.5rem;
+}
+.gate-brief strong { color: var(--ink); }
+.gate-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 2px solid var(--rule);
+  background: white;
+  color: var(--ink);
+  outline: none;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s;
+}
+.gate-input:focus { border-color: var(--navy); }
+.gate-btn {
+  width: 100%;
+  padding: 0.85rem;
+  background: var(--navy);
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.gate-btn:hover { background: var(--navy-lt); }
+.gate-error { color: var(--red); font-size: 0.8rem; margin-top: 0.5rem; font-family: 'Syne', sans-serif; min-height: 1.2em; }
+.gate-pts {
+  text-align: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--light);
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+/* ══ APP SHELL ══════════════════════════════════════════════ */
+#app { display: none; min-height: 100vh; }
+
+/* Top bar */
+.topbar {
+  background: var(--navy);
+  padding: 0.7rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+.topbar-left {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+.topbar-left span { color: white; }
+.topbar-score {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: var(--orange);
+  color: white;
+  padding: 0.3rem 0.9rem;
+}
+
+/* Main layout */
+.shell {
+  display: flex;
+  min-height: calc(100vh - 45px);
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--desk-dark);
+  border-right: 1px solid var(--rule);
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 45px;
+  height: calc(100vh - 45px);
+  overflow-y: auto;
+}
+.sidebar-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--light);
+  padding: 0 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 0.75rem;
+}
+.client-tab {
+  padding: 0.9rem 1.25rem;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+}
+.client-tab:hover { background: rgba(0,0,0,0.05); }
+.client-tab.active {
+  background: var(--paper);
+  border-left-color: var(--orange);
+}
+.client-tab.done { opacity: 0.65; }
+.ct-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+.ct-type {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.ct-badge {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ct-badge.pending { background: var(--rule); color: var(--mid); }
+.ct-badge.done    { background: var(--green); color: white; }
+.ct-badge.active  { background: var(--orange); color: white; }
+
+.sidebar-divider { height: 1px; background: var(--rule); margin: 0.75rem 1.25rem; }
+.sidebar-summary {
+  padding: 0.75rem 1.25rem 0;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.68rem;
+  color: var(--mid);
+  line-height: 1.6;
+}
+.sidebar-summary strong { color: var(--ink); display: block; margin-bottom: 0.25rem; }
+
+/* ── Main panel ── */
+.main {
+  flex: 1;
+  padding: 2rem 2rem 4rem;
+  max-width: 680px;
+}
+
+/* ── Case screens ── */
+.case-screen { display: none; }
+.case-screen.active { display: block; }
+
+/* Client intro card */
+.client-card {
+  background: white;
+  border: 1px solid var(--rule);
+  border-top: 4px solid var(--navy);
+  padding: 1.5rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+.client-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+.client-info { flex: 1; }
+.client-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
+}
+.client-tagline {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 0.5rem;
+}
+.client-bio { font-size: 0.87rem; line-height: 1.6; color: var(--mid); }
+
+/* Sticky note message */
+.sticky-wrap {
+  position: relative;
+  margin-bottom: 1.75rem;
+}
+.sticky {
+  background: var(--sticky);
+  padding: 1.25rem 1.4rem 1.4rem;
+  position: relative;
+  box-shadow: 3px 4px 12px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.1);
+  transform: rotate(-0.6deg);
+  transform-origin: top left;
+  animation: stickydrop 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.sticky.rotate-right { transform: rotate(0.8deg); }
+@keyframes stickydrop {
+  from { opacity: 0; transform: rotate(-0.6deg) translateY(-12px) scale(0.97); }
+  to   { opacity: 1; transform: rotate(-0.6deg) translateY(0) scale(1); }
+}
+.sticky-from {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sticky-dk);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.sticky-from::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+  flex-shrink: 0;
+}
+.sticky-text {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #2a2500;
+  font-style: italic;
+}
+.sticky-text strong { font-style: normal; font-weight: 600; }
+
+/* Situation brief */
+.situation {
+  background: var(--desk);
+  border-left: 3px solid var(--navy);
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--mid);
+}
+.situation strong { color: var(--ink); }
+.situation-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+}
+
+/* Decision prompt */
+.decision-prompt {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.decision-prompt::before {
+  content: '▶';
+  font-size: 0.6rem;
+}
+
+/* Decision cards */
+.decisions { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.25rem; }
+.dec-card {
+  background: white;
+  border: 2px solid var(--rule);
+  padding: 1rem 1.15rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink);
+  position: relative;
+}
+.dec-card:hover:not(.locked) {
+  border-color: var(--navy);
+  background: #F0F4FA;
+  transform: translateX(3px);
+}
+.dec-card.locked { cursor: default; }
+.dec-card.chosen-correct {
+  border-color: var(--green);
+  background: var(--green-lt);
+}
+.dec-card.chosen-wrong {
+  border-color: var(--red);
+  background: var(--red-lt);
+}
+.dec-card.reveal-correct {
+  border-color: var(--green);
+  background: var(--green-lt);
+  opacity: 0.7;
+}
+.dec-tag {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  position: absolute;
+  top: 0.6rem;
+  right: 0.75rem;
+}
+.dec-tag.correct-tag { color: var(--green); }
+.dec-tag.wrong-tag   { color: var(--red); }
+
+/* Consequence / outcome panels */
+.consequence {
+  border-radius: 0;
+  padding: 1.1rem 1.25rem;
+  margin-top: 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  display: none;
+  animation: fadeup 0.3s ease both;
+}
+@keyframes fadeup {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.consequence.show { display: block; }
+.consequence.bad  { background: var(--red-lt); border-left: 4px solid var(--red); color: #3a0a0a; }
+.consequence.good { background: var(--green-lt); border-left: 4px solid var(--green); color: #0a2a10; }
+.consequence-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.consequence.bad  .consequence-label { color: var(--red); }
+.consequence.good .consequence-label { color: var(--green); }
+
+/* Concept callout */
+.concept-callout {
+  background: var(--navy);
+  color: #C8D8F0;
+  padding: 0.9rem 1.1rem;
+  margin-top: 0.75rem;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  display: none;
+}
+.concept-callout.show { display: block; }
+.concept-callout strong { color: #E8F0FF; }
+.concept-callout-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 0.35rem;
+}
+
+/* Continue button */
+.continue-btn {
+  display: none;
+  margin-top: 1.25rem;
+  padding: 0.8rem 2rem;
+  background: var(--navy);
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.continue-btn:hover { background: var(--navy-lt); }
+.continue-btn.show { display: inline-block; }
+
+/* Step counter */
+.step-counter {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.step-dots { display: flex; gap: 0.35rem; }
+.step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--rule);
+  transition: background 0.3s;
+}
+.step-dot.done    { background: var(--green); }
+.step-dot.active  { background: var(--orange); }
+
+/* Section complete card */
+.section-complete {
+  background: var(--navy);
+  padding: 1.75rem;
+  text-align: center;
+  display: none;
+  animation: fadeup 0.4s ease both;
+}
+.section-complete.show { display: block; }
+.sc-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.sc-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 0.3rem;
+}
+.sc-sub { font-size: 0.88rem; color: rgba(255,255,255,0.65); font-style: italic; margin-bottom: 1.25rem; }
+.sc-score {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--sticky);
+  margin-bottom: 0.25rem;
+  line-height: 1;
+}
+.sc-score-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1.25rem;
+}
+.sc-next {
+  padding: 0.75rem 2rem;
+  background: var(--orange);
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.sc-next:hover { background: var(--orange-lt); }
+
+/* ══ RESULTS ══════════════════════════════════════════════ */
+#results {
+  display: none;
+  min-height: 100vh;
+  background: var(--desk);
+  padding: 3rem 2rem 5rem;
+}
+.results-inner { max-width: 600px; margin: 0 auto; }
+.results-header {
+  background: var(--navy);
+  padding: 2rem 2rem 1.75rem;
+  margin-bottom: 1.5rem;
+  border-top: 5px solid var(--orange);
+}
+.results-eyebrow {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 0.4rem;
+}
+.results-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 0.75rem;
+  line-height: 1.15;
+}
+.results-score-big {
+  font-family: 'Syne', sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--sticky);
+  line-height: 1;
+  margin-bottom: 0.15rem;
+}
+.results-score-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.result-rows { background: white; border: 1px solid var(--rule); margin-bottom: 1.5rem; }
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--desk);
+  font-size: 0.88rem;
+}
+.result-row:last-child { border-bottom: none; }
+.result-row .rr-label { color: var(--mid); }
+.result-row .rr-score {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+.submit-note {
+  background: white;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--green);
+  padding: 1rem 1.25rem;
+  font-size: 0.87rem;
+  line-height: 1.65;
+  color: var(--mid);
+  margin-bottom: 1.25rem;
+}
+.submit-note strong { color: var(--ink); display: block; margin-bottom: 0.25rem; }
+.pdf-btn {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: var(--navy);
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pdf-btn:hover { background: var(--navy-lt); }
+
+/* ══ RESPONSIVE ══════════════════════════════════════════ */
+@media (max-width: 680px) {
+  .shell { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    display: flex;
+    padding: 0.75rem 0;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sidebar-label { display: none; }
+  .client-tab {
+    flex-shrink: 0;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.6rem 1rem;
+  }
+  .client-tab.active { border-bottom-color: var(--orange); border-left: none; }
+  .ct-badge { display: none; }
+  .main { padding: 1.25rem 1rem 3rem; }
+  .sidebar-divider, .sidebar-summary { display: none; }
+}
+
+@media print {
+  #gate, .topbar, .sidebar, .decisions, .continue-btn, .sc-next, .pdf-btn { display: none !important; }
+  body, #app, #results, .main { background: white !important; }
+  .case-screen { display: block !important; }
+  .results-header { background: #eee !important; color: black !important; border: 2px solid black; }
+  .results-score-big, .results-title, .results-eyebrow, .results-score-label { color: black !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ GATE ══════════════════════════════════════════════════ -->
+<div id="gate">
+  <div class="gate-wrap">
+    <div class="gate-label">Introduction to Business · Chapter 4</div>
+    <div class="gate-title">The Advisor's Inbox</div>
+    <div class="gate-sub">Three clients. Real decisions. Every choice has a consequence.</div>
+    <div class="gate-divider"></div>
+    <div class="gate-brief">
+      You've just been hired as a business structure consultant. Three clients are waiting for your advice — each one facing a critical decision about how to own, organize, and grow their business.<br><br>
+      <strong>Your job:</strong> Read each situation carefully and recommend the right course of action. Your advice will determine what happens next.
+    </div>
+    <input class="gate-input" id="codeInput" type="text" placeholder="Enter Access Code" autocomplete="off">
+    <button class="gate-btn" onclick="checkCode()">Open My Inbox</button>
+    <div class="gate-error" id="gateError"></div>
+    <div class="gate-pts">10 decisions · 10 points · Save PDF to submit to D2L</div>
+  </div>
+</div>
+
+<!-- ══ APP ════════════════════════════════════════════════════ -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-left">The Advisor's Inbox &nbsp;·&nbsp; <span>Ch. 4 Business Ownership</span></div>
+    <div class="topbar-score" id="topScore">SCORE: 0 / 10</div>
+  </div>
+
+  <div class="shell">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-label">Client Files</div>
+
+      <div class="client-tab active" id="tab-jordan" onclick="switchClient('jordan')">
+        <div class="ct-name">🚚 Jordan A.</div>
+        <div class="ct-type">Food Truck · Fargo</div>
+        <div class="ct-badge active" id="badge-jordan">→</div>
+      </div>
+
+      <div class="client-tab" id="tab-corefit" onclick="switchClient('corefit')">
+        <div class="ct-name">💪 Sam &amp; Riley</div>
+        <div class="ct-type">Fitness Studio · Moorhead</div>
+        <div class="ct-badge pending" id="badge-corefit">–</div>
+      </div>
+
+      <div class="client-tab" id="tab-nova" onclick="switchClient('nova')">
+        <div class="ct-name">💻 Nova Tech</div>
+        <div class="ct-type">Software Co. · Fargo</div>
+        <div class="ct-badge pending" id="badge-nova">–</div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-summary">
+        <strong>Your Role</strong>
+        Business structure consultant. Advise each client on ownership, liability, and growth strategy.
+      </div>
+    </div>
+
+    <!-- Main panel -->
+    <div class="main">
+
+      <!-- ══ JORDAN CASE ══════════════════════════════════════ -->
+      <div class="case-screen active" id="case-jordan">
+
+        <!-- Client card -->
+        <div class="client-card">
+          <div class="client-avatar" style="background:#FEF0E7;color:var(--orange);">JA</div>
+          <div class="client-info">
+            <div class="client-name">Jordan Alvarez</div>
+            <div class="client-tagline">Taco Terreno · Food Truck · Fargo, ND</div>
+            <div class="client-bio">24 years old. Launching a food truck selling locally sourced tacos in Fargo. Has $8,000 in personal savings. Wants to operate alone — but the risks are real: hot equipment, food prep, a running vehicle, and hungry customers in close quarters.</div>
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div id="jordan-s1">
+          <div class="step-counter">
+            <span>Decision 1 of 3</span>
+            <div class="step-dots">
+              <div class="step-dot active" id="jdot1"></div>
+              <div class="step-dot" id="jdot2"></div>
+              <div class="step-dot" id="jdot3"></div>
+            </div>
+          </div>
+
+          <div class="sticky">
+            <div class="sticky-from">Message from Jordan</div>
+            <div class="sticky-text">"Hey — I'm finally ready to launch. I've got $8K saved, I'm going solo, no partners. My cousin said just file a DBA (Doing Business As) and start selling. But I looked up some food truck horror stories — a truck in Minneapolis got sued when someone said their taco made them sick. <strong>Should I just go sole proprietor to keep it simple, or does a food truck actually need an LLC from the start?</strong>"</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            Jordan plans to operate solo with $8,000 in personal savings. A food truck carries layered liability exposure: a moving vehicle that can cause accidents, open flame and hot equipment that can burn customers, and food prepared on-site that can cause illness. Any of these could generate a lawsuit that exceeds the business's cash on hand.
+          </div>
+
+          <div class="decision-prompt">What's your advice, Advisor?</div>
+          <div class="decisions" id="jordan-d1">
+            <div class="dec-card" onclick="decide('jordan',1,'A')">
+              "File a DBA (Doing Business As) and launch as a sole proprietor — it's faster and cheaper. You can always convert to an LLC after you're profitable."
+            </div>
+            <div class="dec-card" onclick="decide('jordan',1,'B')">
+              "Incorporate as a C corporation — it offers the strongest liability shield and looks more professional to vendors and customers."
+            </div>
+            <div class="dec-card" onclick="decide('jordan',1,'C')">
+              "Set up an LLC before you open. A food truck carries real liability risks — vehicle accidents, burns, food poisoning — and an LLC separates your personal assets from any lawsuit the business faces."
+            </div>
+          <div class="consequence" id="jordan-1-con"></div>
+          <div class="concept-callout" id="jordan-1-concept"></div>
+          <button class="continue-btn" id="jordan-1-next" onclick="nextStep('jordan',2)">Next Decision →</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="jordan-s2" style="display:none">
+          <div class="step-counter">
+            <span>Decision 2 of 3</span>
+            <div class="step-dots">
+              <div class="step-dot done"></div>
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+            </div>
+          </div>
+
+          <div class="sticky rotate-right">
+            <div class="sticky-from">🚨 Urgent message from Jordan</div>
+            <div class="sticky-text">"I didn't take your advice. I launched as a sole prop to save money on filing fees. I put the whole $8K into the truck and supplies to get started. Now a customer is claiming our salsa gave her food poisoning and she's suing for <strong>$55,000</strong>. The business only has about $3,200 in it right now. I also have a car and maybe $2,500 in personal savings left. <strong>Can she come after my personal stuff?</strong>"</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            Jordan launched as a sole proprietor, investing the full $8,000 into the truck, equipment, and supplies. The business is six months old and the checking account has about $3,200 in it from recent sales. Jordan also personally owns a vehicle and has roughly $2,500 in personal savings. A customer is now suing for $55,000 over alleged food poisoning. As a sole proprietor, there is no legal separation between Jordan and the business.
+          </div>
+
+          <div class="decision-prompt">What's the honest answer?</div>
+          <div class="decisions" id="jordan-d2">
+            <div class="dec-card" onclick="decide('jordan',2,'A')">
+              "As a sole proprietor, there is no legal wall between you and the business. The car, the laptop, the savings — all of it is potentially on the line for the full $55,000."
+            </div>
+            <div class="dec-card" onclick="decide('jordan',2,'B')">
+              "You're only liable up to what's in the business account. A registered business name protects your personal assets from lawsuits."
+            </div>
+            <div class="dec-card" onclick="decide('jordan',2,'C')">
+              "Food poisoning claims are usually capped at medical expenses only, so the $55,000 demand will likely be reduced significantly in court."
+            </div>
+          <div class="consequence" id="jordan-2-con"></div>
+          <div class="concept-callout" id="jordan-2-concept"></div>
+          <button class="continue-btn" id="jordan-2-next" onclick="nextStep('jordan',3)">Next Decision →</button>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="jordan-s3" style="display:none">
+          <div class="step-counter">
+            <span>Decision 3 of 3</span>
+            <div class="step-dots">
+              <div class="step-dot done"></div>
+              <div class="step-dot done"></div>
+              <div class="step-dot active"></div>
+            </div>
+          </div>
+
+          <div class="sticky">
+            <div class="sticky-from">Message from Jordan</div>
+            <div class="sticky-text">"Good news — Taco Terreno is doing really well. I've saved up enough to buy a second truck and I want to bring in my friend Marcus to run it. Marcus would invest $6,000 and manage that truck full-time while I manage the original one. We'd split profits 60/40 since I'm putting in more. <strong>What happens to my LLC when I bring Marcus in — do I need to change my business structure?</strong>"</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            Jordan currently operates Taco Terreno as a single-member LLC. Marcus would invest $6,000 and actively manage the second truck full-time. Jordan wants a 60/40 profit split reflecting the difference in investment. Adding an active co-owner who shares profits and management changes the structure of the LLC.
+          </div>
+
+          <div class="decision-prompt">What's the right advice?</div>
+          <div class="decisions" id="jordan-d3">
+            <div class="dec-card" onclick="decide('jordan',3,'A')">
+              "You should convert to a general partnership — it's simpler than updating an LLC and works fine for two people splitting a business."
+            </div>
+            <div class="dec-card" onclick="decide('jordan',3,'B')">
+              "Adding Marcus as an active co-owner turns your single-member LLC into a multi-member LLC. You'll want a written operating agreement that spells out the 60/40 split, each person's role, and what happens if one of you wants to exit."
+            </div>
+            <div class="dec-card" onclick="decide('jordan',3,'C')">
+              "Nothing changes — Marcus can just be an employee who happens to share profits. You don't need to update your business structure at all."
+            </div>
+          <div class="consequence" id="jordan-3-con"></div>
+          <div class="concept-callout" id="jordan-3-concept"></div>
+          <button class="continue-btn" id="jordan-3-next" onclick="completeClient('jordan')">Close Jordan's File →</button>
+        </div>
+
+        <div class="section-complete" id="jordan-complete">
+          <div class="sc-icon">✅</div>
+          <div class="sc-title">Jordan's File Closed</div>
+          <div class="sc-sub">Taco Terreno is headed in the right direction.</div>
+          <div class="sc-score" id="jordan-pts-display">3 / 3</div>
+          <div class="sc-score-label">Points earned on this file</div>
+          <button class="sc-next" onclick="switchClient('corefit')">Open Sam &amp; Riley's File →</button>
+        </div>
+      </div>
+
+      <!-- ══ COREFIT CASE ═════════════════════════════════════ -->
+      <div class="case-screen" id="case-corefit">
+
+        <div class="client-card">
+          <div class="client-avatar" style="background:#E8F0FF;color:var(--navy);">SR</div>
+          <div class="client-info">
+            <div class="client-name">Sam Okafor &amp; Riley Chen</div>
+            <div class="client-tagline">CoreFit Studio · Fitness &amp; Training · Moorhead, MN</div>
+            <div class="client-bio">Best friends turned business partners. Sam runs training programs and client relationships; Riley manages finances and marketing. Equal financial investment. Currently operating on a verbal agreement only.</div>
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div id="corefit-s1">
+          <div class="step-counter">
+            <span>Decision 1 of 4</span>
+            <div class="step-dots">
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+            </div>
+          </div>
+
+          <div class="sticky">
+            <div class="sticky-from">Message from Sam &amp; Riley</div>
+            <div class="sticky-text">"We're finally opening CoreFit next month! We split the startup costs 50/50, Sam runs the floor and I handle the books — we each put in the same amount and we're both working full time in the business. <strong>What type of partnership are we?</strong> Someone at the bank asked and we didn't know what to say."</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            Both Sam and Riley invested equally, actively manage the business, share profits, and are both personally involved in daily operations. Neither is a silent or passive investor.
+          </div>
+
+          <div class="decision-prompt">What's your advice, Advisor?</div>
+          <div class="decisions" id="corefit-d1">
+            <div class="dec-card" onclick="decide('corefit',1,'A')">
+              "You're in a limited partnership — Riley is the limited partner since Riley handles back-office work, not client-facing operations."
+            </div>
+            <div class="dec-card" onclick="decide('corefit',1,'B')">
+              "You're in a general partnership — both of you actively manage the business, share profits equally, and each of you can make decisions that legally bind the other."
+            </div>
+            <div class="dec-card" onclick="decide('corefit',1,'C')">
+              "You're co-sole proprietors — since you each own 50%, each of you is running your own separate sole proprietorship."
+            </div>
+          <div class="consequence" id="corefit-1-con"></div>
+          <div class="concept-callout" id="corefit-1-concept"></div>
+          <button class="continue-btn" id="corefit-1-next" onclick="nextStep('corefit',2)">Next Decision →</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="corefit-s2" style="display:none">
+          <div class="step-counter">
+            <span>Decision 2 of 4</span>
+            <div class="step-dots">
+              <div class="step-dot done"></div>
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+            </div>
+          </div>
+
+          <div class="sticky rotate-right">
+            <div class="sticky-from">Urgent message from Sam</div>
+            <div class="sticky-text">"Riley just signed a lease on $18,000 worth of new equipment without telling me. I had no idea — I found out when the invoice showed up. I disagree with this purchase completely. <strong>Am I legally on the hook for this even though I didn't sign anything?</strong>"</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            CoreFit is a general partnership. Riley signed a vendor contract alone, without Sam's prior knowledge or approval. The equipment has already been delivered.
+          </div>
+
+          <div class="decision-prompt">How do you explain their legal situation?</div>
+          <div class="decisions" id="corefit-d2">
+            <div class="dec-card" onclick="decide('corefit',2,'A')">
+              "No — since Sam didn't sign the contract, Sam has no legal obligation. Only Riley is liable for this purchase."
+            </div>
+            <div class="dec-card" onclick="decide('corefit',2,'B')">
+              "It depends — you're only liable if the purchase was over a threshold amount set in your partnership agreement."
+            </div>
+            <div class="dec-card" onclick="decide('corefit',2,'C')">
+              "Yes — in a general partnership, any partner can legally bind the business. Both of you are on the hook for this contract, even though Sam didn't sign it."
+            </div>
+          <div class="consequence" id="corefit-2-con"></div>
+          <div class="concept-callout" id="corefit-2-concept"></div>
+          <button class="continue-btn" id="corefit-2-next" onclick="nextStep('corefit',3)">Next Decision →</button>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="corefit-s3" style="display:none">
+          <div class="step-counter">
+            <span>Decision 3 of 4</span>
+            <div class="step-dots">
+              <div class="step-dot done"></div>
+              <div class="step-dot done"></div>
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+            </div>
+          </div>
+
+          <div class="sticky">
+            <div class="sticky-from">Message from Riley</div>
+            <div class="sticky-text">"A client is threatening to sue us for $90,000 — says she was injured in one of Sam's classes. CoreFit only has $20,000 in the business account. <strong>Can she come after our personal bank accounts and property if the business can't cover it?</strong>"</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            CoreFit is currently a general partnership. The lawsuit amount is $90,000. Business account has $20,000. Both Sam and Riley own personal vehicles and have personal savings accounts.
+          </div>
+
+          <div class="decision-prompt">What do you tell them?</div>
+          <div class="decisions" id="corefit-d3">
+            <div class="dec-card" onclick="decide('corefit',3,'A')">
+              "Yes — as general partners, both of you face unlimited personal liability. The full $90,000 claim can reach your personal savings, cars, and other assets."
+            </div>
+            <div class="dec-card" onclick="decide('corefit',3,'B')">
+              "The liability is capped at what's in the business account — $20,000. Your personal assets are protected by the fact that you're a registered business."
+            </div>
+            <div class="dec-card" onclick="decide('corefit',3,'C')">
+              "Since the injury happened in Sam's class, only Sam is personally liable — not Riley."
+            </div>
+          <div class="consequence" id="corefit-3-con"></div>
+          <div class="concept-callout" id="corefit-3-concept"></div>
+          <button class="continue-btn" id="corefit-3-next" onclick="nextStep('corefit',4)">Next Decision →</button>
+        </div>
+
+        <!-- Step 4 -->
+        <div id="corefit-s4" style="display:none">
+          <div class="step-counter">
+            <span>Decision 4 of 4</span>
+            <div class="step-dots">
+              <div class="step-dot done"></div>
+              <div class="step-dot done"></div>
+              <div class="step-dot done"></div>
+              <div class="step-dot active"></div>
+            </div>
+          </div>
+
+          <div class="sticky rotate-right">
+            <div class="sticky-from">Message from Sam &amp; Riley</div>
+            <div class="sticky-text">"Our attorney is pushing us to convert to an LLC and also write a formal partnership agreement. We already have a verbal understanding — <strong>is a written agreement really necessary? And will an LLC mean we lose control of our own gym?</strong>"</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            Sam and Riley currently operate on a verbal agreement with no written terms. Their attorney is recommending both an LLC conversion for liability protection and a written operating agreement to define roles, profit splits, and exit procedures.
+          </div>
+
+          <div class="decision-prompt">What's your recommendation?</div>
+          <div class="decisions" id="corefit-d4">
+            <div class="dec-card" onclick="decide('corefit',4,'A')">
+              "The verbal agreement is fine — courts generally honor informal business arrangements between established partners."
+            </div>
+            <div class="dec-card" onclick="decide('corefit',4,'B')">
+              "Yes to both. An LLC protects your personal assets without removing your management control — you can run it exactly as you do now. And the written agreement is critical: it defines what happens if one of you wants to exit, disagrees, or can no longer participate."
+            </div>
+            <div class="dec-card" onclick="decide('corefit',4,'C')">
+              "Convert to an LLC, but skip the written agreement — you know each other well enough that the formality will create unnecessary tension."
+            </div>
+          <div class="consequence" id="corefit-4-con"></div>
+          <div class="concept-callout" id="corefit-4-concept"></div>
+          <button class="continue-btn" id="corefit-4-next" onclick="completeClient('corefit')">Close CoreFit's File →</button>
+        </div>
+
+        <div class="section-complete" id="corefit-complete">
+          <div class="sc-icon">✅</div>
+          <div class="sc-title">CoreFit's File Closed</div>
+          <div class="sc-sub">Sam and Riley have a real plan now.</div>
+          <div class="sc-score" id="corefit-pts-display">4 / 4</div>
+          <div class="sc-score-label">Points earned on this file</div>
+          <button class="sc-next" onclick="switchClient('nova')">Open Nova Tech's File →</button>
+        </div>
+      </div>
+
+      <!-- ══ NOVA TECH CASE ══════════════════════════════════ -->
+      <div class="case-screen" id="case-nova">
+
+        <div class="client-card">
+          <div class="client-avatar" style="background:#E8EFF8;color:var(--navy);">NT</div>
+          <div class="client-info">
+            <div class="client-name">Nova Tech — Maya Patel, CEO</div>
+            <div class="client-tagline">Software Company · Fargo, ND · 47 Employees</div>
+            <div class="client-bio">Started in a Fargo basement five years ago. Now projecting $4.2M in revenue. Recently incorporated as a C corporation. Evaluating major structural decisions: franchise expansion, a potential acquisition, and an unsolicited merger offer.</div>
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div id="nova-s1">
+          <div class="step-counter">
+            <span>Decision 1 of 3</span>
+            <div class="step-dots">
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+            </div>
+          </div>
+
+          <div class="sticky">
+            <div class="sticky-from">Message from Maya Patel, CEO</div>
+            <div class="sticky-text">"We just incorporated as a C corp and our CFO mentioned something called 'double taxation.' Our board wants me to understand this before our next investor meeting. <strong>Can you explain exactly what double taxation means for us — and whether it's actually a problem?</strong>"</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            Nova Tech is now a C corporation with outside investors who will receive dividends. The board wants to ensure Maya understands the tax structure before discussing profit distributions.
+          </div>
+
+          <div class="decision-prompt">How do you explain it?</div>
+          <div class="decisions" id="nova-d1">
+            <div class="dec-card" onclick="decide('nova',1,'A')">
+              "Double taxation means Nova Tech pays corporate income tax on its profits — then when you distribute those profits to shareholders as dividends, they pay personal income tax on them again. The same money gets taxed twice."
+            </div>
+            <div class="dec-card" onclick="decide('nova',1,'B')">
+              "Double taxation means you pay taxes in both the state you're incorporated in and every state you operate in — but most corporations get around this with interstate tax agreements."
+            </div>
+            <div class="dec-card" onclick="decide('nova',1,'C')">
+              "It means the IRS charges you twice for the same transaction — once when you invoice a client and once when you collect payment."
+            </div>
+          <div class="consequence" id="nova-1-con"></div>
+          <div class="concept-callout" id="nova-1-concept"></div>
+          <button class="continue-btn" id="nova-1-next" onclick="nextStep('nova',2)">Next Decision →</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="nova-s2" style="display:none">
+          <div class="step-counter">
+            <span>Decision 2 of 3</span>
+            <div class="step-dots">
+              <div class="step-dot done"></div>
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+            </div>
+          </div>
+
+          <div class="sticky rotate-right">
+            <div class="sticky-from">Message from Maya Patel, CEO</div>
+            <div class="sticky-text">"We just purchased DataBridge — a smaller analytics startup. We absorbed their whole team and their technology stack into Nova Tech. DataBridge no longer exists as a company. Meanwhile, a national firm called TechHorizon wants to merge with us — they're proposing we become a new company called 'Nova Horizon' together. <strong>What's the difference between what we did with DataBridge and what TechHorizon is proposing?</strong>"</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            Nova Tech acquired DataBridge (DataBridge ceased to exist). TechHorizon is now proposing a full merger where both companies would dissolve and form a new combined entity with shared leadership.
+          </div>
+
+          <div class="decision-prompt">How do you explain the difference?</div>
+          <div class="decisions" id="nova-d2">
+            <div class="dec-card" onclick="decide('nova',2,'A')">
+              "They're basically the same thing — 'merger' and 'acquisition' are interchangeable terms for when companies combine."
+            </div>
+            <div class="dec-card" onclick="decide('nova',2,'B')">
+              "A merger means you buy TechHorizon. An acquisition means they buy you. The difference is just about who initiates the deal."
+            </div>
+            <div class="dec-card" onclick="decide('nova',2,'C')">
+              "With DataBridge, you did an acquisition — you purchased and absorbed them, and they ceased to exist. TechHorizon is proposing a merger — both companies would dissolve and become a brand new, combined entity together. In a merger, neither original company survives independently."
+            </div>
+          <div class="consequence" id="nova-2-con"></div>
+          <div class="concept-callout" id="nova-2-concept"></div>
+          <button class="continue-btn" id="nova-2-next" onclick="nextStep('nova',3)">Next Decision →</button>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="nova-s3" style="display:none">
+          <div class="step-counter">
+            <span>Decision 3 of 3</span>
+            <div class="step-dots">
+              <div class="step-dot done"></div>
+              <div class="step-dot done"></div>
+              <div class="step-dot active"></div>
+            </div>
+          </div>
+
+          <div class="sticky">
+            <div class="sticky-from">Message from Maya Patel, CEO</div>
+            <div class="sticky-text">"We're thinking about selling franchises of our cloud software platform to regional IT firms. They'd operate under the Nova Tech name and use our systems, and we'd collect a licensing fee. My team keeps calling us 'the franchisee' in meetings. <strong>Is that right — and what exactly would our role be in this arrangement?</strong>"</div>
+          </div>
+
+          <div class="situation">
+            <div class="situation-label">📋 Context</div>
+            Nova Tech would be licensing its brand, systems, processes, and support to independent regional operators in exchange for fees. Nova Tech owns the brand and would set the operating standards.
+          </div>
+
+          <div class="decision-prompt">What do you tell Maya?</div>
+          <div class="decisions" id="nova-d3">
+            <div class="dec-card" onclick="decide('nova',3,'A')">
+              "Your team is right — Nova Tech would be the franchisee since you'd be sharing your systems with others."
+            </div>
+            <div class="dec-card" onclick="decide('nova',3,'B')">
+              "Actually, Nova Tech would be the franchisor — you own the brand and system. The regional IT firms who pay to operate under your name are the franchisees. You set the rules; they run the locations."
+            </div>
+            <div class="dec-card" onclick="decide('nova',3,'C')">
+              "Nova Tech would be a silent partner in each regional operation — you provide the brand but take no active role."
+            </div>
+          <div class="consequence" id="nova-3-con"></div>
+          <div class="concept-callout" id="nova-3-concept"></div>
+          <button class="continue-btn" id="nova-3-next" onclick="completeClient('nova')">Close Nova Tech's File →</button>
+        </div>
+
+        <div class="section-complete" id="nova-complete">
+          <div class="sc-icon">✅</div>
+          <div class="sc-title">Nova Tech's File Closed</div>
+          <div class="sc-sub">Maya has the clarity she needs to move forward.</div>
+          <div class="sc-score" id="nova-pts-display">3 / 3</div>
+          <div class="sc-score-label">Points earned on this file</div>
+          <button class="sc-next" onclick="showResults()">View My Final Score →</button>
+        </div>
+      </div>
+
+    </div><!-- /main -->
+  </div><!-- /shell -->
+</div><!-- /app -->
+
+<!-- ══ RESULTS ════════════════════════════════════════════════ -->
+<div id="results">
+  <div class="results-inner">
+    <div class="results-header">
+      <div class="results-eyebrow">The Advisor's Inbox · Chapter 4 Complete</div>
+      <div class="results-title">All three client files closed.<br>Here's how you did.</div>
+      <div class="results-score-big" id="finalScore">0 / 10</div>
+      <div class="results-score-label">Total Points Earned</div>
+    </div>
+
+    <div class="result-rows">
+      <div class="result-row">
+        <span class="rr-label">🚚 Jordan Alvarez — Taco Terreno (Sole Proprietorship)</span>
+        <span class="rr-score" id="res-jordan">– / 3</span>
+      </div>
+      <div class="result-row">
+        <span class="rr-label">💪 Sam &amp; Riley — CoreFit Studio (Partnership &amp; LLC)</span>
+        <span class="rr-score" id="res-corefit">– / 4</span>
+      </div>
+      <div class="result-row">
+        <span class="rr-label">💻 Nova Tech (Corporation, M&amp;A, Franchise)</span>
+        <span class="rr-score" id="res-nova">– / 3</span>
+      </div>
+    </div>
+
+    <div class="submit-note">
+      <strong>📝 How to Submit</strong>
+      Click the button below to save this page as a PDF. Submit the PDF to the Chapter 4 activity dropbox in D2L by the due date. Make sure your name and score are visible.
+    </div>
+    <button class="pdf-btn" onclick="window.print()">⬇ Save as PDF to Submit to D2L</button>
+  </div>
+</div>
+
+<script>
+// ── Data ─────────────────────────────────────────────────────
+const CORRECT = {
+  jordan: { 1:'C', 2:'A', 3:'B' },
+  corefit:{ 1:'B', 2:'C', 3:'A', 4:'B' },
+  nova:   { 1:'A', 2:'C', 3:'B' }
+};
+
+const FEEDBACK = {
+  jordan: {
+    1: {
+      A: { type:'bad',
+           con: "Not the right call here. A food truck isn't a low-risk business — Jordan is operating a moving vehicle, working with open flame and hot equipment, and preparing food that customers eat on the spot. Any one of those creates real lawsuit exposure. Waiting until the business is profitable to get protection is exactly backwards: the time to build the wall is before the flood, not after.",
+           concept: "LLC for High-Risk Businesses: A food truck carries layered liability — vehicle accidents, burns, and foodborne illness claims are all realistic. An LLC separates Jordan's personal savings and property from any judgment against the business. The filing fee (typically $135–$155 in Minnesota) is cheap insurance." },
+      B: { type:'good',
+           con: "✓ Exactly right — and this is the advice your lecture emphasized. A food truck is not a low-risk operation. One food poisoning claim, one customer burned by a hot container, one fender-bender in a parking lot — any of these could generate a lawsuit that exceeds what's in the business account. An LLC creates a legal wall so Jordan's personal car, savings, and other assets stay protected. The filing fee is minimal compared to the exposure.",
+           concept: "LLC (Limited Liability Company): Provides personal liability protection without requiring multiple owners, a board, or complex corporate structure. A single-member LLC lets Jordan run the business entirely alone while keeping personal assets legally separated from business debts and lawsuits. Taxes still pass through to Jordan's personal return — nothing changes there." },
+      C: { type:'bad',
+           con: "A C corporation is the wrong structure for a solo food truck. It requires a board of directors, involves double taxation, and creates administrative overhead that makes no sense at this scale. An LLC gives Jordan all the liability protection needed with a fraction of the complexity.",
+           concept: "LLC vs. Corporation: For a solo operator needing liability protection, an LLC is almost always the right choice. C corporations are designed for businesses that plan to raise capital from multiple investors and issue stock — not for a single-owner food truck." }
+    },
+    2: {
+      A: { type:'bad',
+           con: "This is a dangerous misconception — and exactly the kind of thinking that got Jordan into this situation. A DBA (Doing Business As) registration — which simply lets you operate under a business name — does NOT create liability protection. As a sole proprietor, Jordan and the business are legally the same entity. The entire $55,000 claim can reach Jordan's personal assets.",
+           concept: "Unlimited Personal Liability: In a sole proprietorship, there is no legal separation between the owner and the business. Registering a business name under a DBA (Doing Business As) does not change this. All personal assets — savings, vehicles, property — are exposed to business lawsuits." },
+      B: { type:'good',
+           con: "✓ Correct — and this is exactly the consequence your lecture warned about. As a sole proprietor, Jordan IS the business legally. There is no wall. The food poisoning claim can reach Jordan's car, laptop, and personal savings — every dollar Jordan personally owns is potentially on the line. This is why the LLC conversation matters before something goes wrong.",
+           concept: "Unlimited Personal Liability: A sole proprietor and the business are one legal entity. Every debt, lawsuit, and liability judgment the business faces extends directly to the owner's personal assets — there is no cap, no shield, and no protection." },
+      C: { type:'bad',
+           con: "Incorrect. There is no legal cap based on claim type for sole proprietors. A $55,000 food poisoning lawsuit is a $55,000 personal exposure for Jordan. Courts do not automatically reduce claims just because the business is small.",
+           concept: "Unlimited Personal Liability: Sole proprietors face full personal exposure regardless of the claim amount or type. Food safety lawsuits in particular can be significant — and they are not capped by the nature of the incident." }
+    },
+    3: {
+      A: { type:'good',
+           con: "✓ Exactly right. Once Marcus becomes an active co-owner who shares profits and management, the single-member LLC becomes a multi-member LLC — and a written operating agreement becomes essential. That document should define the 60/40 profit split, each person's specific responsibilities, how major decisions get made, and what happens if one partner wants to sell their share or exit. Without it, disputes are expensive and messy.",
+           concept: "Multi-Member LLC: When a second active owner joins an LLC, it becomes a multi-member LLC. All members still enjoy limited liability protection. A written operating agreement — while not legally required — is strongly recommended to define ownership percentages, roles, and exit procedures for each member." },
+      B: { type:'bad',
+           con: "Recommending a general partnership here is poor advice — it would strip away the liability protection Jordan worked hard to build. A general partnership gives both Jordan and Marcus unlimited personal liability. The LLC already exists; it just needs to be updated to reflect two members, not converted to a riskier structure.",
+           concept: "LLC vs. General Partnership: A general partnership has no liability protection — both partners' personal assets are exposed. Jordan already has an LLC structure. Adding a second member updates it to a multi-member LLC, preserving the liability shield for both owners." },
+      C: { type:'bad',
+           con: "This advice could create serious legal and tax problems. If Marcus invests capital, shares profits, and actively manages the truck, he is functioning as a co-owner — not an employee. Misclassifying an owner as an employee has tax consequences and leaves the ownership arrangement legally undefined. The LLC structure needs to reflect who actually owns the business.",
+           concept: "Owner vs. Employee: Someone who invests capital and shares in profits and management is a co-owner, not an employee. Failing to update the LLC's ownership structure when a true co-owner joins creates legal ambiguity, tax issues, and potential disputes down the road." }
+    }
+  },
+  corefit: {
+    1: {
+      A: { type:'good',
+           con: "✓ Correct. Both Sam and Riley are active in the business with equal investment and shared management — that's the definition of a general partnership. The important thing to flag is what this means for liability.",
+           concept: "General Partnership: Two or more people who actively co-manage a business, share profits, and share unlimited personal liability. Any partner can legally bind the entire partnership." },
+      B: { type:'bad',
+           con: "A limited partnership requires at least one general partner (active management) and at least one limited partner (investment only, no management). Since both Sam and Riley are actively managing CoreFit, this is a general partnership.",
+           concept: "General vs. Limited Partnership: In a limited partnership, limited partners only invest — they do not manage the business and have limited liability. Sam and Riley both manage the business, making this a general partnership." },
+      C: { type:'bad',
+           con: "There is no such thing as 'co-sole proprietors.' A sole proprietorship has exactly one owner by definition. The moment two people own a business together, it becomes a partnership (or another multi-owner structure).",
+           concept: "General Partnership: When two or more people co-own and operate a business together, the default legal structure is a general partnership — not two separate sole proprietorships." }
+    },
+    2: {
+      A: { type:'good',
+           con: "✓ Correct — and this is one of the most important things to understand about general partnerships. Any partner has the legal authority to enter contracts that bind the entire business. Sam is liable for Riley's contract, even without Sam's signature or approval.",
+           concept: "Mutual Agency: In a general partnership, each partner acts as an agent for the business. Any one partner can enter into contracts that legally bind all partners — regardless of internal disagreements." },
+      B: { type:'bad',
+           con: "This is incorrect and could lead Sam into serious legal trouble. In a general partnership, all partners are bound by contracts entered by any one partner. Sam's name is on the partnership, so Sam is liable.",
+           concept: "Mutual Agency: A key feature of general partnerships is that each partner can legally commit the business — and all other partners — to contracts and obligations. Lack of prior approval is not a defense." },
+      C: { type:'bad',
+           con: "Without a written partnership agreement, there is no threshold amount. Under default partnership law, either partner can bind the business to any contract — not just those above a certain dollar amount.",
+           concept: "Partnership Agreement: Without a written agreement defining spending authority and approval thresholds, default partnership law applies — and that law says any partner can bind the business to contracts of any size." }
+    },
+    3: {
+      A: { type:'bad',
+           con: "Incorrect. A general partnership offers no liability shield. The business account balance is not a cap. Both Sam and Riley face unlimited personal liability — the full $90,000 claim can reach their personal assets.",
+           concept: "Unlimited Personal Liability in Partnerships: Like sole proprietors, general partners have no legal protection separating their personal assets from business liability. The business account balance is irrelevant as a cap." },
+      B: { type:'bad',
+           con: "Incorrect. General partners share liability for the business as a whole — including actions taken by employees or either partner while acting in the course of business. The injury happened at the business, making both partners liable.",
+           concept: "Joint and Several Liability: In a general partnership, all partners can be held jointly liable for the full amount of a judgment — not just the partner whose actions led to the claim." },
+      C: { type:'good',
+           con: "✓ Correct. This is the hard truth of general partnerships: unlimited personal liability applies to both partners for the full amount. The $20,000 in the business account is just the starting point — the remaining $70,000 could come from personal assets. This is why the attorney is now recommending an LLC.",
+           concept: "Unlimited Personal Liability: General partners are personally liable for all business debts and legal judgments — not just their share, and not just the business's assets. This is the defining risk of a general partnership." }
+    },
+    4: {
+      A: { type:'bad',
+           con: "Verbal agreements are legally risky and practically dangerous. Courts can enforce them, but proving the terms of a verbal agreement is extremely difficult. What happens when Sam remembers the profit split one way and Riley remembers it differently?",
+           concept: "Partnership Agreement: While not legally required, a written partnership agreement is essential for defining profit splits, decision authority, buyout terms, and what happens when partners disagree or want to exit." },
+      B: { type:'good',
+           con: "✓ Excellent advice on both counts. An LLC protects personal assets without requiring any change to how Sam and Riley run the business day-to-day. And the written agreement is critical — verbal arrangements collapse under the pressure of real disputes about money, decisions, and exits.",
+           concept: "LLC + Partnership Agreement: Converting to an LLC adds liability protection while preserving management flexibility. A written operating agreement (not legally required but strongly recommended) prevents the disputes that destroy business partnerships and friendships." },
+      C: { type:'bad',
+           con: "An LLC without a written operating agreement is a dangerous half-measure. The operating agreement is what defines how profits are split, who makes major decisions, and what happens when one partner wants out. Without it, a disagreement could dissolve the business entirely.",
+           concept: "Operating Agreement: An LLC's operating agreement defines the rules of the partnership. Without one, members may be left to default state rules — which may not reflect what the partners actually agreed to." }
+    }
+  },
+  nova: {
+    1: {
+      A: { type:'bad',
+           con: "That describes multi-state nexus taxation, not double taxation. Double taxation is specific to the corporate structure — it refers to profits being taxed at both the corporate level and again at the shareholder level when dividends are distributed.",
+           concept: "Double Taxation: A characteristic of C corporations. The corporation pays corporate income tax on profits. Then, when those after-tax profits are paid to shareholders as dividends, shareholders pay personal income tax on that same money." },
+      B: { type:'good',
+           con: "✓ Perfect explanation. Corporate profits are taxed once when the company files its return. Then, when the remaining profits are distributed to investors as dividends, those investors pay income tax again on the same dollars. Two taxes on the same money.",
+           concept: "Double Taxation: C corporations pay corporate income tax on profits. Shareholders then pay personal income tax on dividends — meaning the same profits are taxed twice before reaching the investor's pocket. This is a key tradeoff of the corporate structure." },
+      C: { type:'bad',
+           con: "That's not what double taxation means. Double taxation in the corporate context is specifically about profits being taxed at the corporate level and then again at the shareholder level — not about invoicing or collections.",
+           concept: "Double Taxation: Specific to corporations — corporate profits are taxed at the entity level, then taxed again as personal income when distributed to shareholders as dividends." }
+    },
+    2: {
+      A: { type:'bad',
+           con: "These terms are not interchangeable and the distinction matters a great deal — especially for Maya's leadership position. In a merger, both original companies cease to exist and a new entity is formed. In an acquisition, one company absorbs the other.",
+           concept: "Merger vs. Acquisition: An acquisition = one company purchases and absorbs another (the acquired company disappears). A merger = two companies combine into a brand new, separate entity (both originals dissolve)." },
+      B: { type:'good',
+           con: "✓ Exactly right. DataBridge was an acquisition — Nova Tech purchased and absorbed it, and DataBridge ceased to exist as an independent company. TechHorizon's proposal is a merger — both Nova Tech and TechHorizon would dissolve and become 'Nova Horizon.' Maya would no longer run Nova Tech; she'd co-lead something new.",
+           concept: "Merger vs. Acquisition: Acquisition — one company buys another; acquired company disappears. Merger — both companies dissolve and form an entirely new combined entity. Both involve combining organizations, but the outcome for each company's identity is very different." },
+      C: { type:'bad',
+           con: "The difference between a merger and an acquisition is not about who initiates the deal. It's about what happens to each company afterward. An acquisition leaves one company intact (the buyer); a merger creates a brand new entity from both.",
+           concept: "Merger vs. Acquisition: The distinction is about outcome, not initiation. An acquisition = buyer absorbs target. A merger = both companies dissolve into a new combined entity." }
+    },
+    3: {
+      A: { type:'bad',
+           con: "This is backwards. A franchisee is the party that pays for the right to use someone else's brand and system. Nova Tech owns the brand — so Nova Tech would be the franchisor, not the franchisee.",
+           concept: "Franchisor vs. Franchisee: The franchisor owns the brand and system and licenses it to others. The franchisee pays for the right to operate under that brand. Nova Tech, as the brand owner, would be the franchisor." },
+      B: { type:'good',
+           con: "✓ Correct — and make sure Maya corrects her team. Nova Tech is the franchisor: it owns the brand, sets the operating standards, collects the fees, and licenses everything to the regional IT firms. Those regional firms are the franchisees — they pay Nova Tech for the right to operate under the Nova Tech name.",
+           concept: "Franchise: The franchisor owns the brand and business system and licenses it to franchisees in exchange for fees and royalties. The franchisee operates independently but under the franchisor's standards and name." },
+      C: { type:'bad',
+           con: "A silent partner invests money in a business but takes no active role in management. Nova Tech isn't investing in these regional firms — it's licensing its brand and systems to them while setting standards and collecting fees. That's a franchisor relationship.",
+           concept: "Franchisor: Nova Tech would be licensing its brand and systems to independent operators — that is the definition of a franchisor, not a silent partner. Silent partners invest capital without management involvement." }
+    }
+  }
+};
+
+// ── State ─────────────────────────────────────────────────────
+const scores  = { jordan:0, corefit:0, nova:0 };
+const tried   = {}; // tracks first-try vs retry
+const clientSteps = { jordan:3, corefit:4, nova:3 };
+
+// ── Gate ──────────────────────────────────────────────────────
+document.getElementById('codeInput').addEventListener('keydown', e => { if (e.key==='Enter') checkCode(); });
+function checkCode() {
+  const v = document.getElementById('codeInput').value.trim().toUpperCase();
+  if (['BIZ4OWN','BIZ4OWN2026','OWNERSHIP4','ADVISOR4','INSTRUCTOR'].includes(v)) {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display  = 'block';
+  } else {
+    document.getElementById('gateError').textContent = 'Incorrect access code. Check D2L for the code.';
+  }
+}
+
+// ── Client switching ──────────────────────────────────────────
+function switchClient(name) {
+  document.querySelectorAll('.case-screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.client-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('case-' + name).classList.add('active');
+  document.getElementById('tab-'  + name).classList.add('active');
+  document.getElementById('badge-' + name).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Decision handling ─────────────────────────────────────────
+function decide(client, step, choice) {
+  const key  = client + '-' + step;
+  if (tried[key + '-locked']) return;
+
+  const correct   = CORRECT[client][step];
+  const isCorrect = choice === correct;
+  const fb        = FEEDBACK[client][step][choice];
+  const firstTry  = !tried[key];
+  tried[key]      = true;
+
+  // Lock all options
+  const opts = document.querySelectorAll(`#${client}-d${step} .dec-card`);
+  opts.forEach((card, i) => {
+    card.classList.add('locked');
+    const letters = ['A','B','C','D'];
+    if (letters[i] === choice) {
+      card.classList.add(isCorrect ? 'chosen-correct' : 'chosen-wrong');
+      const tag = document.createElement('span');
+      tag.className = 'dec-tag ' + (isCorrect ? 'correct-tag' : 'wrong-tag');
+      tag.textContent = isCorrect ? '✓ Your choice' : '✗ Your choice';
+      card.appendChild(tag);
+    }
+    if (!isCorrect && letters[i] === correct) {
+      card.classList.add('reveal-correct');
+      const tag2 = document.createElement('span');
+      tag2.className = 'dec-tag correct-tag';
+      tag2.textContent = '✓ Correct answer';
+      card.appendChild(tag2);
+    }
+  });
+
+  // Show consequence
+  const conEl = document.getElementById(`${client}-${step}-con`);
+  conEl.textContent = fb.con;
+  conEl.className   = `consequence show ${fb.type}`;
+  const cLabel = document.createElement('div');
+  cLabel.className  = 'consequence-label';
+  cLabel.textContent = isCorrect ? '📈 Outcome' : '⚠ What Happened';
+  conEl.prepend(cLabel);
+
+  // Show concept callout
+  const conceptEl = document.getElementById(`${client}-${step}-concept`);
+  conceptEl.innerHTML = `<div class="concept-callout-label">📖 Chapter 4 Concept</div>${fb.concept}`;
+  conceptEl.classList.add('show');
+
+  // Score (1pt first try, 0.5pt retry)
+  if (isCorrect) {
+    const pts = firstTry ? 1 : 0.5;
+    scores[client] += pts;
+    tried[key + '-locked'] = true;
+    updateScoreDisplay();
+    document.getElementById(`${client}-${step}-next`).classList.add('show');
+  } else {
+    // Wrong — unlock for one retry
+    if (!tried[key + '-retry']) {
+      tried[key + '-retry'] = true;
+      setTimeout(() => {
+        opts.forEach(card => {
+          card.classList.remove('locked', 'chosen-wrong');
+          // Remove wrong tag
+          const wrongTag = card.querySelector('.dec-tag.wrong-tag');
+          if (wrongTag) wrongTag.remove();
+        });
+        // But keep correct answer revealed
+        opts.forEach((card, i) => {
+          const letters = ['A','B','C','D'];
+          if (letters[i] !== correct) card.style.cursor = 'default'; // disable wrong ones permanently
+        });
+        conEl.className = `consequence show bad`;
+        conEl.querySelector('.consequence-label').textContent = '⚠ Not quite — try again';
+      }, 2000);
+
+      // After showing consequence, only allow clicking correct answer
+      setTimeout(() => {
+        opts.forEach((card, i) => {
+          const letters = ['A','B','C','D'];
+          card.classList.remove('locked');
+          if (letters[i] !== correct) {
+            card.classList.add('locked');
+            card.style.opacity = '0.4';
+            card.style.cursor  = 'default';
+          }
+        });
+      }, 2000);
+    } else {
+      // Second wrong — force correct
+      tried[key + '-locked'] = true;
+      document.getElementById(`${client}-${step}-next`).classList.add('show');
+    }
+  }
+}
+
+function updateScoreDisplay() {
+  const total = Object.values(scores).reduce((a,b) => a+b, 0);
+  const rounded = Math.round(total * 2) / 2; // nearest 0.5
+  document.getElementById('topScore').textContent = `SCORE: ${rounded} / 10`;
+}
+
+// ── Navigation ────────────────────────────────────────────────
+function nextStep(client, stepNum) {
+  document.getElementById(`${client}-s${stepNum-1}`).style.display = 'none';
+  const next = document.getElementById(`${client}-s${stepNum}`);
+  if (next) {
+    next.style.display = 'block';
+    next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function completeClient(client) {
+  const total = clientSteps[client];
+  const pts   = Math.round(scores[client] * 2) / 2;
+  // Hide all steps
+  for (let i = 1; i <= total; i++) {
+    const s = document.getElementById(`${client}-s${i}`);
+    if (s) s.style.display = 'none';
+  }
+  // Update badge
+  const badge = document.getElementById('badge-' + client);
+  badge.textContent = '✓';
+  badge.className = 'ct-badge done';
+  document.getElementById('tab-' + client).classList.add('done');
+  // Show score
+  document.getElementById(`${client}-pts-display`).textContent = `${pts} / ${total}`;
+  document.getElementById(`${client}-complete`).classList.add('show');
+}
+
+function showResults() {
+  document.getElementById('app').style.display = 'none';
+  const res = document.getElementById('results');
+  res.style.display = 'block';
+  const j = Math.round(scores.jordan  * 2) / 2;
+  const c = Math.round(scores.corefit * 2) / 2;
+  const n = Math.round(scores.nova    * 2) / 2;
+  const t = Math.round((j+c+n)        * 2) / 2;
+  document.getElementById('res-jordan').textContent  = `${j} / 3`;
+  document.getElementById('res-corefit').textContent = `${c} / 4`;
+  document.getElementById('res-nova').textContent    = `${n} / 3`;
+  document.getElementById('finalScore').textContent  = `${t} / 10`;
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+</script>
+</body>
+</html>
