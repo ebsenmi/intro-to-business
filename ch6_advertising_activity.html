@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 6 · Advertising in Action</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --navy:    #0D2B55;
+  --navy2:   #081C3A;
+  --teal:    #0D7377;
+  --teal2:   #095C60;
+  --amber:   #F5A623;
+  --rust:    #C05A20;
+  --sage:    #3A7D6A;
+  --cream:   #FDF8F0;
+  --ltblue:  #E8F0F7;
+  --gray:    #64748B;
+  --lgray:   #E2E8F0;
+  --white:   #FFFFFF;
+  --correct: #166534;
+  --correctbg:#DCFCE7;
+  --wrong:   #991B1B;
+  --wrongbg: #FEE2E2;
+  --shadow:  0 4px 24px rgba(0,0,0,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy2);
+  color: #1A2B3C;
+  min-height: 100vh;
+}
+
+/* ── ACCESS GATE ───────────────────────────────────────────────── */
+#gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 30% 30%, #1A3A6A 0%, var(--navy2) 60%);
+  padding: 2rem;
+}
+.gate-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+.gate-tag {
+  display: inline-block;
+  background: var(--amber);
+  color: var(--navy2);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.85rem;
+  border-radius: 20px;
+  margin-bottom: 1.25rem;
+}
+.gate-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+.gate-sub {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+.gate-input {
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  color: var(--white);
+  font-size: 1.1rem;
+  text-align: center;
+  letter-spacing: 0.12em;
+  font-family: 'DM Sans', sans-serif;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.gate-input:focus { border-color: var(--amber); }
+.gate-input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: normal; }
+.gate-btn {
+  width: 100%;
+  background: var(--amber);
+  color: var(--navy2);
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.gate-btn:hover { opacity: 0.9; }
+.gate-error {
+  color: #FCA5A5;
+  font-size: 0.875rem;
+  margin-top: 0.6rem;
+  min-height: 1.2rem;
+}
+.gate-meta {
+  color: rgba(255,255,255,0.25);
+  font-size: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+/* ── MAIN APP ────────────────────────────────────────────────── */
+#app { display: none; }
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+.app-header {
+  background: var(--navy);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.header-left span:first-child {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.2rem;
+}
+.header-left span:last-child {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--white);
+}
+.score-pill {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 30px;
+  padding: 0.4rem 1.2rem;
+  color: var(--white);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.score-pill strong { color: var(--amber); }
+
+/* ── PROGRESS BAR ─────────────────────────────────────────── */
+.progress-bar-wrap { background: rgba(255,255,255,0.06); height: 4px; }
+.progress-bar-fill { height: 4px; background: var(--amber); transition: width 0.4s; }
+
+/* ── SECTION CONTAINER ────────────────────────────────────── */
+.sections-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.section-block {
+  background: var(--white);
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.section-header {
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.section-num {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--white);
+  flex-shrink: 0;
+}
+.section-title-wrap { flex: 1; }
+.section-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 0.1rem;
+}
+.section-title-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+.section-pts {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.section-body { padding: 1.5rem 1.75rem; }
+
+/* ── SCENARIOS ────────────────────────────────────────────── */
+.scenario-box {
+  background: var(--ltblue);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 10px 10px 0;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #1A2B3C;
+}
+.scenario-box strong { color: var(--navy); }
+.scenario-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.35rem;
+}
+
+/* ── DRAG & DROP MATCH ─────────────────────────────────────── */
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.match-col-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+}
+.drag-bank {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.drag-item {
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: grab;
+  user-select: none;
+  transition: opacity 0.2s, transform 0.15s;
+  border: 2px solid transparent;
+}
+.drag-item:hover { opacity: 0.85; transform: translateY(-1px); }
+.drag-item.dragging { opacity: 0.4; cursor: grabbing; }
+.drag-item.placed { display: none; }
+
+.drop-zones { display: flex; flex-direction: column; gap: 0.5rem; }
+.drop-target {
+  border: 2px dashed var(--lgray);
+  border-radius: 8px;
+  min-height: 48px;
+  padding: 0.4rem 0.7rem;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.drop-target.drag-over { border-color: var(--teal); background: rgba(13,115,119,0.06); }
+.drop-target.filled { border-color: transparent; background: var(--lgray); }
+.drop-target.correct { border-color: var(--correct); background: var(--correctbg); }
+.drop-target.incorrect { border-color: var(--wrong); background: var(--wrongbg); }
+.drop-label {
+  font-size: 0.8rem;
+  color: var(--gray);
+  line-height: 1.3;
+  flex: 1;
+}
+.dropped-tag {
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 6px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.feedback-icon { font-size: 1rem; flex-shrink: 0; }
+
+/* ── RANKING ──────────────────────────────────────────────── */
+.rank-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.rank-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--cream);
+  border: 2px solid var(--lgray);
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  cursor: grab;
+  user-select: none;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.rank-item:hover { border-color: var(--teal); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.rank-item.dragging-rank { opacity: 0.4; }
+.rank-handle { color: var(--lgray); font-size: 1.1rem; flex-shrink: 0; }
+.rank-badge {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: var(--teal);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.rank-text { font-size: 0.95rem; flex: 1; }
+.rank-correct .rank-badge { background: var(--correct); }
+.rank-wrong .rank-badge { background: var(--wrong); }
+
+/* ── SLIDER SORT (appeal matcher) ─────────────────────────── */
+.slider-sort-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--cream);
+  border: 2px solid var(--lgray);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+}
+.slider-scenario { flex: 1; font-size: 0.88rem; line-height: 1.4; }
+.slider-select {
+  border: 1.5px solid var(--lgray);
+  border-radius: 7px;
+  padding: 0.4rem 0.7rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  background: var(--white);
+  color: #1A2B3C;
+  cursor: pointer;
+  min-width: 150px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.slider-select:focus { border-color: var(--teal); }
+.slider-select.correct { border-color: var(--correct); background: var(--correctbg); }
+.slider-select.wrong   { border-color: var(--wrong);   background: var(--wrongbg); }
+
+/* ── DECISION SCENARIO ────────────────────────────────────── */
+.decision-step { margin-bottom: 1.5rem; }
+.decision-prompt {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+  line-height: 1.45;
+}
+.choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+.choice-btn {
+  background: var(--cream);
+  border: 2px solid var(--lgray);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s;
+  color: #1A2B3C;
+}
+.choice-btn:hover { border-color: var(--teal); background: rgba(13,115,119,0.05); }
+.choice-btn.selected-correct { border-color: var(--correct); background: var(--correctbg); color: var(--correct); font-weight: 600; }
+.choice-btn.selected-wrong   { border-color: var(--wrong);   background: var(--wrongbg);   color: var(--wrong);   font-weight: 600; }
+.choice-btn.reveal-correct   { border-color: var(--correct); background: var(--correctbg); opacity: 0.6; }
+.choice-btn:disabled { cursor: default; }
+
+.decision-feedback {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  display: none;
+}
+.decision-feedback.show { display: block; }
+.decision-feedback.correct-fb { background: var(--correctbg); color: var(--correct); border-left: 3px solid var(--correct); }
+.decision-feedback.wrong-fb   { background: var(--wrongbg);   color: var(--wrong);   border-left: 3px solid var(--wrong); }
+
+/* ── BUDGET ALLOCATION ─────────────────────────────────────── */
+.budget-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+.budget-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.budget-label { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
+.budget-sublabel { font-size: 0.75rem; color: var(--gray); }
+.budget-input-wrap { position: relative; }
+.budget-pct {
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  color: var(--gray);
+  pointer-events: none;
+}
+.budget-input {
+  width: 100%;
+  border: 1.5px solid var(--lgray);
+  border-radius: 8px;
+  padding: 0.55rem 2rem 0.55rem 0.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #1A2B3C;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.budget-input:focus { border-color: var(--teal); }
+.budget-total-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  background: var(--ltblue);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.budget-total-num { color: var(--teal); font-size: 1.1rem; }
+.budget-total-num.over { color: var(--wrong); }
+
+/* ── TERM CATEGORIZER ─────────────────────────────────────── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.cat-zone {
+  border: 2px dashed var(--lgray);
+  border-radius: 10px;
+  min-height: 140px;
+  padding: 0.75rem;
+}
+.cat-zone-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--lgray);
+}
+.cat-zone.drag-over { border-color: var(--teal); background: rgba(13,115,119,0.04); }
+.cat-zone.graded-correct { border-color: var(--correct); background: var(--correctbg); }
+.cat-zone.graded-wrong   { border-color: var(--wrong);   background: var(--wrongbg); }
+.cat-zone-items { display: flex; flex-wrap: wrap; gap: 0.4rem; min-height: 60px; }
+.cat-chip {
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  user-select: none;
+}
+.cat-chip.placed { opacity: 0.5; }
+.term-bank { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.term-chip {
+  background: var(--cream);
+  border: 1.5px solid var(--lgray);
+  border-radius: 6px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+  cursor: grab;
+  user-select: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.term-chip:hover { border-color: var(--teal); background: rgba(13,115,119,0.05); }
+.term-chip.dragging { opacity: 0.35; }
+.term-chip.used { display: none; }
+
+/* ── SUBMIT SECTION ────────────────────────────────────────── */
+.submit-section {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2rem 1.75rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.submit-section h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+.submit-section p { color: var(--gray); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.final-score-display {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: var(--teal);
+  margin-bottom: 0.25rem;
+}
+.final-score-display.high { color: var(--sage); }
+.final-score-display.low  { color: var(--rust); }
+.name-field {
+  width: 100%;
+  max-width: 320px;
+  border: 1.5px solid var(--lgray);
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.name-field:focus { border-color: var(--teal); }
+
+.btn-row { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.btn-grade {
+  background: var(--teal);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-grade:hover { opacity: 0.88; }
+.btn-pdf {
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-pdf:hover { opacity: 0.88; }
+
+/* ── SECTION COLOR THEMES ────────────────────────────────── */
+.theme-teal  .section-header { background: linear-gradient(135deg, var(--teal) 0%, var(--teal2) 100%); color: var(--white); }
+.theme-teal  .section-num    { background: rgba(255,255,255,0.2); }
+.theme-teal  .section-title-text { color: var(--white); }
+.theme-teal  .section-eyebrow    { color: rgba(255,255,255,0.7); }
+.theme-teal  .section-pts        { color: rgba(255,255,255,0.6); }
+
+.theme-navy  .section-header { background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%); color: var(--white); }
+.theme-navy  .section-num    { background: rgba(255,255,255,0.15); }
+.theme-navy  .section-title-text { color: var(--white); }
+.theme-navy  .section-eyebrow    { color: rgba(255,255,255,0.6); }
+.theme-navy  .section-pts        { color: rgba(255,255,255,0.5); }
+
+.theme-amber .section-header { background: linear-gradient(135deg, #B8780A 0%, #9A6008 100%); color: var(--white); }
+.theme-amber .section-num    { background: rgba(255,255,255,0.2); }
+.theme-amber .section-title-text { color: var(--white); }
+.theme-amber .section-eyebrow    { color: rgba(255,255,255,0.7); }
+.theme-amber .section-pts        { color: rgba(255,255,255,0.6); }
+
+.theme-rust  .section-header { background: linear-gradient(135deg, var(--rust) 0%, #9A4015 100%); color: var(--white); }
+.theme-rust  .section-num    { background: rgba(255,255,255,0.2); }
+.theme-rust  .section-title-text { color: var(--white); }
+.theme-rust  .section-eyebrow    { color: rgba(255,255,255,0.7); }
+.theme-rust  .section-pts        { color: rgba(255,255,255,0.6); }
+
+.theme-sage  .section-header { background: linear-gradient(135deg, var(--sage) 0%, #2A6050 100%); color: var(--white); }
+.theme-sage  .section-num    { background: rgba(255,255,255,0.2); }
+.theme-sage  .section-title-text { color: var(--white); }
+.theme-sage  .section-eyebrow    { color: rgba(255,255,255,0.7); }
+.theme-sage  .section-pts        { color: rgba(255,255,255,0.6); }
+
+/* ── UTILITY ─────────────────────────────────────────────── */
+.hint { font-size: 0.78rem; color: var(--gray); margin-top: 0.5rem; font-style: italic; }
+.mb-1 { margin-bottom: 0.75rem; }
+.mb-2 { margin-bottom: 1.25rem; }
+hr.light { border: none; border-top: 1px solid var(--lgray); margin: 1.25rem 0; }
+
+@media (max-width: 600px) {
+  .match-grid  { grid-template-columns: 1fr; }
+  .choice-grid { grid-template-columns: 1fr; }
+  .cat-grid    { grid-template-columns: 1fr; }
+  .budget-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ACCESS GATE
+═══════════════════════════════════════════════════════════ -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-tag">Introduction to Business</div>
+    <h1 class="gate-title">Chapter 6<br>Advertising in Action</h1>
+    <p class="gate-sub">Enter your access code to begin the activity.</p>
+    <input class="gate-input" id="codeInput" type="text" placeholder="ACCESS CODE" autocomplete="off" spellcheck="false">
+    <button class="gate-btn" onclick="checkCode()">Enter Activity</button>
+    <p class="gate-error" id="gateError"></p>
+    <p class="gate-meta">M-State · Introduction to Business · Summer 2026</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN APP
+═══════════════════════════════════════════════════════════ -->
+<div id="app">
+  <header class="app-header">
+    <div class="header-left">
+      <span>Chapter 6</span>
+      <span>Advertising in Action</span>
+    </div>
+    <div class="score-pill">Score: <strong id="liveScore">0</strong> / 25</div>
+  </header>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+  </div>
+
+  <div class="sections-wrap">
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 1 — Drag the Goal (5 pts)
+    ══════════════════════════════════════════════════════ -->
+    <div class="section-block theme-teal" id="sec1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-title-wrap">
+          <div class="section-eyebrow">Match · Drag &amp; Drop</div>
+          <div class="section-title-text">What's the Ad's Job?</div>
+        </div>
+        <div class="section-pts">5 pts</div>
+      </div>
+      <div class="section-body">
+        <div class="scenario-box">
+          <div class="scenario-label">The Setup</div>
+          Every advertisement is designed to accomplish one of four goals: <strong>Inform, Persuade, Remind,</strong> or <strong>Reinforce.</strong> Drag each real-world ad description from the left column to the advertising goal it best matches on the right.
+        </div>
+
+        <div class="match-grid">
+          <div>
+            <div class="match-col-label">Ad Descriptions</div>
+            <div class="drag-bank" id="bank1">
+              <div class="drag-item" draggable="true" data-id="d1">🍎 Apple's first iPhone keynote — Jobs explaining what a "smartphone" is to a world that's never heard the term.</div>
+              <div class="drag-item" draggable="true" data-id="d2">🥤 Pepsi's "Challenge" ads comparing taste tests side-by-side against Coke drinkers.</div>
+              <div class="drag-item" draggable="true" data-id="d3">🚗 A car brand running ads targeted specifically at people who purchased that same vehicle last month.</div>
+              <div class="drag-item" draggable="true" data-id="d4">🎄 Coca-Cola's holiday ads showing an ice-cold Coke at a family dinner — no explanation, just imagery.</div>
+              <div class="drag-item" draggable="true" data-id="d5">📱 A fintech startup explaining — step by step — how their new "buy now, pay later" app works.</div>
+            </div>
+          </div>
+          <div>
+            <div class="match-col-label">Advertising Goals</div>
+            <div class="drop-zones" id="zones1">
+              <div class="drop-target" data-accept="d1,d5" data-zone="z1">
+                <span class="drop-label"><strong>Inform</strong> — Introduce something new; educate the market.</span>
+              </div>
+              <div class="drop-target" data-accept="d2" data-zone="z2">
+                <span class="drop-label"><strong>Persuade</strong> — Change minds; flip loyalty to your brand.</span>
+              </div>
+              <div class="drop-target" data-accept="d4" data-zone="z3">
+                <span class="drop-label"><strong>Remind</strong> — Keep a known product top of mind.</span>
+              </div>
+              <div class="drop-target" data-accept="d3" data-zone="z4">
+                <span class="drop-label"><strong>Reinforce</strong> — Reduce post-purchase doubt in existing buyers.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="hint">💡 Click a placed item to return it to the bank. Two items share the same goal.</p>
+        <div class="btn-row" style="justify-content:flex-start; margin-top:1rem;">
+          <button class="btn-grade" onclick="gradeSection1()">Check Matches</button>
+        </div>
+        <div id="fb1" style="display:none; margin-top:0.75rem;"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 2 — Appeal Matcher (5 pts)
+    ══════════════════════════════════════════════════════ -->
+    <div class="section-block theme-navy" id="sec2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-title-wrap">
+          <div class="section-eyebrow">Select · Advertising Appeals</div>
+          <div class="section-title-text">Name That Appeal</div>
+        </div>
+        <div class="section-pts">5 pts</div>
+      </div>
+      <div class="section-body">
+        <div class="scenario-box">
+          <div class="scenario-label">The Setup</div>
+          An advertising appeal is the creative angle a brand uses to connect with its audience. For each real campaign description below, select the appeal type being used.
+        </div>
+        <div class="slider-sort-grid" id="appealGrid">
+          <div class="slider-row">
+            <div class="slider-scenario"><strong>GEICO:</strong> A tiny British gecko explains car insurance with dry wit while absurd things happen around him. The brand runs multiple joke formats simultaneously so no single punchline gets old.</div>
+            <select class="slider-select" data-correct="Humor" onchange="checkAppeal(this)">
+              <option value="">— Select —</option>
+              <option>Emotional</option><option>Humor</option><option>Fear</option>
+              <option>Rational/Logical</option><option>Bandwagon</option><option>Celebrity</option>
+            </select>
+          </div>
+          <div class="slider-row">
+            <div class="slider-scenario"><strong>ADT Home Security:</strong> "A break-in happens every 18 seconds in America." Cut to a startled family. Then: ADT installed, alarm sounds, family safe.</div>
+            <select class="slider-select" data-correct="Fear" onchange="checkAppeal(this)">
+              <option value="">— Select —</option>
+              <option>Emotional</option><option>Humor</option><option>Fear</option>
+              <option>Rational/Logical</option><option>Bandwagon</option><option>Celebrity</option>
+            </select>
+          </div>
+          <div class="slider-row">
+            <div class="slider-scenario"><strong>Always #LikeAGirl:</strong> The ad asks people to "run like a girl" — adults perform weak caricatures; then young girls are asked and simply run, hard and fast. No product shown until the final five seconds.</div>
+            <select class="slider-select" data-correct="Emotional" onchange="checkAppeal(this)">
+              <option value="">— Select —</option>
+              <option>Emotional</option><option>Humor</option><option>Fear</option>
+              <option>Rational/Logical</option><option>Bandwagon</option><option>Celebrity</option>
+            </select>
+          </div>
+          <div class="slider-row">
+            <div class="slider-scenario"><strong>Nike x Michael Jordan (1984):</strong> A 22-year-old rookie wears a color shoe the NBA tried to ban. Nike said they'd pay his fines. The shoe became a cultural event before a single ad ran.</div>
+            <select class="slider-select" data-correct="Celebrity" onchange="checkAppeal(this)">
+              <option value="">— Select —</option>
+              <option>Emotional</option><option>Humor</option><option>Fear</option>
+              <option>Rational/Logical</option><option>Bandwagon</option><option>Celebrity</option>
+            </select>
+          </div>
+          <div class="slider-row">
+            <div class="slider-scenario"><strong>Headspace:</strong> "Over 70 million people in 190 countries use Headspace. Join them." The ad shows diverse users meditating; user count is front and center.</div>
+            <select class="slider-select" data-correct="Bandwagon" onchange="checkAppeal(this)">
+              <option value="">— Select —</option>
+              <option>Emotional</option><option>Humor</option><option>Fear</option>
+              <option>Rational/Logical</option><option>Bandwagon</option><option>Celebrity</option>
+            </select>
+          </div>
+        </div>
+        <div id="fb2" style="margin-top:0.75rem;"></div>
+        <div class="btn-row" style="justify-content:flex-start; margin-top:1rem;">
+          <button class="btn-grade" onclick="gradeSection2()">Check Appeals</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 3 — Media Channel Categorizer (5 pts)
+    ══════════════════════════════════════════════════════ -->
+    <div class="section-block theme-amber" id="sec3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-title-wrap">
+          <div class="section-eyebrow">Categorize · Media Types</div>
+          <div class="section-title-text">Traditional vs. Digital</div>
+        </div>
+        <div class="section-pts">5 pts</div>
+      </div>
+      <div class="section-body">
+        <div class="scenario-box">
+          <div class="scenario-label">The Setup</div>
+          Sage is the new marketing director at a regional coffee chain. She's reviewing their media spend and wants to clearly separate <strong>traditional</strong> media channels from <strong>digital</strong> ones before planning next year's budget. Drag each item to the correct category.
+        </div>
+        <div class="mb-2">
+          <div class="term-bank" id="mediaBank">
+            <div class="term-chip" draggable="true" data-id="m1" data-cat="Traditional">Drive-time radio spot</div>
+            <div class="term-chip" draggable="true" data-id="m2" data-cat="Digital">Google Search Ad</div>
+            <div class="term-chip" draggable="true" data-id="m3" data-cat="Traditional">Highway billboard</div>
+            <div class="term-chip" draggable="true" data-id="m4" data-cat="Digital">YouTube pre-roll</div>
+            <div class="term-chip" draggable="true" data-id="m5" data-cat="Traditional">Full-page magazine ad</div>
+            <div class="term-chip" draggable="true" data-id="m6" data-cat="Digital">Programmatic display banner</div>
+            <div class="term-chip" draggable="true" data-id="m7" data-cat="Traditional">30-second TV commercial (local news)</div>
+            <div class="term-chip" draggable="true" data-id="m8" data-cat="Digital">Instagram Story ad</div>
+            <div class="term-chip" draggable="true" data-id="m9" data-cat="Traditional">Transit poster (bus shelter)</div>
+            <div class="term-chip" draggable="true" data-id="m10" data-cat="Digital">Retargeting ad (shows products you viewed)</div>
+          </div>
+        </div>
+        <div class="cat-grid">
+          <div class="cat-zone" id="catTraditional" data-cat="Traditional">
+            <div class="cat-zone-label" style="color: #B8780A;">📺 Traditional Media</div>
+            <div class="cat-zone-items" id="catTraditionalItems"></div>
+          </div>
+          <div class="cat-zone" id="catDigital" data-cat="Digital">
+            <div class="cat-zone-label" style="color: var(--teal);">📱 Digital Media</div>
+            <div class="cat-zone-items" id="catDigitalItems"></div>
+          </div>
+        </div>
+        <p class="hint">💡 Click a placed chip to send it back to the bank.</p>
+        <div class="btn-row" style="justify-content:flex-start; margin-top:1rem;">
+          <button class="btn-grade" onclick="gradeSection3()">Check Categories</button>
+        </div>
+        <div id="fb3" style="margin-top:0.75rem;"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 4 — Campaign Decision Scenario (5 pts)
+    ══════════════════════════════════════════════════════ -->
+    <div class="section-block theme-rust" id="sec4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-title-wrap">
+          <div class="section-eyebrow">Decision Making · Campaign Planning</div>
+          <div class="section-title-text">You're the Ad Director</div>
+        </div>
+        <div class="section-pts">5 pts</div>
+      </div>
+      <div class="section-body">
+        <div class="scenario-box">
+          <div class="scenario-label">The Setup</div>
+          You've just been hired as marketing director for <strong>Ember & Oak</strong> — a new craft candle brand launching in the Twin Cities metro area. Your target audience is women 28–45 who follow home décor accounts on social media and shop at local boutiques. You have a $40,000 launch budget. Work through the five key campaign decisions below.
+        </div>
+
+        <!-- Q1 -->
+        <div class="decision-step">
+          <div class="decision-prompt">1. Your primary launch campaign goal should be:</div>
+          <div class="choice-grid">
+            <button class="choice-btn" onclick="decisionChoice(this, 'A', '4_1')">Remind — Ember &amp; Oak has been around a while and just needs to stay top of mind.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'B', '4_1')">Reinforce — Encourage repeat purchases from the existing customer base.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'C', '4_1')">Inform — Introduce the brand and explain what makes Ember &amp; Oak different.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'D', '4_1')">Persuade — Convince Yankee Candle customers to switch immediately.</button>
+          </div>
+          <div class="decision-feedback" id="fb4_1"></div>
+        </div>
+        <hr class="light">
+
+        <!-- Q2 -->
+        <div class="decision-step">
+          <div class="decision-prompt">2. Your audience (women 28–45 who follow home décor accounts) is most active on social media. Which single digital channel gives you the best reach + visual appeal for this specific audience?</div>
+          <div class="choice-grid">
+            <button class="choice-btn" onclick="decisionChoice(this, 'A', '4_2')">LinkedIn Sponsored Content</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'B', '4_2')">Instagram / Pinterest Ads</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'C', '4_2')">Google Search Ads</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'D', '4_2')">Drive-time Radio</button>
+          </div>
+          <div class="decision-feedback" id="fb4_2"></div>
+        </div>
+        <hr class="light">
+
+        <!-- Q3 -->
+        <div class="decision-step">
+          <div class="decision-prompt">3. You want to create an emotional connection — make people feel warmth, comfort, and "home." Which advertising appeal fits best?</div>
+          <div class="choice-grid">
+            <button class="choice-btn" onclick="decisionChoice(this, 'A', '4_3')">Rational/Logical — Lead with candle burn times and fragrance quality certifications.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'B', '4_3')">Fear — "Don't fill your home with synthetic fragrances."</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'C', '4_3')">Emotional — Imagery of cozy evenings, warm light, family moments.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'D', '4_3')">Bandwagon — "Everyone in the neighborhood is already burning Ember &amp; Oak."</button>
+          </div>
+          <div class="decision-feedback" id="fb4_3"></div>
+        </div>
+        <hr class="light">
+
+        <!-- Q4 -->
+        <div class="decision-step">
+          <div class="decision-prompt">4. A local interior design blogger with 48,000 followers reaches out offering a paid partnership for $800. She posts home styling content that perfectly matches your audience. Based on what you've learned about advertising channels, what should you do?</div>
+          <div class="choice-grid">
+            <button class="choice-btn" onclick="decisionChoice(this, 'A', '4_4')">Decline — influencer marketing isn't a real advertising channel.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'B', '4_4')">Accept — a micro-influencer with the right audience is high-value and cost-efficient.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'C', '4_4')">Decline — spend the $800 on a radio spot instead for broader reach.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'D', '4_4')">Accept only if she has over 500,000 followers.</button>
+          </div>
+          <div class="decision-feedback" id="fb4_4"></div>
+        </div>
+        <hr class="light">
+
+        <!-- Q5 -->
+        <div class="decision-step">
+          <div class="decision-prompt">5. After 3 weeks, your Instagram ads have a 0.4% click-through rate (industry average for your category is 1.2%). What is the most appropriate next step?</div>
+          <div class="choice-grid">
+            <button class="choice-btn" onclick="decisionChoice(this, 'A', '4_5')">Stop all advertising immediately — the campaign is failing.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'B', '4_5')">Continue exactly as-is — it takes 90 days for any campaign to show results.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'C', '4_5')">Switch entirely to print — digital clearly isn't working for this brand.</button>
+            <button class="choice-btn" onclick="decisionChoice(this, 'D', '4_5')">Analyze the data — test different images, headlines, or audience targeting to optimize.</button>
+          </div>
+          <div class="decision-feedback" id="fb4_5"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 5 — Budget Ranking (5 pts)
+    ══════════════════════════════════════════════════════ -->
+    <div class="section-block theme-sage" id="sec5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-title-wrap">
+          <div class="section-eyebrow">Rank · Campaign Planning Steps</div>
+          <div class="section-title-text">Build the Campaign in Order</div>
+        </div>
+        <div class="section-pts">5 pts</div>
+      </div>
+      <div class="section-body">
+        <div class="scenario-box">
+          <div class="scenario-label">The Setup</div>
+          The six steps of advertising campaign planning must happen in a specific logical order — each one builds on the last. Drag the steps below into the correct sequence, from <strong>Step 1</strong> (what you do first) to <strong>Step 6</strong> (what you do last).
+        </div>
+        <div class="rank-list" id="rankList">
+          <div class="rank-item" draggable="true" data-correct="4">
+            <span class="rank-handle">⠿</span>
+            <div class="rank-badge">?</div>
+            <div class="rank-text">Select the media mix — choose which channels will reach your audience most efficiently.</div>
+          </div>
+          <div class="rank-item" draggable="true" data-correct="1">
+            <span class="rank-handle">⠿</span>
+            <div class="rank-badge">?</div>
+            <div class="rank-text">Define the objective — what exactly are you trying to accomplish? (Inform, persuade, remind, or reinforce?)</div>
+          </div>
+          <div class="rank-item" draggable="true" data-correct="6">
+            <span class="rank-handle">⠿</span>
+            <div class="rank-badge">?</div>
+            <div class="rank-text">Execute and measure — launch the campaign, then track performance data and optimize.</div>
+          </div>
+          <div class="rank-item" draggable="true" data-correct="3">
+            <span class="rank-handle">⠿</span>
+            <div class="rank-badge">?</div>
+            <div class="rank-text">Develop the creative strategy — decide the message, the appeal, and the big creative idea.</div>
+          </div>
+          <div class="rank-item" draggable="true" data-correct="2">
+            <span class="rank-handle">⠿</span>
+            <div class="rank-badge">?</div>
+            <div class="rank-text">Identify the target audience — who are you talking to? Their demographics, behaviors, and media habits.</div>
+          </div>
+          <div class="rank-item" draggable="true" data-correct="5">
+            <span class="rank-handle">⠿</span>
+            <div class="rank-badge">?</div>
+            <div class="rank-text">Set the budget — how much will you spend, and using which method (percentage of sales, objective-and-task, etc.)?</div>
+          </div>
+        </div>
+        <p class="hint">💡 Drag the rows up and down to reorder them into the correct sequence.</p>
+        <div class="btn-row" style="justify-content:flex-start; margin-top:1rem;">
+          <button class="btn-grade" onclick="gradeSection5()">Check Order</button>
+        </div>
+        <div id="fb5" style="margin-top:0.75rem;"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         SUBMIT
+    ══════════════════════════════════════════════════════ -->
+    <div class="submit-section">
+      <h3>Ready to Submit?</h3>
+      <p>Enter your name, then click Grade &amp; Save. Your results will open as a PDF for D2L upload.</p>
+      <input class="name-field" id="studentName" type="text" placeholder="Your Full Name">
+      <div class="btn-row">
+        <button class="btn-grade" onclick="finalGrade()">Grade &amp; Save</button>
+        <button class="btn-pdf" id="pdfBtn" onclick="savePDF()" style="display:none">Save as PDF</button>
+      </div>
+      <div id="finalResult" style="margin-top:1.5rem;"></div>
+    </div>
+
+  </div><!-- /sections-wrap -->
+</div><!-- /app -->
+
+<script>
+// ──────────────────────────────────────────────────────────────
+// ACCESS CODE
+// ──────────────────────────────────────────────────────────────
+const ACCESS_CODE = "ADVERTISE6";
+const BYPASS      = "INSTRUCTOR";
+
+function checkCode() {
+  const val = document.getElementById('codeInput').value.trim().toUpperCase();
+  if (val === ACCESS_CODE || val === BYPASS) {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display  = 'block';
+    updateProgress();
+  } else {
+    document.getElementById('gateError').textContent = 'Incorrect access code. Check your course materials and try again.';
+  }
+}
+document.getElementById('codeInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkCode(); });
+
+// ──────────────────────────────────────────────────────────────
+// SCORING
+// ──────────────────────────────────────────────────────────────
+const scores = { s1: 0, s2: 0, s3: 0, s4: 0, s5: 0 };
+const graded = { s1: false, s2: false, s3: false, s4: false, s5: false };
+
+function totalScore() { return Object.values(scores).reduce((a, b) => a + b, 0); }
+
+function updateProgress() {
+  const sc = totalScore();
+  document.getElementById('liveScore').textContent = sc;
+  const pct = (sc / 25) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+// ──────────────────────────────────────────────────────────────
+// SECTION 1 — DRAG & DROP
+// ──────────────────────────────────────────────────────────────
+let draggingId = null;
+
+// Draggable items from bank
+document.querySelectorAll('.drag-item').forEach(item => {
+  item.addEventListener('dragstart', e => {
+    draggingId = item.dataset.id;
+    item.classList.add('dragging');
+  });
+  item.addEventListener('dragend', () => item.classList.remove('dragging'));
+});
+
+document.querySelectorAll('.drop-target').forEach(zone => {
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    if (!draggingId) return;
+
+    // Find the dragged element (could be from bank or another zone)
+    const bankItem = document.querySelector(`.drag-item[data-id="${draggingId}"]`);
+    const existingTag = zone.querySelector('.dropped-tag');
+    const existingTagZoneItemId = zone.dataset.currentItem;
+
+    // Check if this zone already has something — return it to bank if so
+    if (existingTagZoneItemId) {
+      const oldBankItem = document.querySelector(`.drag-item[data-id="${existingTagZoneItemId}"]`);
+      if (oldBankItem) {
+        oldBankItem.classList.remove('placed');
+        oldBankItem.draggable = true;
+      }
+      if (existingTag) existingTag.remove();
+      zone.dataset.currentItem = '';
+      zone.classList.remove('filled');
+    }
+
+    // Remove from any OTHER zone it was in
+    document.querySelectorAll('.drop-target').forEach(z => {
+      if (z !== zone && z.dataset.currentItem === draggingId) {
+        const t = z.querySelector('.dropped-tag');
+        if (t) t.remove();
+        z.dataset.currentItem = '';
+        z.classList.remove('filled');
+      }
+    });
+
+    // Place the tag
+    if (bankItem) bankItem.classList.add('placed');
+    const tag = document.createElement('span');
+    tag.className = 'dropped-tag';
+    tag.textContent = bankItem ? bankItem.textContent.slice(0, 40) + '…' : draggingId;
+    tag.title = bankItem ? bankItem.textContent : '';
+    tag.addEventListener('click', () => {
+      if (graded.s1) return;
+      if (bankItem) { bankItem.classList.remove('placed'); bankItem.draggable = true; }
+      tag.remove();
+      zone.dataset.currentItem = '';
+      zone.classList.remove('filled', 'correct', 'incorrect');
+    });
+    zone.appendChild(tag);
+    zone.dataset.currentItem = draggingId;
+    zone.classList.add('filled');
+    draggingId = null;
+  });
+});
+
+function gradeSection1() {
+  if (graded.s1) return;
+  let correct = 0;
+  document.querySelectorAll('#zones1 .drop-target').forEach(zone => {
+    const placed = zone.dataset.currentItem;
+    const accepts = zone.dataset.accept.split(',');
+    const icon = document.createElement('span');
+    icon.className = 'feedback-icon';
+    if (placed && accepts.includes(placed)) {
+      zone.classList.add('correct'); icon.textContent = '✓'; correct++;
+    } else {
+      zone.classList.add('incorrect'); icon.textContent = '✗';
+    }
+    // Insert icon before label
+    const lbl = zone.querySelector('.drop-label');
+    if (lbl) zone.insertBefore(icon, lbl);
+  });
+  scores.s1 = correct;
+  graded.s1 = true;
+  const fb = document.getElementById('fb1');
+  fb.style.display = 'block';
+  fb.innerHTML = `<div style="padding:0.7rem 1rem;background:${correct>=4?'#DCFCE7':'#FEF3C7'};border-radius:8px;font-size:0.88rem;color:${correct>=4?'#166534':'#92400E'}"><strong>Section 1: ${correct}/5 correct.</strong> ${correct===5?'Perfect! You understand all four advertising goals.':correct>=3?'Good work — review the ones marked ✗ and connect them to the textbook examples.':'Keep reviewing the four advertising goals (Inform, Persuade, Remind, Reinforce) and try to match each to a real-world example.'}</div>`;
+  updateProgress();
+}
+
+// ──────────────────────────────────────────────────────────────
+// SECTION 2 — APPEAL SELECTS
+// ──────────────────────────────────────────────────────────────
+function checkAppeal(sel) { /* live feedback on change handled in grade */ }
+
+function gradeSection2() {
+  if (graded.s2) return;
+  let correct = 0;
+  document.querySelectorAll('.slider-select').forEach(sel => {
+    sel.disabled = true;
+    if (sel.value === sel.dataset.correct) { sel.classList.add('correct'); correct++; }
+    else { sel.classList.add('wrong'); }
+  });
+  scores.s2 = correct;
+  graded.s2 = true;
+  const fb = document.getElementById('fb2');
+  fb.innerHTML = `<div style="padding:0.7rem 1rem;background:${correct>=4?'#DCFCE7':'#FEF3C7'};border-radius:8px;font-size:0.88rem;color:${correct>=4?'#166534':'#92400E'}"><strong>Section 2: ${correct}/5 correct.</strong> ${correct===5?'Excellent! You can identify advertising appeals from real campaigns.':correct>=3?'Nice work. Review any marked in red — connect the appeal type to the emotional or psychological technique each ad uses.':'Review the eight advertising appeals in Chapter 6 and think about what psychological lever each one pulls.'}</div>`;
+  updateProgress();
+}
+
+// ──────────────────────────────────────────────────────────────
+// SECTION 3 — TERM CATEGORIZER (drag chips to buckets)
+// ──────────────────────────────────────────────────────────────
+let draggingChipId = null;
+const chipPlacements = {}; // chipId → catName
+
+function setupCatDrag() {
+  document.querySelectorAll('.term-chip').forEach(chip => {
+    chip.addEventListener('dragstart', e => {
+      draggingChipId = chip.dataset.id;
+      chip.classList.add('dragging');
+    });
+    chip.addEventListener('dragend', () => chip.classList.remove('dragging'));
+    chip.addEventListener('click', () => returnChip(chip.dataset.id));
+  });
+
+  document.querySelectorAll('.cat-zone').forEach(zone => {
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      if (!draggingChipId || graded.s3) return;
+      const chip = document.querySelector(`.term-chip[data-id="${draggingChipId}"]`);
+      if (!chip) return;
+      const catName = zone.dataset.cat;
+      const itemsEl = document.getElementById(`cat${catName}Items`);
+
+      // If already placed, remove from old zone
+      if (chipPlacements[draggingChipId]) {
+        const oldZoneItems = document.getElementById(`cat${chipPlacements[draggingChipId]}Items`);
+        const existing = oldZoneItems.querySelector(`[data-chipid="${draggingChipId}"]`);
+        if (existing) existing.remove();
+      }
+
+      // Add to new zone
+      chipPlacements[draggingChipId] = catName;
+      chip.classList.add('used');
+      const placedChip = document.createElement('div');
+      placedChip.className = 'cat-chip';
+      placedChip.dataset.chipid = draggingChipId;
+      placedChip.textContent = chip.textContent;
+      placedChip.addEventListener('click', () => returnChip(draggingChipId || chip.dataset.id));
+      placedChip.addEventListener('click', function() { returnChip(this.dataset.chipid); });
+      itemsEl.appendChild(placedChip);
+      draggingChipId = null;
+    });
+  });
+}
+
+function returnChip(chipId) {
+  if (graded.s3) return;
+  const chip = document.querySelector(`.term-chip[data-id="${chipId}"]`);
+  if (!chip) return;
+  // Remove from zone
+  if (chipPlacements[chipId]) {
+    const oldItems = document.getElementById(`cat${chipPlacements[chipId]}Items`);
+    const placed = oldItems.querySelector(`[data-chipid="${chipId}"]`);
+    if (placed) placed.remove();
+    delete chipPlacements[chipId];
+  }
+  chip.classList.remove('used');
+}
+
+setupCatDrag();
+
+function gradeSection3() {
+  if (graded.s3) return;
+  let correct = 0;
+  const chips = document.querySelectorAll('.term-chip');
+  chips.forEach(chip => {
+    const placed = chipPlacements[chip.dataset.id];
+    if (placed === chip.dataset.cat) correct++;
+  });
+  // 10 chips → 5 points (1 pt per 2 correct)
+  scores.s3 = Math.round(correct / 2);
+  graded.s3 = true;
+
+  // Visual feedback on zones
+  document.querySelectorAll('.cat-zone').forEach(zone => {
+    zone.querySelectorAll('.cat-chip').forEach(c => {
+      const chipId = c.dataset.chipid;
+      const original = document.querySelector(`.term-chip[data-id="${chipId}"]`);
+      if (original && chipPlacements[chipId] === original.dataset.cat) {
+        c.style.background = '#166534';
+      } else {
+        c.style.background = '#991B1B';
+      }
+    });
+  });
+
+  const fb = document.getElementById('fb3');
+  fb.innerHTML = `<div style="padding:0.7rem 1rem;background:${scores.s3>=4?'#DCFCE7':'#FEF3C7'};border-radius:8px;font-size:0.88rem;color:${scores.s3>=4?'#166534':'#92400E'}"><strong>Section 3: ${scores.s3}/5 points (${correct}/10 items correctly placed).</strong> ${correct===10?'Perfect — you can distinguish traditional from digital media with confidence!':correct>=7?'Good — review any items in red. The key question: does the channel rely on a physical medium (traditional) or the internet (digital)?':'Review Chapter 6 media types. Traditional = broadcast, print, OOH. Digital = paid search, social, programmatic, streaming.'}</div>`;
+  updateProgress();
+}
+
+// ──────────────────────────────────────────────────────────────
+// SECTION 4 — DECISION SCENARIO
+// ──────────────────────────────────────────────────────────────
+const decisionCorrect = { '4_1': 'C', '4_2': 'B', '4_3': 'C', '4_4': 'B', '4_5': 'D' };
+const decisionAnswered = {};
+const decisionFeedback = {
+  '4_1': {
+    C: '✓ Correct! A brand-new business needs to Inform — introduce the product and explain why it exists. You can't persuade or remind people who don't know you yet.',
+    wrong: '✗ Not quite. When Ember & Oak is completely unknown, the goal must be to Inform — help people understand what the brand is before anything else.'
+  },
+  '4_2': {
+    B: '✓ Correct! Instagram and Pinterest are visual platforms dominant with this exact demographic. Home décor content thrives there, and your audience is already engaged.',
+    wrong: '✗ Think about where your audience actually spends time. LinkedIn is professional networking. Radio reaches commuters broadly. Google Search is great for intent — but your audience is browsing, not searching for candles yet.'
+  },
+  '4_3': {
+    C: '✓ Correct! Emotional appeal — warmth, light, home, family — is the natural fit for a candle brand. This is about feeling, not facts.',
+    wrong: '✗ You want people to feel something. Fear is manipulative for a lifestyle brand. Rational/logical (burn times) undersells the emotional draw. Bandwagon doesn\'t build a warm brand identity. Emotional is the right tool here.'
+  },
+  '4_4': {
+    B: '✓ Correct! A micro-influencer (under 100K followers) with the right audience is often more cost-efficient and authentic than a mega-celebrity. At $800 with a matched audience, this is high ROI.',
+    wrong: '✗ Follower count alone doesn\'t determine value — audience match does. A 48K-follower home stylist reaching your exact target customer is far more valuable than a 500K-follower influencer whose audience doesn\'t match.'
+  },
+  '4_5': {
+    D: '✓ Correct! Below-average performance is a signal to optimize, not quit. Test different creative, adjust targeting, and use the data to improve. Campaign optimization is an ongoing process.',
+    wrong: '✗ Low CTR means something in the campaign needs adjustment — not that advertising doesn\'t work. The professional move is to analyze the data, run A/B tests on imagery and copy, and refine the targeting.'
+  }
+};
+
+function decisionChoice(btn, choice, questionId) {
+  if (decisionAnswered[questionId]) return;
+  decisionAnswered[questionId] = choice;
+  const correct = decisionCorrect[questionId];
+  const isRight = choice === correct;
+  const parent = btn.closest('.decision-step');
+  const allBtns = parent.querySelectorAll('.choice-btn');
+
+  allBtns.forEach(b => {
+    b.disabled = true;
+    b.classList.remove('selected-correct', 'selected-wrong', 'reveal-correct');
+  });
+
+  if (isRight) {
+    btn.classList.add('selected-correct');
+    scores.s4 = (scores.s4 || 0) + 1;
+  } else {
+    btn.classList.add('selected-wrong');
+    // Reveal the correct one
+    allBtns.forEach((b, i) => {
+      const letters = ['A','B','C','D'];
+      if (letters[i] === correct) b.classList.add('reveal-correct');
+    });
+  }
+
+  const fbEl = document.getElementById(`fb${questionId}`);
+  const fbData = decisionFeedback[questionId];
+  const fbText = isRight ? fbData[correct] : fbData.wrong;
+  fbEl.textContent = fbText;
+  fbEl.className = `decision-feedback show ${isRight ? 'correct-fb' : 'wrong-fb'}`;
+
+  if (Object.keys(decisionAnswered).length >= 5) graded.s4 = true;
+  updateProgress();
+}
+
+// ──────────────────────────────────────────────────────────────
+// SECTION 5 — DRAG TO RANK
+// ──────────────────────────────────────────────────────────────
+let dragSrcRank = null;
+
+function setupRankDrag() {
+  const list = document.getElementById('rankList');
+  let dragOverEl = null;
+
+  list.querySelectorAll('.rank-item').forEach(item => {
+    item.addEventListener('dragstart', e => {
+      dragSrcRank = item;
+      item.classList.add('dragging-rank');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    item.addEventListener('dragend', () => {
+      item.classList.remove('dragging-rank');
+      list.querySelectorAll('.rank-item').forEach(i => i.style.borderTop = '');
+      updateRankBadges();
+    });
+    item.addEventListener('dragover', e => {
+      e.preventDefault();
+      if (item === dragSrcRank) return;
+      dragOverEl = item;
+      list.querySelectorAll('.rank-item').forEach(i => i.style.borderTop = '');
+      item.style.borderTop = '3px solid ' + getComputedStyle(document.documentElement).getPropertyValue('--teal');
+    });
+    item.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragSrcRank === item) return;
+      const items = [...list.querySelectorAll('.rank-item')];
+      const srcIdx = items.indexOf(dragSrcRank);
+      const tgtIdx = items.indexOf(item);
+      if (srcIdx < tgtIdx) list.insertBefore(dragSrcRank, item.nextSibling);
+      else list.insertBefore(dragSrcRank, item);
+      updateRankBadges();
+    });
+  });
+}
+
+function updateRankBadges() {
+  document.querySelectorAll('#rankList .rank-badge').forEach((badge, i) => {
+    badge.textContent = i + 1;
+  });
+}
+
+setupRankDrag();
+updateRankBadges();
+
+function gradeSection5() {
+  if (graded.s5) return;
+  const items = [...document.querySelectorAll('#rankList .rank-item')];
+  let correct = 0;
+  items.forEach((item, idx) => {
+    const expected = parseInt(item.dataset.correct);
+    const placed = idx + 1;
+    const badge = item.querySelector('.rank-badge');
+    if (placed === expected) {
+      correct++;
+      item.classList.add('rank-correct');
+      badge.textContent = '✓';
+    } else {
+      item.classList.add('rank-wrong');
+      badge.textContent = placed;
+    }
+    item.draggable = false;
+  });
+  // 6 rank items → 5 pts: 1 pt per correct, max 5 (bonus if all 6)
+  scores.s5 = Math.min(correct, 5);
+  graded.s5 = true;
+  const fb = document.getElementById('fb5');
+  const corr = correct;
+  fb.innerHTML = `<div style="padding:0.7rem 1rem;background:${corr>=5?'#DCFCE7':'#FEF3C7'};border-radius:8px;font-size:0.88rem;color:${corr>=5?'#166534':'#92400E'}"><strong>Section 5: ${scores.s5}/5 points (${corr}/6 steps in correct order).</strong> ${corr===6?'Perfect sequence! You understand the full campaign planning process.':corr>=4?'Good — the ones marked in red were out of sequence. Remember: Objective → Audience → Creative → Media → Budget → Execute/Measure.':'Review the 6-step campaign planning process in Chapter 6. The sequence has a clear logic: you must know the goal before you can pick the audience, the message before the channel, and the plan before you spend.'}</div>`;
+  updateProgress();
+}
+
+// ──────────────────────────────────────────────────────────────
+// FINAL GRADE & PDF
+// ──────────────────────────────────────────────────────────────
+function finalGrade() {
+  const name = document.getElementById('studentName').value.trim();
+  if (!name) { alert('Please enter your name before submitting.'); return; }
+  const total = totalScore();
+  const pct = Math.round((total / 25) * 100);
+  let grade = 'A';
+  if (pct < 60) grade = 'F';
+  else if (pct < 70) grade = 'D';
+  else if (pct < 80) grade = 'C';
+  else if (pct < 90) grade = 'B';
+
+  const colorClass = pct >= 80 ? 'high' : pct >= 60 ? '' : 'low';
+  const now = new Date().toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+
+  const resultEl = document.getElementById('finalResult');
+  resultEl.innerHTML = `
+    <div id="printBlock" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:1.5rem;text-align:left;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+        <div>
+          <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#64748B;margin-bottom:0.2rem;">M-State · Introduction to Business · Summer 2026</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.25rem;color:#0D2B55;">Chapter 6: Advertising in Action</div>
+        </div>
+        <div class="final-score-display ${colorClass}">${total}/25</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:0.88rem;margin-bottom:1rem;">
+        <tr style="background:#0D2B55;color:#fff;">
+          <th style="padding:0.5rem 0.75rem;text-align:left;border-radius:4px 0 0 4px;">Student</th>
+          <th style="padding:0.5rem 0.75rem;text-align:left;">Date</th>
+          <th style="padding:0.5rem 0.75rem;text-align:center;">Score</th>
+          <th style="padding:0.5rem 0.75rem;text-align:center;border-radius:0 4px 4px 0;">Grade</th>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem 0.75rem;border-bottom:1px solid #E2E8F0;">${name}</td>
+          <td style="padding:0.5rem 0.75rem;border-bottom:1px solid #E2E8F0;">${now}</td>
+          <td style="padding:0.5rem 0.75rem;border-bottom:1px solid #E2E8F0;text-align:center;font-weight:700;color:#0D7377;">${total}/25  (${pct}%)</td>
+          <td style="padding:0.5rem 0.75rem;border-bottom:1px solid #E2E8F0;text-align:center;font-weight:700;color:#0D2B55;">${grade}</td>
+        </tr>
+      </table>
+      <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+        <tr style="background:#E8F0F7;">
+          <th style="padding:0.4rem 0.75rem;text-align:left;">Section</th>
+          <th style="padding:0.4rem 0.75rem;text-align:center;">Points</th>
+        </tr>
+        ${[
+          ['1 — What\'s the Ad\'s Job? (drag & drop goals)', scores.s1, 5],
+          ['2 — Name That Appeal (select from scenarios)', scores.s2, 5],
+          ['3 — Traditional vs. Digital Media (10 items → 5 pts)', scores.s3, 5],
+          ['4 — You\'re the Ad Director (decision scenario)', scores.s4, 5],
+          ['5 — Build the Campaign in Order (6 steps → 5 pts)', scores.s5, 5],
+        ].map(([lbl, sc, mx], i) => `
+          <tr style="background:${i%2===0?'#fff':'#F8FAFC'}">
+            <td style="padding:0.4rem 0.75rem;border-bottom:1px solid #E2E8F0;">${lbl}</td>
+            <td style="padding:0.4rem 0.75rem;border-bottom:1px solid #E2E8F0;text-align:center;font-weight:600;color:${sc===mx?'#166534':sc>=mx/2?'#92400E':'#991B1B'}">${sc}/${mx}</td>
+          </tr>`).join('')}
+        <tr style="background:#0D2B55;">
+          <td style="padding:0.5rem 0.75rem;font-weight:700;color:#fff;">TOTAL</td>
+          <td style="padding:0.5rem 0.75rem;text-align:center;font-weight:700;color:#F5A623;">${total}/25</td>
+        </tr>
+      </table>
+    </div>`;
+
+  document.getElementById('pdfBtn').style.display = 'inline-block';
+
+  // Lock completion in localStorage
+  try {
+    localStorage.setItem('ch6_advertising_done', JSON.stringify({ name, score: total, date: now }));
+  } catch(e) {}
+}
+
+function savePDF() { window.print(); }
+</script>
+</body>
+</html>
