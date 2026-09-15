@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Positioning Playground: The Play-Doh Case</title>
+<style>
+  :root{
+    --navy:#0f2a4a;
+    --navy-light:#1c3f68;
+    --navy-pale:#e8edf3;
+    --orange:#f47920;
+    --orange-dark:#d1650f;
+    --orange-pale:#fdece0;
+    --green:#2f7d4f;
+    --red:#c0392b;
+    --text:#1c2530;
+    --bg:#f7f8fa;
+    --card:#ffffff;
+    --border:#d8dee6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.55;
+  }
+  header.top{
+    background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%);
+    color:#fff;
+    padding:28px 20px 24px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  header.top::after{
+    content:"";
+    position:absolute;
+    right:-40px;
+    bottom:-60px;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    background:var(--orange);
+    opacity:0.18;
+  }
+  header.top h1{
+    margin:0 0 6px;
+    font-size:1.8rem;
+    letter-spacing:.3px;
+  }
+  header.top p.sub{
+    margin:0;
+    color:var(--orange-pale);
+    font-size:1rem;
+    opacity:.95;
+  }
+  .badge-row{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:14px;
+    position:relative;
+    z-index:1;
+  }
+  .badge{
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.35);
+    border-radius:999px;
+    padding:5px 14px;
+    font-size:.8rem;
+    font-weight:600;
+  }
+  .wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:22px 18px 80px;
+  }
+  .progress{
+    display:flex;
+    gap:6px;
+    margin:0 0 24px;
+    position:sticky;
+    top:0;
+    background:var(--bg);
+    padding:12px 0;
+    z-index:5;
+  }
+  .progress .step{
+    flex:1;
+    height:8px;
+    border-radius:4px;
+    background:var(--border);
+    transition:background .3s;
+  }
+  .progress .step.active{background:var(--orange);}
+  .progress .step.done{background:var(--navy);}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:24px 26px;
+    margin-bottom:22px;
+    box-shadow:0 1px 3px rgba(15,42,74,0.06);
+  }
+  .card h2{
+    color:var(--navy);
+    margin-top:0;
+    font-size:1.3rem;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .step-num{
+    background:var(--orange);
+    color:#fff;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:.95rem;
+    flex-shrink:0;
+  }
+  .fact-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:14px;
+    margin-top:16px;
+  }
+  .fact{
+    background:var(--navy-pale);
+    border-left:4px solid var(--orange);
+    border-radius:8px;
+    padding:14px 16px;
+    font-size:.93rem;
+  }
+  .fact strong{color:var(--navy);}
+  label{
+    display:block;
+    font-weight:600;
+    color:var(--navy);
+    margin:14px 0 6px;
+    font-size:.95rem;
+  }
+  select, input[type=text], textarea{
+    width:100%;
+    padding:10px 12px;
+    border:1.5px solid var(--border);
+    border-radius:8px;
+    font-size:.95rem;
+    font-family:inherit;
+    background:#fff;
+    color:var(--text);
+  }
+  select:focus, input:focus, textarea:focus{
+    outline:none;
+    border-color:var(--orange);
+  }
+  textarea{resize:vertical;min-height:110px;}
+  .hint{
+    font-size:.82rem;
+    color:#5b6675;
+    margin-top:4px;
+  }
+  .wordcount{
+    font-size:.82rem;
+    font-weight:600;
+    margin-top:4px;
+  }
+  .wordcount.short{color:var(--red);}
+  .wordcount.ok{color:var(--green);}
+  .statement-preview{
+    background:var(--orange-pale);
+    border:1.5px dashed var(--orange);
+    border-radius:10px;
+    padding:16px;
+    margin-top:14px;
+    font-size:1.02rem;
+    font-style:italic;
+    color:var(--navy);
+    min-height:28px;
+  }
+  .feedback-box{
+    display:none;
+    margin-top:12px;
+    padding:12px 14px;
+    border-radius:8px;
+    font-size:.9rem;
+  }
+  .feedback-box.show{display:block;}
+  .feedback-box.correct{background:#e7f5ec;border:1px solid var(--green);color:var(--green);}
+  .feedback-box.incorrect{background:#fdecec;border:1px solid var(--red);color:var(--red);}
+  button{
+    font-family:inherit;
+    cursor:pointer;
+  }
+  .btn{
+    background:var(--orange);
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-size:.95rem;
+    font-weight:600;
+    margin-top:14px;
+  }
+  .btn:hover{background:var(--orange-dark);}
+  .btn.secondary{
+    background:var(--navy);
+  }
+  .btn.secondary:hover{background:var(--navy-light);}
+  .btn:disabled{background:#b7bec7;cursor:not-allowed;}
+  .map-wrap{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:16px;
+    align-items:flex-start;
+  }
+  .map-axis-y{
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    font-size:.8rem;
+    font-weight:600;
+    color:var(--navy);
+    text-align:center;
+    padding:4px 0;
+  }
+  .map-container{
+    position:relative;
+    flex:1;
+    min-width:260px;
+    max-width:420px;
+  }
+  .map-box{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    background:
+      linear-gradient(var(--border) 1px, transparent 1px) 0 0 / 100% 50%,
+      linear-gradient(90deg, var(--border) 1px, transparent 1px) 0 0 / 50% 100%;
+    background-color:#fbfcfd;
+    border:2px solid var(--navy);
+    border-radius:10px;
+    cursor:crosshair;
+    overflow:hidden;
+  }
+  .map-box .center-line-v, .map-box .center-line-h{
+    position:absolute;
+    background:var(--navy);
+    opacity:.5;
+  }
+  .map-box .center-line-v{left:50%;top:0;bottom:0;width:2px;transform:translateX(-1px);}
+  .map-box .center-line-h{top:50%;left:0;right:0;height:2px;transform:translateY(-1px);}
+  .map-axis-x{
+    text-align:center;
+    font-size:.8rem;
+    font-weight:600;
+    color:var(--navy);
+    margin-top:6px;
+  }
+  .map-dot{
+    position:absolute;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    border:2px solid #fff;
+    box-shadow:0 1px 3px rgba(0,0,0,0.4);
+  }
+  .map-dot .dot-label{
+    position:absolute;
+    top:16px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:.72rem;
+    font-weight:700;
+    white-space:nowrap;
+    background:rgba(255,255,255,0.92);
+    padding:1px 5px;
+    border-radius:4px;
+  }
+  .brand-picker{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:10px 0;
+  }
+  .brand-chip{
+    border:2px solid var(--border);
+    background:#fff;
+    border-radius:999px;
+    padding:6px 14px;
+    font-size:.85rem;
+    font-weight:600;
+  }
+  .brand-chip.active{border-color:var(--orange);background:var(--orange-pale);}
+  .brand-chip.placed{opacity:.45;}
+  table.rubric{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:14px;
+    font-size:.88rem;
+  }
+  table.rubric th, table.rubric td{
+    border:1px solid var(--border);
+    padding:9px 10px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.rubric th{
+    background:var(--navy);
+    color:#fff;
+  }
+  table.rubric tr:nth-child(even) td{background:#f6f8fa;}
+  .pts{text-align:center;font-weight:700;color:var(--navy);white-space:nowrap;}
+  .gate{
+    position:fixed;
+    inset:0;
+    background:var(--navy);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+  }
+  .gate-box{
+    background:#fff;
+    border-radius:14px;
+    padding:32px 28px;
+    max-width:380px;
+    width:100%;
+    text-align:center;
+  }
+  .gate-box h2{color:var(--navy);margin-top:0;}
+  .gate-box input{margin:14px 0;text-align:center;letter-spacing:1px;}
+  .gate-error{color:var(--red);font-size:.85rem;min-height:18px;}
+  .locked-banner{
+    background:var(--navy-pale);
+    border:1px solid var(--navy);
+    color:var(--navy);
+    padding:14px 18px;
+    border-radius:10px;
+    margin-bottom:20px;
+    font-size:.9rem;
+    display:none;
+  }
+  .locked-banner.show{display:block;}
+  [hidden]{display:none!important;}
+  footer.actions{
+    position:sticky;
+    bottom:0;
+    background:#fff;
+    border-top:1px solid var(--border);
+    padding:14px 18px;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  @media print{
+    header.top::after{display:none;}
+    .progress, footer.actions, .gate, .btn, .brand-picker, .locked-banner, .feedback-box{display:none!important;}
+    body{background:#fff;}
+    .card{box-shadow:none;border:1px solid #999;break-inside:avoid;}
+    select, textarea, input{border:1px solid #999;background:#fff;}
+  }
+  @media (max-width:520px){
+    header.top h1{font-size:1.4rem;}
+    .card{padding:18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <h2>Chapter 4 Activity Access</h2>
+    <p>Enter the access code from your D2L announcement or module page to begin.</p>
+    <input type="text" id="gateCode" placeholder="Access code">
+    <div class="gate-error" id="gateError"></div>
+    <button class="btn" onclick="checkGate()">Enter Activity</button>
+  </div>
+</div>
+
+<header class="top">
+  <h1>Positioning Playground</h1>
+  <p class="sub">What Makes Play-Doh, Play-Doh? &mdash; Chapter 4: Segmentation, Targeting &amp; Positioning</p>
+  <div class="badge-row">
+    <span class="badge">25 points</span>
+    <span class="badge">Principles of Marketing</span>
+    <span class="badge">Individual Assignment</span>
+  </div>
+</header>
+
+<div class="wrap" id="mainWrap" hidden>
+
+  <div class="progress" id="progressBar">
+    <div class="step" data-step="1"></div>
+    <div class="step" data-step="2"></div>
+    <div class="step" data-step="3"></div>
+    <div class="step" data-step="4"></div>
+    <div class="step" data-step="5"></div>
+  </div>
+
+  <div class="locked-banner" id="lockedBanner">
+    You already submitted this activity as <strong id="lockedName"></strong> on <strong id="lockedDate"></strong>. It is now in review-only mode. If you believe this is an error, contact your instructor.
+  </div>
+
+  <!-- IDENTIFICATION -->
+  <div class="card">
+    <h2><span class="step-num">*</span> Before You Start</h2>
+    <label for="studentName">Your full name (as it appears in D2L)</label>
+    <input type="text" id="studentName" placeholder="First Last">
+    <p class="hint">This activity is designed to be completed using only your Chapter 4 lecture and course materials. Outside AI tools should not be used to generate your written responses &mdash; several questions ask you to reference specific examples from our class lecture, which a generic AI answer will not include.</p>
+  </div>
+
+  <!-- STEP 1: THE STORY -->
+  <div class="card">
+    <h2><span class="step-num">1</span> The Play-Doh Story</h2>
+    <p>Before it was a toy, Play-Doh was a <strong>wallpaper cleaner</strong>. In the 1930s, Kutol Products sold a soft, pliable putty that scrubbed coal soot off wallpaper. By the 1950s, coal heating (and soot-covered wallpaper) was disappearing, and the product was headed for the discontinued bin. A nursery school teacher discovered that kids loved molding the leftover cleaning putty, and Kutol repositioned the entire product around that insight: same core formula, completely different frame of reference, completely different customer.</p>
+    <div class="fact-grid">
+      <div class="fact"><strong>Old positioning:</strong> A household cleaning product for adults who heat with coal.</div>
+      <div class="fact"><strong>New positioning:</strong> A safe, reusable creative-play compound for young children and the parents/teachers who supply them.</div>
+      <div class="fact"><strong>What didn't change:</strong> The physical product itself &mdash; the formula stayed nearly identical.</div>
+      <div class="fact"><strong>What did change:</strong> The target market, the frame of reference, and the points of difference the brand chose to emphasize.</div>
+    </div>
+    <p class="hint">This is the same repositioning logic we discussed in lecture with other brands &mdash; a company doesn't always need a new product to find a new position, sometimes it needs a new story about the same product.</p>
+  </div>
+
+  <!-- STEP 2: GUIDED POSITIONING STATEMENT -->
+  <div class="card">
+    <h2><span class="step-num">2</span> Build Play-Doh's Positioning Statement</h2>
+    <p>Using the positioning statement template from lecture (<em>To [target market], [brand] is the [frame of reference] that [point of difference], because [reason to believe / points of parity]</em>), select the option in each box that best fits how Play-Doh is actually positioned today.</p>
+
+    <label for="pdTarget">To...</label>
+    <select id="pdTarget" onchange="buildPlayDohStatement()">
+      <option value="">Choose a target market</option>
+      <option value="wrong">adults looking for a wallpaper cleaning solution</option>
+      <option value="right">parents and teachers of young children who want safe, open-ended creative play</option>
+      <option value="wrong2">professional sculptors who need a permanent modeling material</option>
+    </select>
+
+    <label for="pdFrame">Play-Doh is the...</label>
+    <select id="pdFrame" onchange="buildPlayDohStatement()">
+      <option value="">Choose a frame of reference</option>
+      <option value="wrong">industrial cleaning compound</option>
+      <option value="right">modeling compound / creative-play toy</option>
+      <option value="wrong2">arts-and-crafts kit</option>
+    </select>
+
+    <label for="pdPod">...that...</label>
+    <select id="pdPod" onchange="buildPlayDohStatement()">
+      <option value="">Choose the point of difference</option>
+      <option value="right">lets kids mold, squish, and reshape endlessly without a "correct" outcome, unlike compounds that harden or dry out</option>
+      <option value="wrong">is the cheapest option on the toy aisle shelf</option>
+      <option value="wrong2">requires no adult supervision whatsoever</option>
+    </select>
+
+    <label for="pdRtb">...because...</label>
+    <select id="pdRtb" onchange="buildPlayDohStatement()">
+      <option value="">Choose the reason to believe</option>
+      <option value="right">its non-toxic, reusable formula and iconic scent have been trusted by parents and educators for decades</option>
+      <option value="wrong">it was originally invented as a cleaning product</option>
+      <option value="wrong2">it comes in more colors than any competitor</option>
+    </select>
+
+    <div class="statement-preview" id="pdPreview">Your statement will build here as you make selections...</div>
+    <button class="btn" onclick="checkPlayDohStatement()">Check My Statement</button>
+    <div class="feedback-box" id="pdFeedback"></div>
+  </div>
+
+  <!-- STEP 3: PERCEPTUAL MAP -->
+  <div class="card">
+    <h2><span class="step-num">3</span> Plot the Perceptual Map</h2>
+    <p>Click a brand chip below, then click a spot on the map to place it. Plot all four brands: <strong>Play-Doh, Crayola Model Magic, Kinetic Sand, and Silly Putty.</strong></p>
+    <div class="brand-picker" id="brandPicker">
+      <button type="button" class="brand-chip" data-brand="Play-Doh" data-color="#f47920" onclick="selectBrand(this)">Play-Doh</button>
+      <button type="button" class="brand-chip" data-brand="Model Magic" data-color="#0f2a4a" onclick="selectBrand(this)">Crayola Model Magic</button>
+      <button type="button" class="brand-chip" data-brand="Kinetic Sand" data-color="#2f7d4f" onclick="selectBrand(this)">Kinetic Sand</button>
+      <button type="button" class="brand-chip" data-brand="Silly Putty" data-color="#8e44ad" onclick="selectBrand(this)">Silly Putty</button>
+    </div>
+    <div class="map-wrap">
+      <div class="map-axis-y">Open-Ended Imaginative Play &larr;&rarr; Structured, Realistic Results</div>
+      <div class="map-container">
+        <div class="map-box" id="mapBox" onclick="placeDot(event)">
+          <div class="center-line-v"></div>
+          <div class="center-line-h"></div>
+        </div>
+        <div class="map-axis-x">Mess-Free &larr;&rarr; Very Messy</div>
+      </div>
+    </div>
+    <label for="mapReasoning">In 3&ndash;5 sentences, explain why you placed Play-Doh where you did relative to the other three brands. Reference at least one specific placement decision (e.g., why it's messier or less messy than a named competitor).</label>
+    <textarea id="mapReasoning" oninput="updateWordCount('mapReasoning','mapCount',60)" placeholder="I placed Play-Doh..."></textarea>
+    <div class="wordcount short" id="mapCount">0 words (60 minimum)</div>
+  </div>
+
+  <!-- STEP 4: YOUR TURN -->
+  <div class="card">
+    <h2><span class="step-num">4</span> Your Turn: Position a Product of Your Own</h2>
+    <p>Pick a real product or brand <strong>we have not discussed in class</strong> (not Play-Doh, and not any brand from our Chapter 4 lecture or slides). Write a full positioning statement for it using the same four-part template, then explain your reasoning.</p>
+
+    <label for="myProduct">Product or brand you're positioning</label>
+    <input type="text" id="myProduct" placeholder="e.g., a specific brand you use or admire">
+
+    <label for="myTarget">To [target market]...</label>
+    <input type="text" id="myTarget" placeholder="Describe the specific target market">
+
+    <label for="myFrame">...[brand] is the [frame of reference]...</label>
+    <input type="text" id="myFrame" placeholder="What category or frame of reference does it compete in?">
+
+    <label for="myPod">...that [point of difference]...</label>
+    <input type="text" id="myPod" placeholder="What makes it meaningfully different from competitors?">
+
+    <label for="myRtb">...because [reason to believe / points of parity].</label>
+    <input type="text" id="myRtb" placeholder="Why should the target market believe this claim?">
+
+    <label for="myRationale">Rationale (150-word minimum): Explain your choices using at least <u>two</u> specific concepts from Chapter 4 by name (for example: points of parity, points of difference, frame of reference, perceptual mapping, repositioning). Also compare your product's positioning approach to the Play-Doh example from Step 1 or 2 &mdash; is it similar or different, and why?</label>
+    <textarea id="myRationale" style="min-height:160px;" oninput="updateWordCount('myRationale','myRationaleCount',150)" placeholder="Type your rationale here..."></textarea>
+    <div class="wordcount short" id="myRationaleCount">0 words (150 minimum)</div>
+  </div>
+
+  <!-- STEP 5: REFLECTION -->
+  <div class="card">
+    <h2><span class="step-num">5</span> Reflection</h2>
+    <label for="reflection">Word minimum: 100 words. Name and briefly describe <em>one specific example, story, or case discussed in our Chapter 4 lecture or slides</em> (other than Play-Doh) that illustrates positioning, points of difference, or repositioning. Explain in your own words why that example worked or didn't work.</label>
+    <textarea id="reflection" style="min-height:140px;" oninput="updateWordCount('reflection','reflectionCount',100)" placeholder="In our Chapter 4 lecture, we discussed..."></textarea>
+    <div class="wordcount short" id="reflectionCount">0 words (100 minimum)</div>
+  </div>
+
+  <!-- RUBRIC -->
+  <div class="card">
+    <h2>Grading Rubric &mdash; 25 Points</h2>
+    <table class="rubric">
+      <tr><th>Criterion</th><th>What Earns Full Points</th><th class="pts">Pts</th></tr>
+      <tr>
+        <td>Play-Doh Positioning Statement (Step 2)</td>
+        <td>All four dropdown selections correctly identify Play-Doh's actual target market, frame of reference, point of difference, and reason to believe.</td>
+        <td class="pts">5</td>
+      </tr>
+      <tr>
+        <td>Perceptual Map Placement &amp; Reasoning (Step 3)</td>
+        <td>All four brands plotted in logically defensible positions relative to one another; written reasoning clearly explains at least one comparative placement decision.</td>
+        <td class="pts">5</td>
+      </tr>
+      <tr>
+        <td>Original Positioning Statement (Step 4)</td>
+        <td>All four template fields are complete, internally consistent, and describe a genuine, specific point of difference (not a generic claim like "good quality" or "affordable").</td>
+        <td class="pts">7</td>
+      </tr>
+      <tr>
+        <td>Rationale Paragraph (Step 4)</td>
+        <td>Meets the 150-word minimum, correctly names and applies at least two Chapter 4 concepts by name, and draws a specific, accurate comparison to the Play-Doh example.</td>
+        <td class="pts">5</td>
+      </tr>
+      <tr>
+        <td>Reflection (Step 5)</td>
+        <td>Meets the 100-word minimum and names a specific, accurate example from Chapter 4 lecture/slides (not Play-Doh) with a clear explanation of why it worked or didn't.</td>
+        <td class="pts">3</td>
+      </tr>
+    </table>
+    <p class="hint">Criteria are scored in 0.5-point increments. Responses that could apply to any product without reference to our specific Chapter 4 lecture content will not receive full credit on the rationale or reflection criteria.</p>
+  </div>
+
+</div>
+
+<footer class="actions" id="actionsFooter" hidden>
+  <button class="btn secondary" onclick="window.print()">Save as PDF</button>
+  <button class="btn" id="submitBtn" onclick="markComplete()">Mark Complete &amp; Lock</button>
+</footer>
+
+<script>
+const STUDENT_CODE = "POSITION4";
+const INSTRUCTOR_CODE = "INSTRUCTOR";
+const STORAGE_KEY = "ch4_positioning_playdoh_completed";
+let isInstructor = false;
+
+function checkGate(){
+  const val = document.getElementById('gateCode').value.trim().toUpperCase();
+  const err = document.getElementById('gateError');
+  if(val === INSTRUCTOR_CODE){
+    isInstructor = true;
+    enterActivity();
+    return;
+  }
+  if(val === STUDENT_CODE){
+    enterActivity();
+    return;
+  }
+  err.textContent = "That code doesn't match. Check your D2L module page and try again.";
+}
+
+function enterActivity(){
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('mainWrap').hidden = false;
+  document.getElementById('actionsFooter').hidden = false;
+  checkLockState();
+  window.addEventListener('scroll', updateProgress);
+  updateProgress();
+}
+
+function checkLockState(){
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if(saved && !isInstructor){
+    const data = JSON.parse(saved);
+    document.getElementById('lockedBanner').classList.add('show');
+    document.getElementById('lockedName').textContent = data.name || "you";
+    document.getElementById('lockedDate').textContent = data.date || "";
+    document.querySelectorAll('input, select, textarea').forEach(el => el.disabled = true);
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').textContent = "Already Submitted";
+    // restore saved answers for review
+    if(data.answers){
+      Object.keys(data.answers).forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.value = data.answers[id];
+      });
+      buildPlayDohStatement();
+    }
+  }
+}
+
+function buildPlayDohStatement(){
+  const t = document.getElementById('pdTarget');
+  const f = document.getElementById('pdFrame');
+  const p = document.getElementById('pdPod');
+  const r = document.getElementById('pdRtb');
+  const parts = [];
+  parts.push("To " + (t.options[t.selectedIndex]?.text.startsWith('Choose') ? "___" : t.options[t.selectedIndex]?.text || "___") + ",");
+  parts.push("Play-Doh is the " + (f.value ? f.options[f.selectedIndex].text : "___") + " that");
+  parts.push((p.value ? p.options[p.selectedIndex].text : "___") + ",");
+  parts.push("because " + (r.value ? r.options[r.selectedIndex].text : "___") + ".");
+  document.getElementById('pdPreview').textContent = parts.join(" ");
+}
+
+function checkPlayDohStatement(){
+  const ids = ['pdTarget','pdFrame','pdPod','pdRtb'];
+  const fb = document.getElementById('pdFeedback');
+  const allAnswered = ids.every(id => document.getElementById(id).value !== "");
+  if(!allAnswered){
+    fb.className = "feedback-box show incorrect";
+    fb.textContent = "Please make a selection in all four boxes before checking.";
+    return;
+  }
+  const allCorrect = ids.every(id => document.getElementById(id).value === "right");
+  fb.className = "feedback-box show " + (allCorrect ? "correct" : "incorrect");
+  fb.textContent = allCorrect
+    ? "That matches how Play-Doh is actually positioned. Nice work — you can move on to Step 3."
+    : "At least one selection doesn't match Play-Doh's actual positioning. Review the Step 1 story and try again — think about what the brand emphasizes today, not what it was originally.";
+}
+
+let currentBrand = null;
+const placedBrands = {};
+function selectBrand(btn){
+  document.querySelectorAll('.brand-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  currentBrand = { name: btn.dataset.brand, color: btn.dataset.color, btn: btn };
+}
+function placeDot(e){
+  if(!currentBrand){ return; }
+  const box = document.getElementById('mapBox');
+  const rect = box.getBoundingClientRect();
+  const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+  const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+  const existingId = 'dot-' + currentBrand.name.replace(/\s+/g,'');
+  let dot = document.getElementById(existingId);
+  if(!dot){
+    dot = document.createElement('div');
+    dot.className = 'map-dot';
+    dot.id = existingId;
+    const label = document.createElement('span');
+    label.className = 'dot-label';
+    label.textContent = currentBrand.name;
+    label.style.color = currentBrand.color;
+    dot.appendChild(label);
+    box.appendChild(dot);
+  }
+  dot.style.left = xPct + '%';
+  dot.style.top = yPct + '%';
+  dot.style.background = currentBrand.color;
+  placedBrands[currentBrand.name] = {x:xPct, y:yPct};
+  currentBrand.btn.classList.add('placed');
+}
+
+function updateWordCount(taId, countId, min){
+  const text = document.getElementById(taId).value;
+  const words = text.trim().length ? text.trim().split(/\s+/).length : 0;
+  const el = document.getElementById(countId);
+  el.textContent = words + " words (" + min + " minimum)";
+  el.className = "wordcount " + (words >= min ? "ok" : "short");
+}
+
+function updateProgress(){
+  const cards = document.querySelectorAll('.wrap .card');
+  const steps = document.querySelectorAll('.progress .step');
+  const scrollPos = window.scrollY + window.innerHeight/2;
+  let activeIdx = 0;
+  cards.forEach((c,i) => { if(c.offsetTop < scrollPos) activeIdx = i; });
+  steps.forEach((s,i) => {
+    s.classList.remove('active','done');
+    if(i < activeIdx) s.classList.add('done');
+    else if(i === activeIdx) s.classList.add('active');
+  });
+}
+
+function markComplete(){
+  const name = document.getElementById('studentName').value.trim();
+  if(!name){
+    alert("Please enter your name before marking this activity complete.");
+    document.getElementById('studentName').focus();
+    return;
+  }
+  const requiredChecks = [
+    {id:'myRationale', min:150, label:'Step 4 rationale'},
+    {id:'reflection', min:100, label:'Step 5 reflection'}
+  ];
+  for(const chk of requiredChecks){
+    const words = document.getElementById(chk.id).value.trim().split(/\s+/).filter(Boolean).length;
+    if(words < chk.min){
+      alert("Your " + chk.label + " needs at least " + chk.min + " words before you can submit. It currently has " + words + ".");
+      return;
+    }
+  }
+  if(!confirm("Mark this activity complete and lock it? You won't be able to make further changes. Be sure to click \"Save as PDF\" first if you haven't already.")){
+    return;
+  }
+  const fieldsToSave = ['studentName','pdTarget','pdFrame','pdPod','pdRtb','mapReasoning','myProduct','myTarget','myFrame','myPod','myRtb','myRationale','reflection'];
+  const answers = {};
+  fieldsToSave.forEach(id => { const el = document.getElementById(id); if(el) answers[id] = el.value; });
+  answers['perceptualMap'] = placedBrands;
+  const record = { name: name, date: new Date().toLocaleDateString(), answers: answers };
+  if(!isInstructor){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+  }
+  checkLockState();
+  alert("Activity marked complete. Use \"Save as PDF\" now to submit your file to the D2L dropbox.");
+}
+</script>
+
+</body>
+</html>
