@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Global Gamble · Chapter 3 Case Study</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;600&display=swap');
+
+:root {
+  --ink:     #1A1208;
+  --paper:   #F5EDD8;
+  --aged:    #EDE0C4;
+  --amber:   #C8860A;
+  --amber2:  #A06A05;
+  --teal:    #0D6B75;
+  --coral:   #B84030;
+  --sage:    #4A7A62;
+  --navy:    #0D2B55;
+  --rule:    #8B7355;
+  --mgray:   #6B5E4A;
+  --lgray:   #C4B49A;
+  --correct: #2D6B3A;
+  --wrong:   #922B1A;
+  --white:   #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  background: #2C2010;
+  min-height: 100vh;
+  color: var(--ink);
+}
+
+/* ── GATE ────────────────────────────────────────────────── */
+#gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #3a2a10 0%, #1a1208 100%);
+  padding: 2rem;
+}
+.gate-masthead {
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+.gate-rule { height: 3px; background: var(--amber); margin-bottom: 1.5rem; }
+.gate-rule-thin { height: 1px; background: var(--amber); margin: 0.5rem 0 1.5rem; opacity: 0.5; }
+.gate-eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.gate-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  color: var(--paper);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.gate-deck {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  color: var(--lgray);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+.gate-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 0;
+  border: 1px solid var(--amber);
+  border-bottom: 3px solid var(--amber);
+  background: rgba(245,237,216,0.07);
+  color: var(--paper);
+  font-family: 'Source Code Pro', monospace;
+  font-size: 1rem;
+  text-align: center;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  outline: none;
+  transition: background 0.2s;
+}
+.gate-input:focus { background: rgba(245,237,216,0.12); }
+.gate-btn {
+  width: 100%;
+  padding: 0.9rem;
+  border: 1px solid var(--amber);
+  background: var(--amber);
+  color: var(--ink);
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+}
+.gate-btn:hover { background: var(--amber2); border-color: var(--amber2); }
+.gate-error { color: var(--coral); font-size: 0.82rem; margin-top: 0.5rem; font-style: italic; min-height: 1.2em; font-family: 'Source Code Pro', monospace; }
+.gate-points { color: var(--lgray); font-size: 0.78rem; margin-top: 1.25rem; font-family: 'Source Code Pro', monospace; letter-spacing: 0.05em; }
+
+/* ── MAIN APP ─────────────────────────────────────────────── */
+#app { display: none; background: #2C2010; min-height: 100vh; }
+
+/* Masthead */
+.masthead {
+  background: var(--paper);
+  border-bottom: 4px double var(--rule);
+  padding: 0.75rem 2rem 0.6rem;
+  text-align: center;
+  position: relative;
+}
+.mast-eyebrow {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--mgray);
+  text-transform: uppercase;
+}
+.mast-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--ink);
+  line-height: 1;
+  margin: 0.2rem 0;
+}
+.mast-sub {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  color: var(--mgray);
+  font-size: 0.85rem;
+}
+.mast-rule { height: 2px; background: var(--ink); margin: 0.5rem 0 0.25rem; }
+.mast-rule-thin { height: 1px; background: var(--ink); }
+.mast-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.4rem;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.65rem;
+  color: var(--mgray);
+  letter-spacing: 0.05em;
+}
+.score-tag {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.15rem 0.6rem;
+  font-size: 0.65rem;
+  font-family: 'Source Code Pro', monospace;
+}
+
+/* Progress */
+.progress-strip {
+  background: var(--ink);
+  padding: 0.4rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.progress-bg { flex: 1; height: 4px; background: rgba(255,255,255,0.1); }
+.progress-fill {
+  height: 100%;
+  background: var(--amber);
+  transition: width 0.5s ease;
+  width: 0%;
+}
+.progress-txt { color: var(--lgray); font-size: 0.68rem; font-family: 'Source Code Pro', monospace; white-space: nowrap; letter-spacing: 0.05em; }
+
+/* Story page */
+.page { display: none; max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+.page.active { display: block; }
+
+/* Chapter header */
+.chapter-flag {
+  background: var(--amber);
+  color: var(--ink);
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.chapter-flag.teal { background: var(--teal); color: var(--white); }
+.chapter-flag.coral { background: var(--coral); color: var(--white); }
+.chapter-flag.sage { background: var(--sage); color: var(--white); }
+.chapter-flag.navy { background: var(--navy); color: var(--white); }
+
+.story-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--paper);
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+.story-deck {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  color: var(--lgray);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.6rem 0;
+  margin-bottom: 1.25rem;
+}
+.byline {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.65rem;
+  color: var(--amber);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+/* Story body text */
+.story-body {
+  background: var(--paper);
+  border: 1px solid var(--lgray);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.story-body::before {
+  content: '';
+  position: absolute;
+  top: 6px; left: 6px; right: -6px; bottom: -6px;
+  background: rgba(0,0,0,0.25);
+  z-index: -1;
+}
+.story-body p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.story-body p:last-child { margin-bottom: 0; }
+.story-body strong { color: var(--amber2); }
+.story-body .pull-quote {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--amber2);
+  border-left: 4px solid var(--amber);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+.concept-tag {
+  display: inline-block;
+  background: var(--teal);
+  color: var(--white);
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.5rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  margin-right: 0.35rem;
+}
+.concept-tag.amber { background: var(--amber2); }
+.concept-tag.coral { background: var(--coral); }
+.concept-tag.sage { background: var(--sage); }
+.concept-tag.navy { background: var(--navy); }
+
+/* Decision prompt */
+.decision-prompt {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--paper);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+.decision-prompt em { color: var(--amber); font-style: italic; }
+
+/* Choice cards */
+.choices { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+.choice-card {
+  background: var(--paper);
+  border: 2px solid var(--lgray);
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  text-align: left;
+  font-family: inherit;
+  width: 100%;
+  position: relative;
+}
+.choice-card:hover:not(.locked) {
+  border-color: var(--amber);
+  background: #FDF8EC;
+  transform: translateX(4px);
+}
+.choice-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--amber2);
+  min-width: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.choice-text {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.choice-card.correct { border-color: var(--correct); background: #EEF7F0; }
+.choice-card.correct .choice-letter { color: var(--correct); }
+.choice-card.wrong { border-color: var(--wrong); background: #FDF0EE; }
+.choice-card.wrong .choice-letter { color: var(--wrong); }
+.choice-card.locked { cursor: default; }
+.choice-card.reveal-correct { border-color: var(--correct); background: #EEF7F0; }
+.choice-card.reveal-correct::after { content: ' ✓ CORRECT ANSWER'; font-family: 'Source Code Pro', monospace; font-size: 0.65rem; font-weight: 600; color: var(--correct); letter-spacing: 0.1em; display: block; margin-top: 0.4rem; }
+
+/* Outcome box */
+.outcome {
+  display: none;
+  margin-bottom: 1.5rem;
+}
+.outcome.show { display: block; }
+.outcome-inner {
+  padding: 1.25rem 1.5rem;
+  border-left: 5px solid var(--correct);
+  background: var(--paper);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.outcome-inner.bad { border-color: var(--wrong); }
+.outcome-header {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.outcome-header.good { color: var(--correct); }
+.outcome-header.bad { color: var(--wrong); }
+.pts-badge {
+  display: inline-block;
+  background: var(--correct);
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+.pts-badge.zero { background: var(--wrong); }
+
+/* Concept callout */
+.concept-box {
+  background: rgba(13,107,117,0.12);
+  border: 1px solid rgba(13,107,117,0.3);
+  padding: 0.85rem 1.1rem;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--paper);
+}
+.concept-box strong { color: var(--amber); }
+
+/* Drag classifier */
+.classifier-wrap { margin-bottom: 1.5rem; }
+.classifier-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+.classify-chip {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--rule);
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.82rem;
+  cursor: grab;
+  transition: transform 0.15s, box-shadow 0.15s;
+  user-select: none;
+}
+.classify-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+.classify-chip.dragging { opacity: 0.4; }
+.classify-chip.placed { opacity: 0.4; cursor: default; }
+
+.drop-bins { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.drop-bin {
+  border: 2px dashed var(--rule);
+  padding: 0.75rem;
+  min-height: 80px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.drop-bin.drag-over { border-color: var(--amber); background: rgba(200,134,10,0.06); }
+.drop-bin h4 {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.6rem;
+}
+.bin-item {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+  font-family: 'Libre Baskerville', serif;
+  border-left: 3px solid var(--rule);
+}
+.bin-item.correct-item { border-color: var(--correct); }
+.bin-item.wrong-item { border-color: var(--wrong); }
+
+.check-classify-btn {
+  padding: 0.6rem 1.5rem;
+  border: 2px solid var(--amber);
+  background: transparent;
+  color: var(--amber);
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.75rem;
+}
+.check-classify-btn:hover { background: var(--amber); color: var(--ink); }
+.check-classify-btn:disabled { border-color: var(--rule); color: var(--rule); cursor: default; }
+
+/* Map clickable */
+.world-map-wrap {
+  background: var(--paper);
+  border: 1px solid var(--lgray);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.map-label {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.65rem;
+  color: var(--mgray);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.market-card {
+  border: 2px solid var(--lgray);
+  padding: 0.85rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #FDF8EC;
+}
+.market-card:hover:not(.locked) { border-color: var(--amber); transform: translateY(-2px); }
+.market-card.selected { border-color: var(--amber); background: #FDF0D0; }
+.market-card.correct-market { border-color: var(--correct); background: #EEF7F0; }
+.market-card.wrong-market { border-color: var(--wrong); background: #FDF0EE; }
+.market-card.locked { cursor: default; }
+.market-flag { font-size: 1.8rem; margin-bottom: 0.3rem; }
+.market-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: var(--ink); font-weight: 700; }
+.market-hint { font-size: 0.72rem; color: var(--mgray); margin-top: 0.2rem; font-style: italic; font-family: 'Libre Baskerville', serif; }
+
+/* Timeline/entry method selector */
+.entry-selector { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+.entry-option {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--lgray);
+  background: var(--paper);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  font-family: inherit;
+  width: 100%;
+}
+.entry-option:hover:not(.locked) { border-color: var(--amber); }
+.entry-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--amber2);
+  min-width: 24px;
+}
+.entry-label { font-size: 0.88rem; color: var(--ink); line-height: 1.4; }
+.entry-option.correct { border-color: var(--correct); }
+.entry-option.wrong { border-color: var(--wrong); }
+.entry-option.locked { cursor: default; }
+.entry-option.reveal-correct { border-color: var(--correct); background: #EEF7F0; }
+
+/* Nav */
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  margin-top: 0.5rem;
+}
+.btn-continue {
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--amber);
+  background: var(--amber);
+  color: var(--ink);
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.03em;
+}
+.btn-continue:hover { background: var(--amber2); border-color: var(--amber2); }
+.btn-back {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--lgray);
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.08em;
+}
+.btn-back:hover { border-color: var(--lgray); color: var(--paper); }
+
+/* Completion */
+#completion {
+  display: none;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  text-align: center;
+}
+.final-masthead { background: var(--paper); padding: 2rem; margin-bottom: 1.5rem; }
+.final-flag {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--amber2);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.final-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+.final-deck {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  color: var(--mgray);
+  font-size: 0.92rem;
+}
+.score-wrap {
+  background: var(--ink);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.score-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  color: var(--amber);
+  line-height: 1;
+}
+.score-denom { color: var(--lgray); font-family: 'Source Code Pro', monospace; font-size: 0.8rem; margin-top: 0.25rem; }
+.score-grade {
+  margin-top: 1rem;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--paper);
+}
+.result-table { background: var(--paper); padding: 1.25rem; margin-bottom: 1.5rem; text-align: left; }
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--lgray);
+  font-size: 0.88rem;
+  color: var(--ink);
+  font-family: 'Libre Baskerville', serif;
+}
+.result-row:last-child { border-bottom: none; }
+.result-pts { font-family: 'Source Code Pro', monospace; font-weight: 600; color: var(--amber2); }
+.pdf-btn {
+  padding: 0.9rem 2.5rem;
+  background: var(--amber);
+  border: none;
+  color: var(--ink);
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.03em;
+}
+.pdf-btn:hover { background: var(--amber2); color: var(--white); }
+
+@media (max-width: 580px) {
+  .story-headline { font-size: 1.5rem; }
+  .drop-bins { grid-template-columns: 1fr; }
+  .market-grid { grid-template-columns: repeat(2, 1fr); }
+  .page { padding: 1rem 1rem 3rem; }
+}
+</style>
+<script>document.addEventListener('DOMContentLoaded', function() {
+						if (document.documentElement.hasAttribute('lang')) {
+							document.documentElement.dataset.customLang = '';
+							return;
+						}
+						document.documentElement.setAttribute('lang', 'en-us');
+					});</script><script>document.addEventListener('DOMContentLoaded', function() {
+						if (document.head.querySelector('title')) return;
+						var handleAppendTitle = function(evt) {
+							if (!evt || !evt.data) return;
+
+							try {
+								var data = JSON.parse(evt.data);
+								if (data.handler !== 'd2l.iframe.requestPageTitle' || !data.pageTitle) return;
+
+								window.removeEventListener('message', handleAppendTitle, false);
+
+								var titleElm = document.createElement('title');
+								titleElm.textContent = data.pageTitle;
+								document.head.appendChild(titleElm);
+							} catch (e) {}
+						};
+
+						window.addEventListener('message', handleAppendTitle, false);
+						window.parent.postMessage(JSON.stringify({ handler: 'd2l.iframe.requestPageTitle' }), '*');
+					});</script><script>window.addEventListener('message', function(event) { 
+					if( !event.data ) {
+						return;
+					}
+
+					let params;
+					try {
+						params = JSON.parse( event.data );
+					}
+					catch {
+						return;
+					}
+					if( !params.subject || params.subject !== 'lti.frameResize' ) {
+						return;
+					}
+
+					const MAX_FRAME_HEIGHT = 10000;
+					if( !params.height || params.height < 1 || params.height > MAX_FRAME_HEIGHT ) {
+						console.warn( 'Invalid height value received, aborting' );
+						return;
+					}
+					const el = document.getElementsByTagName( 'iframe' );
+					for ( let i=0; i < el.length; i++ ) {
+						if( el[i].contentWindow === event.source ) {
+							el[i].style.height = params.height + 'px';
+
+							console.info( 'Setting iFrame height to ' + params.height );
+
+							if( el[i].getAttribute('lockwidth') !== 'true'){
+								el[i].style.width = '100%';
+								console.info( 'Setting iFrame width to 100%' );
+							}
+						}
+					}
+				});</script><script src="https://s.brightspace.com/lib/bsi/2026.9.217/unbundled/embeds.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+					window.D2L.EmbedRenderer.renderEmbeds(document.body);
+				});</script><script src="https://s.brightspace.com/lib/bsi/2026.9.217/unbundled/mathjax.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+			if (document.querySelector('math, .d2l-element, .d2l-cplus-layout') || /\$\$|\\\(|\\\[|\\begin{|\\ref{|\\eqref{/.test(document.body.innerHTML)) {
+				document.querySelectorAll('mspace[linebreak="newline"]').forEach(elm => {
+					elm.setAttribute('style', 'display: block; height: 0.5rem;');
+				});
+
+				document.querySelectorAll('math mmultiscripts > none').forEach(elm => {
+					const mrow = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'mrow');
+					elm.replaceWith(mrow);
+				});
+
+				window.D2L.MathJax.loadMathJax({"renderLatex":true,"outputScale":1.5,"enableMML3Support":false});
+			}
+		});</script><script src="https://s.brightspace.com/lib/bsi/2026.9.217/unbundled/prism.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', function() {
+					document.querySelectorAll('.d2l-code').forEach(code => {
+						window.D2L.Prism.formatCodeElement(code);
+					});
+				});</script><script>document.addEventListener('DOMContentLoaded', async () => {
+			document.querySelectorAll('iframe[src*="quickLink.d2l"][src*="type=lti"]').forEach(iframe => {
+				iframe.style.borderStyle = 'none';
+			});
+		});</script><script src="https://s.brightspace.com/lib/bsi/2026.9.217/unbundled/context-provider-host-factory.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', async () => {
+			document.documentElement.setAttribute('data-mathjax-context', '{"renderLatex":true,"outputScale":1.5,"enableMML3Support":false}');
+			window.D2L.ContextProvider.createContextProviderHost();
+		});</script><script>
+					if (window.frameElement !== null && !document.documentElement.hasAttribute('data-oslo')) {
+						const osloSettings = {"batch":"/d2l/api/oslo/batch?languageId=1","collection":"/d2l/api/oslo/collection?languageId=1","version":"W/\"20.26.9.24696.639149643291742641\""};
+						document.documentElement.setAttribute('data-oslo', JSON.stringify(osloSettings));
+					}
+				</script><script src="https://s.brightspace.com/lib/bsi/2026.9.217/unbundled/creator.js" type="module"></script><script>document.addEventListener('DOMContentLoaded', async () => {
+			const activities = [];
+			const practices = [];
+			const allPractices = document.querySelectorAll('.d2l-practice');
+			const elements = document.querySelectorAll('.d2l-element');
+			let layouts = [...document.querySelectorAll('.d2l-cplus-layout')];
+			const tables = document.querySelectorAll('table');
+			const contentStylerStyleLinks = document.querySelectorAll('head > link[href="https://templates.lcs.brightspace.com/lib/assets/css/styles.min.css"]');
+			const contentStylerOverides = document.querySelectorAll('head > link[href^="/d2l/le/contentstyler/"][data-override="override"]');
+
+			layouts = layouts.filter((layout) => layout.closest('.d2l-element.mceNonEditable') === null);
+
+			for (const practice of allPractices) {
+				const activityContainer = practice.hasAttribute('data-d2l-activity-href');
+				if (activityContainer) {
+					activities.push(practice);
+				}
+				else {
+					practices.push(practice);
+				}
+			}
+
+			if (layouts.length > 0) {
+				window.D2L.Creator.convertLayouts(layouts);
+			}
+			if (elements.length > 0) {
+				window.D2L.Creator.convertElements(elements, 1346013, '/content/', true);
+			}
+			if (activities.length > 0) {
+				window.D2L.Creator.convertPracticeActivities(activities, 1346013, '/content/');
+			}
+			if (practices.length > 0) {
+				window.D2L.Creator.convertPractices(practices, 1346013, '/content/');
+			}
+			if (contentStylerStyleLinks.length > 0 && contentStylerOverides.length > 0 && tables.length > 0) {
+				window.D2L.Creator.wrapTables(tables);
+			}
+		});</script><script>function lti_launch( vars, target ) {
+					var query = '';
+					var new_tab = false;
+
+					for(var key in vars) {
+						if(query.length == 0) {
+							query += '?' + key + '=' + encodeURIComponent(vars[key]);
+						}
+						else {
+							query += '&' + key + '=' + encodeURIComponent(vars[key]);
+						}
+					}
+
+					var url = '/d2l/customization/pearsonlti/1346013/Launch' + query;(target == '_blank') ? window.open( url, '_blank' ) : location.replace( url );}</script></head>
+<body>
+
+<!-- ══ GATE ══════════════════════════════════════════════════ -->
+<div id="gate">
+  <div class="gate-masthead">
+    <div class="gate-rule"></div>
+    <div class="gate-eyebrow">Chapter 3 · Introduction to Business · M-State</div>
+    <div class="gate-title">The Global<br>Gamble</div>
+    <div class="gate-rule-thin"></div>
+    <div class="gate-deck">An interactive case study in international business.<br>You make the calls. The market decides.</div>
+    <input class="gate-input" id="codeInput" type="text" placeholder="ACCESS CODE" maxlength="20" autocomplete="off">
+    <button class="gate-btn" onclick="checkCode()">Enter the Newsroom</button>
+    <div class="gate-error" id="gateError"></div>
+    <div class="gate-points">11 points · No writing required · Save PDF to submit to D2L</div>
+    <div class="gate-rule" style="margin-top:1.5rem;"></div>
+  </div>
+</div>
+
+<!-- ══ APP ════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- Masthead -->
+  <div class="masthead">
+    <div class="mast-eyebrow">Introduction to Business · Chapter 3 Case Study</div>
+    <div class="mast-rule"></div>
+    <div class="mast-title">The Global Gamble</div>
+    <div class="mast-sub">Follow Prairie Jar Co. as it attempts to take on the world</div>
+    <div class="mast-rule-thin"></div>
+    <div class="mast-meta">
+      <span>Minnesota State Community and Technical College</span>
+      <span class="score-tag" id="headerScore">SCORE: 0 / 11</span>
+      <span id="dateStamp"></span>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-strip">
+    <div class="progress-bg"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-txt" id="progressTxt">DISPATCH 1 OF 8</div>
+  </div>
+
+  <!-- ══ PAGE 1: Setting the Scene ══════════════════════════ -->
+  <div class="page active" id="p1">
+    <div class="chapter-flag">Dispatch No. 1 · LO 1 — Global Trade</div>
+    <h1 class="story-headline">A Small Jar Company Dreams of Going Global</h1>
+    <div class="story-deck">Prairie Jar Co. makes artisan hot sauce and specialty preserves from a facility in Moorhead, Minnesota. After five years of regional success, founder Dana Larsen wants to take the brand international.</div>
+    <div class="byline">By: You — Business Correspondent · Interactive Case Study</div>
+
+    <div class="story-body">
+      <p>Prairie Jar Co. has been one of the Upper Midwest's best-kept culinary secrets since Dana Larsen started selling at the Fargo farmers market in 2019. The company now ships to all 50 states and turns a comfortable profit. But Dana has bigger ambitions.</p>
+      <p><strong>"I keep getting emails from people in Canada and the UK asking where they can buy our stuff,"</strong> Dana says, spreading a map across the conference room table. "That's got to mean something."</p>
+      <p>It does mean something. In fact, 95% of the world's consumers live outside the United States. A business that only sells domestically is ignoring 19 out of every 20 potential customers.</p>
+      <div class="pull-quote">"Are we leaving money on the table — or are we about to make the biggest mistake of our lives?"</div>
+      <p>Dana's business partner, Marcus, is more cautious. He pulls up a spreadsheet showing how much of their current revenue depends on their domestic supply chain. Going global, he warns, means measuring the risks carefully — including how the value of foreign currencies compared to the dollar will affect what they actually earn.</p>
+      <p><span class="concept-tag">LO 1</span><span class="concept-tag amber">Global Vision</span><span class="concept-tag navy">Exchange Rate</span></p>
+    </div>
+
+    <div class="decision-prompt">Prairie Jar Co. just got an offer from a Canadian distributor willing to pay in Canadian dollars. Marcus warns that the <em>exchange rate</em> could hurt them. What does this mean?</div>
+    <div class="choices" id="c1">
+      <button class="choice-card" onclick="choose(1,'A',false,this)"><span class="choice-letter">A</span><span class="choice-text">If the Canadian dollar weakens against the U.S. dollar, Prairie Jar receives fewer U.S. dollars for the same Canadian price — cutting into their profit margin.</span></button>
+      <button class="choice-card" onclick="choose(1,'B',false,this)"><span class="choice-letter">B</span><span class="choice-text">Exchange rates only matter for imports, not exports, so Prairie Jar has nothing to worry about selling to Canada.</span></button>
+      <button class="choice-card" onclick="choose(1,'C',false,this)"><span class="choice-letter">C</span><span class="choice-text">A stronger Canadian dollar always means more profit for U.S. exporters, so Dana should sign immediately.</span></button>
+    </div>
+    <div class="outcome" id="o1"></div>
+    <div class="nav-row">
+      <div></div>
+      <button class="btn-continue" id="next1" onclick="nextPage(1)" style="display:none;">Next Dispatch →</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 2: Choosing a Market ══════════════════════════ -->
+  <div class="page" id="p2">
+    <div class="chapter-flag teal">Dispatch No. 2 · LO 2 — Comparative Advantage</div>
+    <h1 class="story-headline">The World Is Open — But Which Door Do You Walk Through?</h1>
+    <div class="story-deck">Prairie Jar Co. is ready to export. But with limited resources, they can only target one international market first. Dana and Marcus analyze their options.</div>
+    <div class="byline">Location: Prairie Jar Co. HQ, Moorhead MN · Day 14 of the Global Push</div>
+
+    <div class="story-body">
+      <p>The team has done their homework. Their hot sauce is fermented using a process that takes three weeks — a production method that requires skilled labor, precise temperature control, and specific pepper varieties grown in the U.S. Midwest. No other country currently makes a product quite like it.</p>
+      <p><strong>This is their absolute advantage.</strong> The product is genuinely unique. Now they need to figure out where to sell it.</p>
+      <p>Marcus lays out three markets, each with a different profile. "We can't be everywhere at once," he says. "So let's think comparatively about where we actually have the best shot."</p>
+      <p><span class="concept-tag">LO 2</span><span class="concept-tag amber">Absolute Advantage</span><span class="concept-tag sage">Comparative Advantage</span></p>
+    </div>
+
+    <div class="decision-prompt">Based on <em>comparative advantage</em> — choosing the market where Prairie Jar's unique product and language/cultural advantages give them the biggest edge — which market should they enter first?</div>
+
+    <div class="world-map-wrap">
+      <div class="map-label">Click to select your target market</div>
+      <div class="market-grid" id="marketGrid">
+        <div class="market-card" onclick="selectMarket(this,'A')">
+          <div class="market-flag">🇨🇦</div>
+          <div class="market-name">Canada</div>
+          <div class="market-hint">Shared language, same border, similar food culture, no major language barrier</div>
+        </div>
+        <div class="market-card" onclick="selectMarket(this,'B')">
+          <div class="market-flag">🇧🇷</div>
+          <div class="market-name">Brazil</div>
+          <div class="market-hint">Large population, Portuguese-speaking, different food preferences, distant market</div>
+        </div>
+        <div class="market-card" onclick="selectMarket(this,'C')">
+          <div class="market-flag">🇯🇵</div>
+          <div class="market-name">Japan</div>
+          <div class="market-hint">Premium food market, very different culture, complex import regulations, language barrier</div>
+        </div>
+      </div>
+    </div>
+    <button class="check-classify-btn" id="checkMarket" onclick="checkMarket()" disabled>Confirm Market Selection</button>
+    <div class="outcome" id="o2"></div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevPage(2)">← Back</button>
+      <button class="btn-continue" id="next2" onclick="nextPage(2)" style="display:none;">Next Dispatch →</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 3: Trade Barriers ══════════════════════════════ -->
+  <div class="page" id="p3">
+    <div class="chapter-flag coral">Dispatch No. 3 · LO 3 — Barriers to Trade</div>
+    <h1 class="story-headline">The Road to Canada Is Paved With Red Tape</h1>
+    <div class="story-deck">Prairie Jar's first export shipment hits a wall — not a physical one, but a bureaucratic one. Not all barriers to trade are created equal.</div>
+    <div class="byline">Location: Canadian Border Crossing · Day 31</div>
+
+    <div class="story-body">
+      <p>The first truck of Prairie Jar product is sitting at the U.S.-Canada border. The driver calls Dana with bad news: their fermented pepper products require a Canadian food certification they don't yet have. The shipment is delayed.</p>
+      <p>"This isn't a tariff," Dana's trade consultant explains over the phone. "It's a regulatory barrier — a non-tariff barrier. Totally legal, but it still costs you time and money."</p>
+      <p>While sorting out the certification, Dana gets another call. A U.S. competitor filed a complaint that a European company has been selling a similar fermented sauce in the U.S. at prices far below their actual production cost — apparently to drive domestic producers out of business.</p>
+      <p><span class="concept-tag coral">LO 3</span><span class="concept-tag navy">Non-Tariff Barriers</span><span class="concept-tag amber">Dumping</span></p>
+    </div>
+
+    <div class="decision-prompt">Your trade consultant gives you a quick lesson. <em>Classify each scenario below</em> — drag each situation to the correct barrier type.</div>
+
+    <div class="classifier-wrap">
+      <div class="classifier-items" id="classifyChips">
+        <div class="classify-chip" draggable="true" data-id="c1" data-val="tariff">U.S. places a 25% tax on imported Canadian lumber</div>
+        <div class="classify-chip" draggable="true" data-id="c2" data-val="natural">Prairie Jar's shipment to Japan costs 8x more than to Canada due to ocean freight</div>
+        <div class="classify-chip" draggable="true" data-id="c3" data-val="nontariff">Canada requires food certification before fermented imports are allowed</div>
+        <div class="classify-chip" draggable="true" data-id="c4" data-val="tariff">EU imposes retaliatory tariffs on U.S. bourbon after U.S. steel tariffs</div>
+      </div>
+      <div class="drop-bins" id="dropBins">
+        <div class="drop-bin" data-bin="tariff2" id="bin_quota">
+          <h4>Tariff (Retaliatory)</h4>
+        </div>
+        <div class="drop-bin" data-bin="natural" id="bin_natural">
+          <h4>Natural Barrier</h4>
+        </div>
+        <div class="drop-bin" data-bin="tariff" id="bin_tariff">
+          <h4>Tariff Barrier</h4>
+        </div>
+        <div class="drop-bin" data-bin="nontariff" id="bin_nontariff">
+          <h4>Non-Tariff Barrier</h4>
+        </div>
+      </div>
+      <button class="check-classify-btn" id="checkClassify" onclick="checkClassify()" disabled>Check My Classifications</button>
+      <div class="outcome" id="o3"></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevPage(3)">← Back</button>
+      <button class="btn-continue" id="next3" onclick="nextPage(3)" style="display:none;">Next Dispatch →</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 4: WTO & Trade Institutions ═══════════════════ -->
+  <div class="page" id="p4">
+    <div class="chapter-flag sage">Dispatch No. 4 · LO 4 — Fostering Trade</div>
+    <h1 class="story-headline">Who Referees the Global Marketplace?</h1>
+    <div class="story-deck">Prairie Jar's trade consultant explains the three global institutions that make international trade possible — and what each one does when things go wrong.</div>
+    <div class="byline">Location: Video Call · Dana's Home Office · Day 45</div>
+
+    <div class="story-body">
+      <p>"You're going to hear a lot of acronyms in this business," the consultant tells Dana. "Let me break down the three you actually need to know."</p>
+      <p><strong>First:</strong> the WTO — the World Trade Organization. It's the most powerful trade institution in the world. Created by something called the Uruguay Round, which cut global tariffs by one-third overnight. When countries have a trade dispute, the WTO is the referee. You've probably heard about Boeing versus Airbus — the WTO ruled in the U.S.'s favor and allowed $7 billion in retaliatory tariffs against EU subsidies.</p>
+      <p><strong>Second:</strong> the World Bank. It doesn't settle disputes — it makes long-term, low-interest loans to developing nations so they can build ports, roads, and power grids. Better infrastructure means more trade for everyone.</p>
+      <p><strong>Third:</strong> the IMF — the International Monetary Fund. Think of it as the global emergency room for currencies. When a country's balance of payments craters and its currency collapses, the IMF steps in with short-term stabilization loans.</p>
+      <p><span class="concept-tag sage">LO 4</span><span class="concept-tag">WTO</span><span class="concept-tag amber">World Bank</span><span class="concept-tag navy">IMF</span></p>
+    </div>
+
+    <div class="decision-prompt">Prairie Jar's consultant brings up a real scenario: A country where Prairie Jar wants to sell has just had a currency crisis — their money is collapsing and imports are being restricted. <em>Which institution is most relevant here?</em></div>
+
+    <div class="choices" id="c4">
+      <button class="choice-card" onclick="choose(4,'A',false,this)"><span class="choice-letter">A</span><span class="choice-text">The WTO — it can force the country to keep its borders open to imports even during an economic crisis.</span></button>
+      <button class="choice-card" onclick="choose(4,'B',false,this)"><span class="choice-letter">B</span><span class="choice-text">The World Bank — it can give that country a loan to build better import infrastructure.</span></button>
+      <button class="choice-card" onclick="choose(4,'C',true,this)"><span class="choice-letter">C</span><span class="choice-text">The IMF — it provides short-term emergency loans to stabilize a country's currency and balance of payments, which would allow normal trade to resume.</span></button>
+    </div>
+    <div class="outcome" id="o4"></div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevPage(4)">← Back</button>
+      <button class="btn-continue" id="next4" onclick="nextPage(4)" style="display:none;">Next Dispatch →</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 5: Trade Agreements ════════════════════════════ -->
+  <div class="page" id="p5">
+    <div class="chapter-flag navy">Dispatch No. 5 · LO 5 — Economic Communities</div>
+    <h1 class="story-headline">The Club That Changes Everything</h1>
+    <div class="story-deck">Prairie Jar's Canadian shipments are finally flowing. Now Dana learns that the trade agreement governing this relationship almost didn't survive — and what that would have meant.</div>
+    <div class="byline">Location: Prairie Jar Co. Warehouse · Day 60 · First Successful Export</div>
+
+    <div class="story-body">
+      <p>The certification came through. Prairie Jar's first international pallet — 240 cases of Smoky Jalapeño Preserve — crossed into Manitoba without a tariff. Dana grins watching the truck pull out.</p>
+      <p>"You have USMCA to thank for that," the consultant says. "Used to be called NAFTA. It created a free-trade zone between the U.S., Canada, and Mexico. No tariffs on most goods crossing those borders. The auto industry built its entire supply chain around it — parts cross the border six or seven times before a car is finished."</p>
+      <p>Dana asks what would happen if USMCA collapsed. "You'd be paying Canadian tariffs on every jar you ship. And Canada could retaliate against U.S. agricultural goods broadly. Same reason Brexit was such a big deal for UK exporters — losing EU membership meant losing zero-tariff access to 26 other countries overnight."</p>
+      <p><span class="concept-tag navy">LO 5</span><span class="concept-tag">USMCA/NAFTA</span><span class="concept-tag amber">European Union</span><span class="concept-tag sage">Free Trade Zones</span></p>
+    </div>
+
+    <div class="decision-prompt">Dana's cousin asks: <em>"If the EU is such a great trade deal, why did the UK leave?"</em> Which answer best reflects what the chapter teaches?</div>
+
+    <div class="choices" id="c5">
+      <button class="choice-card" onclick="choose(5,'A',false,this)"><span class="choice-letter">A</span><span class="choice-text">The UK left because the EU was economically failing — most EU members were running large trade deficits that hurt British exports.</span></button>
+      <button class="choice-card" onclick="choose(5,'B',true,this)"><span class="choice-letter">B</span><span class="choice-text">The UK left primarily over sovereignty concerns — many citizens felt that EU membership required them to adopt shared regulations and open-border policies that limited Britain's ability to set its own direction, even though the EU could not legally force the UK to comply.</span></button>
+      <button class="choice-card" onclick="choose(5,'C',false,this)"><span class="choice-letter">C</span><span class="choice-text">The UK left because USMCA replaced NAFTA, making it more profitable for the UK to trade with North America than to remain in the EU single market.</span></button>
+    </div>
+    <div class="outcome" id="o5"></div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevPage(5)">← Back</button>
+      <button class="btn-continue" id="next5" onclick="nextPage(5)" style="display:none;">Next Dispatch →</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 6: Entry Method Decision ══════════════════════ -->
+  <div class="page" id="p6">
+    <div class="chapter-flag">Dispatch No. 6 · LO 6 — Entering the Global Marketplace</div>
+    <h1 class="story-headline">The UK Is Calling. How Do You Answer?</h1>
+    <div class="story-deck">A British specialty food importer wants to carry Prairie Jar products. But they're offering something more — a licensing deal that would let them produce a UK version of the sauce locally.</div>
+    <div class="byline">Location: Prairie Jar HQ · Incoming Email from London · Day 78</div>
+
+    <div class="story-body">
+      <p>The email from Hargreaves Fine Foods in London is flattering. They've been following Prairie Jar on social media and think the brand would sell well in UK specialty grocery stores. They're proposing two options.</p>
+      <p><strong>Option 1:</strong> Prairie Jar ships product directly from Moorhead. Hargreaves distributes it in the UK. This is straightforward exporting — Prairie Jar takes currency risk but keeps full control of the product.</p>
+      <p><strong>Option 2:</strong> Prairie Jar licenses its recipes and brand to Hargreaves, who produces a "UK Edition" locally using British peppers. Prairie Jar receives a royalty on every jar sold but gives up some control over the product and quality.</p>
+      <p>Dana calls Marcus. "Option 2 terrifies me a little," Dana says. "What if they mess up our recipe? But it also means no shipping costs, no ocean freight headaches, no currency exchange on every transaction."</p>
+      <p><span class="concept-tag">LO 6</span><span class="concept-tag amber">Exporting</span><span class="concept-tag sage">Licensing</span><span class="concept-tag coral">Risk vs. Reward</span></p>
+    </div>
+
+    <div class="decision-prompt">Prairie Jar is a small company with limited capital. Based on the <em>risk-reward spectrum of market entry methods</em>, which option makes more sense for them right now — and why?</div>
+
+    <div class="entry-selector" id="entryOptions">
+      <button class="entry-option" onclick="chooseEntry(this,'A',true)">
+        <span class="entry-num">A</span>
+        <span class="entry-label"><strong>Start with exporting (Option 1)</strong> — Lower risk, Prairie Jar keeps control of the product and builds a track record in the UK market before committing to anything deeper.</span>
+      </button>
+      <button class="entry-option" onclick="chooseEntry(this,'B',false)">
+        <span class="entry-num">B</span>
+        <span class="entry-label"><strong>Jump straight to licensing (Option 2)</strong> — Maximum efficiency; let Hargreaves handle everything while Prairie Jar collects royalties.</span>
+      </button>
+      <button class="entry-option" onclick="chooseEntry(this,'C',false)">
+        <span class="entry-num">C</span>
+        <span class="entry-label"><strong>Open a Prairie Jar manufacturing facility in the UK (Direct Foreign Investment)</strong> — Own the whole operation from day one.</span>
+      </button>
+    </div>
+    <div class="outcome" id="o6"></div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevPage(6)">← Back</button>
+      <button class="btn-continue" id="next6" onclick="nextPage(6)" style="display:none;">Next Dispatch →</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 7: Cultural Misstep / Threats ═════════════════ -->
+  <div class="page" id="p7">
+    <div class="chapter-flag coral">Dispatch No. 7 · LO 7 — Global Threats &amp; Opportunities</div>
+    <h1 class="story-headline">Lost in Translation: A Costly Cultural Lesson</h1>
+    <div class="story-deck">Prairie Jar's UK launch stumbles — not because of tariffs or shipping, but because of something the team never thought to check.</div>
+    <div class="byline">Location: London · Post-Launch Review · Day 120</div>
+
+    <div class="story-body">
+      <p>The UK launch should have been a triumph. Instead, it's a headache.</p>
+      <p>Prairie Jar's marketing team, working from Minnesota, designed the UK campaign using the same messaging they use in the U.S. — heavy on imagery of wide open Midwestern prairies, barns, and American flags. The product tagline: <em>"The Heartland's Hottest."</em></p>
+      <p>British food bloggers mocked it. "Why would I want Midwestern American nationalism in my kitchen?" one wrote. Sales in the first month were a fraction of projections.</p>
+      <p><strong>"You made the classic mistake,"</strong> a UK marketing consultant told Dana bluntly. "Shared language does not mean shared culture. You assumed Britain was just America with better accents."</p>
+      <p>Dana thinks of MTV — which had cracked this exact problem by adapting its format entirely for each country rather than exporting American content wholesale. That approach built genuine loyalty. Prairie Jar had done the opposite.</p>
+      <p><span class="concept-tag coral">LO 7</span><span class="concept-tag amber">Cultural Factors</span><span class="concept-tag">Political Risk</span><span class="concept-tag sage">Economic Environment</span></p>
+    </div>
+
+    <div class="decision-prompt">To recover, Prairie Jar needs to fix their UK marketing strategy. <em>Which approach best applies what Chapter 3 teaches about cultural factors in global business?</em></div>
+
+    <div class="choices" id="c7">
+      <button class="choice-card" onclick="choose(7,'A',false,this)"><span class="choice-letter">A</span><span class="choice-text">Keep the same messaging — the product is American and that's its selling point. British consumers just need more time to warm up to it.</span></button>
+      <button class="choice-card" onclick="choose(7,'B',false,this)"><span class="choice-letter">B</span><span class="choice-text">Pull out of the UK market immediately — if the culture is different, it's too risky to continue.</span></button>
+      <button class="choice-card" onclick="choose(7,'C',true,this)"><span class="choice-letter">C</span><span class="choice-text">Redesign the UK campaign to use local language, imagery, and food culture references — position Prairie Jar as a premium import with character, not an American billboard.</span></button>
+    </div>
+    <div class="outcome" id="o7"></div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevPage(7)">← Back</button>
+      <button class="btn-continue" id="next7" onclick="nextPage(7)" style="display:none;">Next Dispatch →</button>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 8: MNCs & Final Verdict ════════════════════════ -->
+  <div class="page" id="p8">
+    <div class="chapter-flag sage">Dispatch No. 8 · LO 8 &amp; 9 — MNCs &amp; Global Trends</div>
+    <h1 class="story-headline">Five Years Later: Prairie Jar Goes Global — What Comes Next?</h1>
+    <div class="story-deck">Prairie Jar is now exporting to four countries. A major food conglomerate — a multinational corporation — has made an acquisition offer. Dana faces the biggest decision yet.</div>
+    <div class="byline">Location: Prairie Jar Co. · Five Years Into the Global Journey · Final Dispatch</div>
+
+    <div class="story-body">
+      <p>Prairie Jar Co. is now a genuine international brand. Canada and the UK are steady markets. A distributor in Australia came on board last year. An importer in South Korea reached out last month.</p>
+      <p>Then the phone call came. GloFoods International — a multinational corporation headquartered in Chicago with production facilities in eight countries — wants to acquire Prairie Jar. The offer is generous.</p>
+      <p>"Think about what we can do for you," the GloFoods rep says. "We already have facilities in Canada, the UK, and Australia. We can shift production to whichever facility gives us the best cost structure at any given time. If the Canadian dollar tanks, we produce from Chicago. If a UK trade deal falls through, we produce from Australia. That's the advantage of being a multinational."</p>
+      <p>Dana sits with the offer. Being absorbed by an MNC would mean losing the small-business identity — but gaining production flexibility, resource access across eight countries, and the scale to compete with anyone in the world.</p>
+      <p><span class="concept-tag sage">LO 8</span><span class="concept-tag">Multinational Corporations</span><span class="concept-tag amber">LO 9</span><span class="concept-tag navy">Global Trends</span></p>
+    </div>
+
+    <div class="decision-prompt">GloFoods describes their ability to shift production between countries based on costs. <em>Which specific MNC advantage is the rep describing?</em></div>
+
+    <div class="choices" id="c8">
+      <button class="choice-card" onclick="choose(8,'A',false,this)"><span class="choice-letter">A</span><span class="choice-text">Resource acquisition — GloFoods can source ingredients from any country in the world.</span></button>
+      <button class="choice-card" onclick="choose(8,'B',true,this)"><span class="choice-letter">B</span><span class="choice-text">Production flexibility — MNCs can move manufacturing between facilities in different countries as costs, tariffs, or regulations change.</span></button>
+      <button class="choice-card" onclick="choose(8,'C',false,this)"><span class="choice-letter">C</span><span class="choice-text">Market scale — GloFoods sells to so many customers that individual market downturns don't matter.</span></button>
+    </div>
+    <div class="outcome" id="o8"></div>
+    <div class="nav-row">
+      <button class="btn-back" onclick="prevPage(8)">← Back</button>
+      <button class="btn-continue" id="next8" onclick="submitActivity()" style="display:none;">Read the Final Edition →</button>
+    </div>
+  </div>
+
+  <!-- ══ COMPLETION ═════════════════════════════════════════ -->
+  <div id="completion">
+    <div class="final-masthead">
+      <div class="final-flag">Final Edition · Chapter 3 · The Global Gamble</div>
+      <div class="mast-rule" style="margin:0.5rem 0;"></div>
+      <div class="final-headline">Prairie Jar Co. Survives the Global Marketplace</div>
+      <div class="mast-rule-thin" style="margin:0.5rem 0;"></div>
+      <div class="final-deck">And you helped make it happen. Here's how you did.</div>
+    </div>
+
+    <div class="score-wrap">
+      <div class="score-big" id="finalScore">0</div>
+      <div class="score-denom">OUT OF 11 POINTS</div>
+      <div class="score-grade" id="gradeMsg"></div>
+    </div>
+
+    <div class="result-table" id="resultTable"></div>
+
+    <p style="color:var(--lgray);font-size:0.85rem;margin-bottom:1.5rem;line-height:1.65;font-family:'Libre Baskerville',serif;font-style:italic;">
+      Save this page as a PDF and submit it to D2L to receive credit for this activity.
+    </p>
+    <button class="pdf-btn" onclick="savePDF()">Print / Save as PDF for D2L</button>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+// ══ GATE ════════════════════════════════════════════════════
+const CODES = ['GLOBALMARKET2','INSTRUCTOR'];
+
+function checkCode() {
+  const val = document.getElementById('codeInput').value.trim().toUpperCase();
+  const err = document.getElementById('gateError');
+  if (CODES.includes(val)) {
+    if (val !== 'INSTRUCTOR' && localStorage.getItem('ch3cs_done') === 'true') {
+      err.textContent = 'This activity has already been completed on this device.';
+      return;
+    }
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('dateStamp').textContent = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    updateProgress();
+  } else {
+    err.textContent = 'Invalid access code. Please check with your instructor.';
+    document.getElementById('codeInput').value = '';
+  }
+}
+document.getElementById('codeInput').addEventListener('keydown', e => { if(e.key==='Enter') checkCode(); });
+
+// ══ STATE ════════════════════════════════════════════════════
+const scores = {}; // page -> pts earned
+const TOTAL = 11;
+const PAGE_SCORES = {
+  1: { label: 'Dispatch 1 — Exchange Rates (LO 1)', max: 1 },
+  2: { label: 'Dispatch 2 — Comparative Advantage (LO 2)', max: 1 },
+  3: { label: 'Dispatch 3 — Trade Barrier Classifier (LO 3)', max: 4 },
+  4: { label: 'Dispatch 4 — Global Institutions (LO 4)', max: 1 },
+  5: { label: 'Dispatch 5 — Economic Communities (LO 5)', max: 1 },
+  6: { label: 'Dispatch 6 — Market Entry Methods (LO 6)', max: 1 },
+  7: { label: 'Dispatch 7 — Cultural Factors (LO 7)', max: 1 },
+  8: { label: 'Dispatch 8 — MNC Advantages (LO 8 & 9)', max: 1 },
+};
+
+function totalScore() {
+  return Object.values(scores).reduce((a,b)=>a+b,0);
+}
+function updateHeader() {
+  document.getElementById('headerScore').textContent = `SCORE: ${totalScore()} / ${TOTAL}`;
+}
+
+// ══ CHOICE OUTCOMES ══════════════════════════════════════════
+const OUTCOMES = {
+  1: {
+    correct: 'A',
+    pts: { A: 1, B: 0, C: 0 },
+    result: {
+      A: { good: true, head: 'Correct — Exchange Rate Risk Is Real', body: 'Exactly right. If the Canadian dollar weakens, Prairie Jar receives fewer U.S. dollars for the same sale — shrinking profit margins without changing anything about the product. This is why businesses track exchange rates carefully when pricing for international markets. <strong>+1 point</strong>' },
+      B: { good: false, head: 'Not Quite — Exchange Rates Affect Exporters Too', body: 'Exchange rates matter for both importers and exporters. When Prairie Jar gets paid in Canadian dollars and converts them to U.S. dollars, the exchange rate determines what they actually receive. A weakening Canadian dollar means their revenue, in U.S. terms, shrinks.' },
+      C: { good: false, head: 'Not Quite — It Works Both Ways', body: 'A stronger Canadian dollar would help U.S. exporters — but it\'s not guaranteed, and "always" is never true in global markets. The point is that exchange rate movements in either direction create risk and opportunity. Dana needs to monitor this carefully, not assume it\'s always favorable.' },
+    },
+    concept: 'Key concept: <strong>Exchange Rate</strong> — the price of one currency in terms of another. When the dollar strengthens, U.S. exports become more expensive for foreign buyers. When it weakens, U.S. goods are a better deal abroad.'
+  },
+  4: {
+    correct: 'C',
+    pts: { A: 0, B: 0, C: 1 },
+    result: {
+      A: { good: false, head: 'Not Quite — The WTO Isn\'t the Right Tool Here', body: 'The WTO does protect market access and can rule on trade restrictions — but its processes take years and aren\'t designed for currency emergencies. The IMF is specifically built for balance of payment and currency crises.' },
+      B: { good: false, head: 'Not Quite — World Bank Loans Are Long-Term', body: 'The World Bank makes development loans, not emergency stabilization loans. Infrastructure projects take years. A currency crisis needs an immediate response.' },
+      C: { good: true, head: 'Correct — The IMF Is the Emergency Room for Currencies', body: 'The IMF provides short-term loans specifically to stabilize currencies and help countries manage balance of payment crises. It\'s the right institution when the problem is an economic emergency that threatens normal trade flows. <strong>+1 point</strong>' },
+    },
+    concept: 'Key concept: <strong>IMF vs. World Bank vs. WTO</strong> — each has a distinct role. WTO = trade rules and disputes. World Bank = long-term development loans. IMF = short-term currency and balance-of-payment stabilization.'
+  },
+  5: {
+    correct: 'B',
+    pts: { A: 0, B: 1, C: 0 },
+    result: {
+      A: { good: false, head: 'Incorrect — The EU\'s Economy Was Not the Issue', body: 'The EU remains one of the world\'s largest and most successful economic trading blocs. Most member nations were not running unusual deficits relative to their history. The Brexit decision was driven by political and sovereignty concerns, not economic failure.' },
+      B: { good: true, head: 'Correct — Sovereignty vs. Economic Integration', body: 'Brexit is a textbook illustration of the tension inside every trade agreement: you gain economic benefits but give up some national flexibility. Many UK voters felt that EU membership required Britain to adopt shared regulations and open-border policies that limited their ability to chart their own course — even though the EU had no direct legal authority to force compliance. <strong>+1 point</strong>' },
+      C: { good: false, head: 'Incorrect — The EU Doesn\'t Raise Tariffs Against Members', body: 'The EU\'s entire purpose is to eliminate tariffs between member states. A country doesn\'t leave because of internal tariffs — it leaves because of the political and sovereignty trade-offs that come with membership.' },
+    },
+    concept: 'Key concept: <strong>Economic Communities</strong> — groups like USMCA and the EU create free-trade zones that benefit members economically, but membership requires adopting shared rules and regulations that can limit a nation\'s flexibility to set its own policies independently.'
+  },
+  7: {
+    correct: 'C',
+    pts: { A: 0, B: 0, C: 1 },
+    result: {
+      A: { good: false, head: 'That\'s the Mistake Prairie Jar Already Made', body: 'Assuming your home country identity is a universal selling point is a classic cultural misstep. What works in Minnesota doesn\'t automatically resonate in Manchester. Ignoring cultural feedback and doubling down would likely kill the UK launch entirely.' },
+      B: { good: false, head: 'Retreat Isn\'t the Answer', body: 'Pulling out based on a cultural misstep that can be fixed is an overreaction. The product has genuine appeal — the marketing approach was wrong, not the product itself. Many globally successful brands stumbled in their first international attempt and recovered by adapting.' },
+      C: { good: true, head: 'Correct — Localization Is the Lesson', body: 'This is exactly what the chapter teaches through the MTV example. Effective global businesses don\'t just export their domestic identity — they localize. That means using language, imagery, and cultural references that resonate with the specific market. Prairie Jar keeps its brand but adapts its voice. <strong>+1 point</strong>' },
+    },
+    concept: 'Key concept: <strong>Cultural Factors</strong> — missteps in language, customs, or values can damage a brand quickly. Companies that localize their approach (like MTV) build loyalty that global competitors can\'t easily replicate.'
+  },
+  8: {
+    correct: 'B',
+    pts: { A: 0, B: 1, C: 0 },
+    result: {
+      A: { good: false, head: 'Not Quite — That\'s Resource Acquisition', body: 'Resource acquisition describes accessing raw materials or talent across countries. What GloFoods described — moving manufacturing between facilities in response to cost changes — is specifically production flexibility.' },
+      B: { good: true, head: 'Correct — Production Flexibility Is the Key MNC Advantage', body: 'Production flexibility means an MNC can literally shift where it manufactures based on changing conditions — tariffs, labor costs, currency values, trade agreements. A domestic company has one factory. GloFoods has eight. That\'s the structural advantage of being multinational. <strong>+1 point</strong>' },
+      C: { good: false, head: 'Not Quite — That\'s Market Scale', body: 'Market scale refers to the revenue advantage of selling to billions of customers across many countries — which funds R&D and innovation. What GloFoods described is specifically about manufacturing flexibility, not customer reach.' },
+    },
+    concept: 'Key concept: <strong>MNC Advantages</strong> — multinationals gain by overcoming trade barriers, production flexibility, global resource access, and operating at a scale that drives innovation. Production flexibility specifically = ability to shift manufacturing across countries.'
+  },
+};
+
+// Simple correct/wrong pages
+const SIMPLE = {
+  1: { A: true, B: false, C: false },
+  5: { A: false, B: true, C: false },
+  7: { A: false, B: false, C: true },
+  8: { A: false, B: true, C: false },
+};
+
+function choose(page, choice, correct, el) {
+  const cDiv = document.getElementById('c' + page);
+  if (!cDiv || cDiv.classList.contains('locked')) return;
+  cDiv.classList.add('locked');
+  cDiv.querySelectorAll('.choice-card').forEach(c => c.classList.add('locked'));
+
+  const isCorrect = OUTCOMES[page] ? choice === OUTCOMES[page].correct : correct;
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  // Reveal correct if wrong
+  if (!isCorrect && OUTCOMES[page]) {
+    cDiv.querySelectorAll('.choice-card').forEach(c => {
+      const ch = c.querySelector('.choice-letter').textContent;
+      if (ch === OUTCOMES[page].correct) c.classList.add('reveal-correct');
+    });
+  } else if (!isCorrect) {
+    cDiv.querySelectorAll('.choice-card').forEach(c => {
+      const onclick = c.getAttribute('onclick');
+      if (onclick && onclick.includes(',true,')) c.classList.add('reveal-correct');
+    });
+  }
+
+  const pts = OUTCOMES[page] ? (OUTCOMES[page].pts[choice] || 0) : (isCorrect ? PAGE_SCORES[page].max : 0);
+  scores[page] = pts;
+  updateHeader();
+
+  // Show outcome
+  const oEl = document.getElementById('o' + page);
+  if (oEl && OUTCOMES[page]) {
+    const r = OUTCOMES[page].result[choice];
+    oEl.innerHTML = `
+      <div class="outcome-inner ${r.good ? '' : 'bad'}">
+        <div class="outcome-header ${r.good ? 'good' : 'bad'}">${r.head}</div>
+        <p>${r.body}</p>
+        <div class="concept-box">${OUTCOMES[page].concept}</div>
+      </div>`;
+  } else if (oEl) {
+    const maxPts = PAGE_SCORES[page] ? PAGE_SCORES[page].max : 3;
+    oEl.innerHTML = `
+      <div class="outcome-inner ${isCorrect ? '' : 'bad'}">
+        <div class="outcome-header ${isCorrect ? 'good' : 'bad'}">${isCorrect ? '✓ Correct' : '✗ Not Quite'} <span class="pts-badge ${isCorrect ? '' : 'zero'}">${pts}/${maxPts} pts</span></div>
+        <p>${isCorrect
+          ? 'Well done. You correctly identified the right answer.'
+          : 'Review this concept in your Chapter 3 readings.'}</p>
+      </div>`;
+  }
+  oEl && oEl.classList.add('show');
+
+  document.getElementById('next' + page) && (document.getElementById('next' + page).style.display = 'inline-block');
+}
+
+// Entry method selector (page 6)
+function chooseEntry(el, choice, correct) {
+  const parent = document.getElementById('entryOptions');
+  if (!parent || parent.classList.contains('locked')) return;
+  parent.classList.add('locked');
+  parent.querySelectorAll('.entry-option').forEach(o => o.classList.add('locked'));
+  el.classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) {
+    parent.querySelector('[onclick*="\'A\'"]').classList.add('reveal-correct');
+  }
+  const pts = correct ? 1 : 0;
+  scores[6] = pts;
+  updateHeader();
+
+  const oEl = document.getElementById('o6');
+  oEl.innerHTML = correct
+    ? `<div class="outcome-inner">
+        <div class="outcome-header good">✓ Correct — Crawl Before You Walk <span class="pts-badge">1/1 pt</span></div>
+        <p>For a small business with limited capital, <strong>exporting is always the smart first move</strong>. It lets Prairie Jar test the market, build brand recognition, and generate revenue without the commitment of licensing away their recipe or investing in overseas facilities. They can always move to licensing or DFI later — after they understand the market.</p>
+        <div class="concept-box">Key concept: <strong>Risk-Reward Spectrum</strong> — Exporting (lowest risk) → Licensing → Contract Manufacturing → Joint Ventures → Direct Foreign Investment (highest risk/reward). Small businesses should start at the low end and move up as they gain experience and capital.</div>
+      </div>`
+    : choice === 'B'
+    ? `<div class="outcome-inner bad">
+        <div class="outcome-header bad">Not Quite — Licensing Has Hidden Risks <span class="pts-badge zero">0/1 pt</span></div>
+        <p>Licensing can be a smart move — but jumping straight to it before exporting means Prairie Jar gives up control of their recipe and product quality without first knowing whether the UK market even wants their product. The smarter path is to export first, validate demand, then consider licensing as a next step.</p>
+        <div class="concept-box">Key concept: <strong>Market Entry Spectrum</strong> — Exporting lets you test the market before making deeper commitments. Licensing means giving a foreign company the right to use your brand and formula — which requires trust in that partner and knowledge of the market first.</div>
+      </div>`
+    : `<div class="outcome-inner bad">
+        <div class="outcome-header bad">Not Quite — DFI Is the Highest-Risk Move <span class="pts-badge zero">0/1 pt</span></div>
+        <p>Direct Foreign Investment — opening your own manufacturing facility abroad — is the highest-risk, highest-reward entry method. It makes sense for large companies with proven market demand and deep capital reserves. For a small business entering a new market for the first time, this is the equivalent of Target's Canada mistake: overcommitting before understanding the market. Prairie Jar needs to prove the UK market first.</p>
+        <div class="concept-box">Key concept: <strong>Direct Foreign Investment</strong> — owns and operates overseas facilities. Highest potential reward but highest risk. Target's $2B Canadian failure is the cautionary tale.</div>
+      </div>`;
+  oEl.classList.add('show');
+  document.getElementById('next6').style.display = 'inline-block';
+}
+
+// ══ PAGE 2: MARKET SELECTION ══════════════════════════════════
+let selectedMarket = null;
+function selectMarket(el, choice) {
+  if (document.getElementById('marketGrid').classList.contains('locked')) return;
+  document.querySelectorAll('.market-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedMarket = choice;
+  document.getElementById('checkMarket').disabled = false;
+}
+function checkMarket() {
+  if (!selectedMarket) return;
+  const isCorrect = selectedMarket === 'A';
+  const grid = document.getElementById('marketGrid');
+  grid.classList.add('locked');
+  grid.querySelectorAll('.market-card').forEach(c => c.classList.add('locked'));
+  document.querySelectorAll('.market-card').forEach((c,i) => {
+    const letters = ['A','B','C'];
+    if (letters[i] === 'A') c.classList.add('correct-market');
+    else if (letters[i] === selectedMarket && !isCorrect) c.classList.add('wrong-market');
+  });
+
+  scores[2] = isCorrect ? 1 : 0;
+  updateHeader();
+
+  const oEl = document.getElementById('o2');
+  oEl.innerHTML = isCorrect
+    ? `<div class="outcome-inner">
+        <div class="outcome-header good">✓ Canada — The Smart First Move <span class="pts-badge">1/1 pt</span></div>
+        <p>Canada checks every comparative advantage box for Prairie Jar: shared language eliminates communication barriers, shared border means dramatically lower freight costs and faster delivery, and similar food culture means less education needed to sell the product. Comparative advantage isn't just about what you produce — it's about where you have the <em>relative</em> edge.</p>
+        <div class="concept-box">Key concept: <strong>Comparative Advantage</strong> — specialize in what you do relatively best. Prairie Jar's relative edge in Canada (language, geography, food culture) is far stronger than in Japan or Brazil — even if those markets are potentially larger.</div>
+      </div>`
+    : `<div class="outcome-inner bad">
+        <div class="outcome-header bad">Not the Best First Move <span class="pts-badge zero">0/1 pt</span></div>
+        <p>Canada was the right answer. Comparative advantage means choosing where your <em>relative</em> advantages are strongest — not necessarily the largest or most exotic market. Canada offers shared language, zero ocean freight, similar food culture, and USMCA zero-tariff access. For a small business making their first international move, those advantages are decisive.</p>
+        <div class="concept-box">Key concept: <strong>Comparative Advantage</strong> — even when a larger market exists elsewhere, the country where you have the strongest relative advantages (language, proximity, trade agreements, cultural fit) should come first.</div>
+      </div>`;
+  oEl.classList.add('show');
+  document.getElementById('checkMarket').disabled = true;
+  document.getElementById('next2').style.display = 'inline-block';
+}
+
+// ══ PAGE 3: CLASSIFIER ══════════════════════════════════════
+const CORRECT_BINS = { c1: 'tariff', c2: 'natural', c3: 'nontariff', c4: 'tariff2' };
+let classifyDragSrc = null;
+
+function initClassifyDrag() {
+  document.querySelectorAll('.classify-chip').forEach(chip => {
+    chip.addEventListener('dragstart', e => {
+      classifyDragSrc = chip;
+      chip.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', chip.dataset.id);
+    });
+    chip.addEventListener('dragend', () => chip.classList.remove('dragging'));
+  });
+  document.querySelectorAll('.drop-bin').forEach(bin => {
+    bin.addEventListener('dragover', e => { e.preventDefault(); bin.classList.add('drag-over'); });
+    bin.addEventListener('dragleave', () => bin.classList.remove('drag-over'));
+    bin.addEventListener('drop', e => {
+      e.preventDefault();
+      bin.classList.remove('drag-over');
+      if (!classifyDragSrc || classifyDragSrc.classList.contains('placed')) return;
+      const chipId = classifyDragSrc.dataset.id;
+      // Remove from any previous bin
+      document.querySelectorAll('.bin-item[data-chipid="'+chipId+'"]').forEach(el => el.remove());
+      // Add to this bin
+      const item = document.createElement('div');
+      item.className = 'bin-item';
+      item.dataset.chipid = chipId;
+      item.dataset.val = classifyDragSrc.dataset.val;
+      item.textContent = classifyDragSrc.textContent;
+      bin.appendChild(item);
+      classifyDragSrc.classList.add('placed');
+      // Check if all placed
+      const allPlaced = document.querySelectorAll('.classify-chip:not(.placed)').length === 0;
+      if (allPlaced) document.getElementById('checkClassify').disabled = false;
+    });
+  });
+}
+
+function checkClassify() {
+  let correct = 0;
+  document.querySelectorAll('.drop-bin').forEach(bin => {
+    const binVal = bin.dataset.bin;
+    bin.querySelectorAll('.bin-item').forEach(item => {
+      const chipId = item.dataset.chipid;
+      const isCorrect = CORRECT_BINS[chipId] === binVal;
+      item.classList.add(isCorrect ? 'correct-item' : 'wrong-item');
+      if (isCorrect) correct++;
+    });
+  });
+
+  const pts = correct === 4 ? 4 : correct === 3 ? 3 : correct === 2 ? 2 : correct === 1 ? 1 : 0;
+  scores[3] = pts;
+  updateHeader();
+
+  const oEl = document.getElementById('o3');
+  oEl.innerHTML = `
+    <div class="outcome-inner ${correct === 4 ? '' : 'bad'}">
+      <div class="outcome-header ${correct === 4 ? 'good' : 'bad'}">${correct === 4 ? '✓ Perfect Classification!' : `${correct}/4 Correct`} <span class="pts-badge ${correct < 2 ? 'zero' : ''}">${pts}/4 pts</span></div>
+      <p>Correct answers: <strong>25% lumber tax = Tariff</strong> (a government-imposed tax on imports). <strong>Ocean freight cost = Natural barrier</strong> (nobody created it; geography makes it expensive). <strong>Food certification = Non-tariff barrier</strong> (a regulatory requirement that limits imports without being a tax). <strong>Retaliatory EU tariffs = Tariff</strong> (same mechanism — a tax — even when used as retaliation).</p>
+      <div class="concept-box">Key concept: <strong>Trade Barriers</strong> come in many forms. Natural barriers are created by geography. Tariffs are government-imposed taxes. Non-tariff barriers are rules, regulations, and certifications that restrict trade without technically being taxes.</div>
+    </div>`;
+  oEl.classList.add('show');
+  document.getElementById('checkClassify').disabled = true;
+  document.getElementById('next3').style.display = 'inline-block';
+}
+
+// ══ NAVIGATION ═══════════════════════════════════════════════
+let currentPage = 1;
+const TOTAL_PAGES = 8;
+
+function nextPage(from) {
+  showPage(from + 1);
+}
+function prevPage(from) {
+  showPage(from - 1);
+}
+function showPage(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('p' + n);
+  if (el) { el.classList.add('active'); currentPage = n; }
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function updateProgress() {
+  const pct = ((currentPage - 1) / TOTAL_PAGES) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressTxt').textContent = `DISPATCH ${currentPage} OF ${TOTAL_PAGES}`;
+}
+
+// ══ SUBMISSION ════════════════════════════════════════════════
+function submitActivity() {
+  const total = totalScore();
+  document.getElementById('finalScore').textContent = total;
+
+  const grade = total >= 23 ? 'Outstanding Global Correspondent' :
+                total >= 19 ? 'Seasoned Trade Reporter' :
+                total >= 15 ? 'Junior Business Journalist' :
+                              'Cub Reporter — Review Chapter 3';
+  document.getElementById('gradeMsg').textContent = grade;
+
+  let rows = '';
+  Object.entries(PAGE_SCORES).forEach(([pg, info]) => {
+    const earned = scores[pg] || 0;
+    rows += `<div class="result-row"><span>${info.label}</span><span class="result-pts">${earned} / ${info.max}</span></div>`;
+  });
+  rows += `<div class="result-row" style="font-weight:700;border-top:2px solid var(--rule);margin-top:0.5rem;padding-top:0.75rem;"><span>Total</span><span class="result-pts" style="font-size:1rem;">${total} / ${TOTAL}</span></div>`;
+  document.getElementById('resultTable').innerHTML = rows;
+
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  document.getElementById('completion').style.display = 'block';
+  localStorage.setItem('ch3cs_done', 'true');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══ PDF ════════════════════════════════════════════════════════
+function savePDF() {
+  const total = totalScore();
+  const win = window.open('', '_blank');
+  let rows = Object.entries(PAGE_SCORES).map(([pg, info]) =>
+    `<tr><td>${info.label}</td><td style="text-align:right;font-weight:600;">${scores[pg]||0} / ${info.max}</td></tr>`
+  ).join('');
+  win.document.write(`<!DOCTYPE html><html><head><title>The Global Gamble — Ch3 Submission</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 700px; margin: 2rem auto; color: #1A1208; font-size: 14px; line-height: 1.6; }
+    h1 { font-size: 1.8rem; border-bottom: 3px double #8B7355; padding-bottom: 0.5rem; margin-bottom: 0.2rem; }
+    .meta { color: #6B5E4A; font-size: 0.82rem; font-style: italic; margin-bottom: 1.5rem; }
+    h2 { font-size: 1rem; color: #C8860A; margin-top: 1.5rem; border-left: 4px solid #C8860A; padding-left: 0.6rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; }
+    td { padding: 0.45rem 0.5rem; border-bottom: 1px solid #C4B49A; font-size: 13px; }
+    .total-row td { font-weight: 700; border-top: 2px solid #8B7355; border-bottom: none; font-size: 1rem; }
+    .score-box { background: #1A1208; color: #F5EDD8; padding: 1.25rem; text-align: center; margin-top: 1.5rem; }
+    .score-box .big { font-size: 2.5rem; color: #C8860A; font-weight: 700; }
+    .note { font-size: 0.78rem; color: #6B5E4A; font-style: italic; margin-top: 1.5rem; }
+    @media print { body { margin: 0.5rem; } }
+  </style></head><body>
+  <h1>The Global Gamble</h1>
+  <div class="meta">Chapter 3 Interactive Case Study · Introduction to Business · Minnesota State Community and Technical College · ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</div>
+  <h2>Score Breakdown</h2>
+  <table><tbody>${rows}
+    <tr class="total-row"><td>Total Score</td><td style="text-align:right;">${total} / 11</td></tr>
+  </tbody></table>
+  <div class="score-box"><div class="big">${total} / 11</div><div style="font-size:0.85rem;opacity:0.8;margin-top:0.3rem;">The Global Gamble · Chapter 3 Case Study</div></div>
+  <div class="note">Save using your browser's print dialog (Ctrl+P or Cmd+P → Save as PDF) and submit to D2L.</div>
+  </body></html>`);
+  win.document.close();
+  setTimeout(() => win.print(), 500);
+}
+
+// ══ INIT ══════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  initClassifyDrag();
+  updateProgress();
+});
+</script>
+</body>
+</html>
