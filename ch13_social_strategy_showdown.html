@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 13 Social Strategy Showdown | Principles of Marketing</title>
+<style>
+:root{--navy:#1F3864;--navy2:#2E4A7A;--orange:#E87722;--lor:#FDEBDD;--lt:#F3F5F9;--txt:#222A35;--mute:#5B6577;--ok:#1E7B4A;--bad:#B3261E;--line:#D5DAE2}
+*{box-sizing:border-box}
+body{margin:0;font-family:Calibri,"Segoe UI",Arial,sans-serif;color:var(--txt);background:#fff;line-height:1.45}
+header.top{background:var(--navy);color:#fff;padding:22px 16px}
+header.top .wrap{max-width:900px;margin:0 auto}
+header.top .eyebrow{color:var(--orange);font-weight:700;letter-spacing:.12em;font-size:13px}
+header.top h1{margin:4px 0 4px;font-size:30px}
+header.top p{margin:0;color:#CADCFC}
+main{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--lt);border-radius:10px;padding:18px 20px;margin:18px 0}
+.card.or{background:var(--lor)}
+h2{color:var(--navy);margin:0 0 4px;font-size:22px}
+h2 .pts{color:var(--orange);font-size:15px;font-weight:700;margin-left:8px}
+h3{color:var(--navy);margin:16px 0 6px;font-size:17px}
+.sub{color:var(--mute);margin:0 0 14px}
+label.f{display:block;font-weight:700;color:var(--navy);margin:12px 0 4px}
+input[type=text],input[type=email],select{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:6px;width:100%;max-width:420px;background:#fff}
+button{font:inherit;cursor:pointer;border-radius:6px;border:none}
+.btn{background:var(--orange);color:#fff;font-weight:700;padding:11px 22px;font-size:16px}
+.btn.navy{background:var(--navy)}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.err{color:var(--bad);font-weight:700;margin-top:10px;min-height:1em}
+.namebar{position:sticky;top:0;z-index:5;background:var(--navy2);color:#fff;padding:8px 16px;font-weight:700;text-align:center}
+.namebar .run{color:#FFD7B5;margin-left:10px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row .q{flex:1 1 260px;font-weight:600}
+.row select{flex:0 1 300px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{background:#fff;border:1px solid var(--line);padding:7px 12px;color:var(--txt)}
+.seg button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.mc{display:flex;flex-direction:column;gap:6px;width:100%}
+.mc button{text-align:left;background:#fff;border:1px solid var(--line);padding:9px 12px;color:var(--txt)}
+.mc button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:10px}
+.legend div{background:#fff;border-radius:8px;padding:8px 10px;font-size:14px}
+.legend b{color:var(--navy)}
+/* brand profile + social posts */
+.brand{display:flex;gap:14px;align-items:center;background:#fff;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.avatar{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;flex:0 0 54px}
+.av-n{background:#2F6B3A}.av-l{background:#3A2E2A}
+.brand .bn{font-weight:800;color:var(--navy);font-size:18px}
+.brand .bh{color:var(--mute);font-size:14px}
+.post{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0}
+.post .ph{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;margin-bottom:6px}
+.post .mini{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px}
+.post .handle{font-weight:700}
+.plat{background:var(--navy);color:#fff;border-radius:10px;padding:1px 9px;font-size:12px;font-weight:700}
+.post .body{font-size:15px}
+.post .media{background:var(--lt);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:13px;color:var(--mute);font-style:italic}
+.post .stats{font-size:12px;color:var(--mute);margin-top:6px}
+.post .reply{border-left:3px solid var(--line);margin-top:8px;padding-left:10px;font-size:14px}
+.post .askrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.post .askrow .q{flex:1 1 200px;font-weight:700;color:var(--navy);font-size:14px}
+.post .askrow select{flex:0 1 320px}
+.tag{display:inline-block;font-weight:800;color:var(--orange);margin-right:6px}
+.hint{font-size:13px;color:var(--mute)}
+.hidden{display:none!important}
+/* results */
+.scorebig{font-size:44px;font-weight:800;color:var(--orange)}
+table.res{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:14px}
+table.res th,table.res td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+table.res th{background:var(--navy);color:#fff}
+.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}
+.report-name{background:var(--navy);color:#fff;border-radius:10px;padding:18px 20px;margin:16px 0}
+.report-name .lbl{color:var(--orange);font-weight:700;letter-spacing:.1em;font-size:12px}
+.report-name .nm{font-size:40px;font-weight:800;line-height:1.1;word-break:break-word}
+.report-name .em{font-size:20px;font-weight:700;color:#fff;margin-top:4px;word-break:break-all}
+.report-name .meta{color:#CADCFC;margin-top:6px;font-size:14px}
+#watermark{display:none}
+.inst{border:2px dashed var(--orange)}
+.partfoot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.partscore{font-weight:800;color:var(--navy);font-size:17px}
+.scorebox{display:none;background:#fff;border:2px solid var(--orange);border-radius:10px;padding:10px 14px;margin-top:12px}
+.scorebox.show{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.scorebox .big{font-size:26px;font-weight:800;color:var(--orange)}
+.scorebox .lab{font-size:13px;color:var(--mute)}
+.mark{font-weight:700;font-size:14px;white-space:nowrap}
+.mark.ok{color:var(--ok)}.mark.bad{color:var(--bad)}
+.locked .seg button,.locked .mc button,.locked select{pointer-events:none;opacity:.75}
+.okrow{background:rgba(30,123,74,.07)}
+.badrow{background:rgba(179,38,30,.07)}
+.waiting{color:var(--mute);font-style:italic}
+@media print{
+  header.top,.namebar,#startView,#activityView,.noprint,#instView{display:none!important}
+  main{padding:0;max-width:none}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #watermark{display:block;position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  #watermark div{position:absolute;left:-20%;width:140%;transform:rotate(-30deg);font-size:30px;font-weight:800;color:rgba(31,56,100,.09);white-space:nowrap}
+  #resultView{position:relative;z-index:1}
+  .card{break-inside:avoid;background:rgba(243,245,249,.55)!important}
+  table.res tr{break-inside:avoid}
+  table.res td:first-child{white-space:nowrap}
+  .printfoot{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:11px;color:var(--mute)}
+}
+.printfoot{display:none}
+@media print{.printfoot{display:block}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="eyebrow">PRINCIPLES OF MARKETING &nbsp;|&nbsp; CHAPTER 13</div>
+  <h1>Social Strategy Showdown</h1>
+  <p>Social Media Marketing &middot; 25 points</p>
+</div></header>
+<div class="namebar hidden" id="nameBar"></div>
+<div id="watermark"></div>
+
+<main>
+<!-- START -->
+<section id="startView">
+  <div class="card">
+    <h2>Before you begin</h2>
+    <p class="sub">You're the new social media analyst for two coffee companies that compete in the same market: <b>Northbound Coffee Co.</b> and <b>Ledger &amp; Bean Coffee Roasters</b>. You'll pick the right platforms, analyze each brand's posts, compare their strategies, listen in on what customers are saying, and spot the latest trends.</p>
+    <ul>
+      <li>Six parts, 25 points. Every question is click or select. No essays.</li>
+      <li>Submit one part at a time. As soon as you submit a part, you'll see your score for that part, your running total, and which answers were correct. Then the next part unlocks.</li>
+      <li>You get <b>one attempt</b> at each part. You can't change a part after you submit it.</li>
+      <li>Your questions are selected and shuffled based on your name, so your activity is different from your classmates'.</li>
+      <li>After Part 6, click <b>Finish and create my PDF</b>, save the PDF, and upload it to the Chapter 13 D2L assignment folder.</li>
+    </ul>
+    <label class="f" for="fname">First and last name (exactly as it appears in D2L)</label>
+    <input type="text" id="fname" autocomplete="name">
+    <label class="f" for="femail">School email address</label>
+    <input type="email" id="femail" autocomplete="email" placeholder="Your school email">
+    <label class="f" for="code">Access code</label>
+    <input type="text" id="code" autocomplete="off">
+    <div class="err" id="startErr"></div>
+    <button class="btn" id="startBtn">Start</button>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section id="instView" class="hidden">
+  <div class="card inst">
+    <h2>Instructor tools</h2>
+    <p class="sub">Not visible to students. Look up the questions and answers a student received, or check a submitted PDF.</p>
+    <label class="f" for="iName">Student name</label>
+    <input type="text" id="iName">
+    <div style="margin-top:10px"><button class="btn navy" id="iLookup">Show this student's questions and answers</button></div>
+    <div id="iOut" style="margin-top:12px"></div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--line)">
+    <h2 style="font-size:18px">Verify a PDF</h2>
+    <p class="sub">Enter the student name above, then copy the email, score, completion time, and verification code from the student's PDF footer.</p>
+    <label class="f" for="vEmail">Email (exactly as printed)</label><input type="text" id="vEmail">
+    <label class="f" for="vScore">Score (number only, e.g. 21.5)</label><input type="text" id="vScore">
+    <label class="f" for="vTime">Completed (exactly as printed)</label><input type="text" id="vTime">
+    <label class="f" for="vCode">Verification code</label><input type="text" id="vCode">
+    <div style="margin-top:10px"><button class="btn navy" id="iVerify">Verify</button></div>
+    <div id="vOut" style="margin-top:12px;font-weight:700"></div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--line)">
+    <button class="btn ghost" id="iPreview">Preview the activity as a student (not saved)</button>
+  </div>
+</section>
+
+<!-- ACTIVITY -->
+<section id="activityView" class="hidden">
+
+  <div class="card part" id="card1">
+    <h2>Part 1: Pick the platform<span class="pts">5 points</span></h2>
+    <p class="sub">Both coffee companies have a goal. Choose the social media platform that fits each goal best.</p>
+    <div id="p1"></div>
+    <div class="partfoot"><button class="btn" id="sub1">Submit Part 1</button><span class="err" id="err1" style="margin:0"></span></div>
+    <div class="scorebox" id="sb1"></div>
+  </div>
+
+  <div class="card part" id="card2">
+    <h2>Part 2: Analyze Company 1, Northbound Coffee Co.<span class="pts">5 points</span></h2>
+    <p class="sub">Read Northbound's profile and posts. First identify its brand identity, then choose the <b>social media marketing benefit</b> each post best shows. A benefit may be used more than once or not at all.</p>
+    <div class="brand"><div class="avatar av-n">NB</div><div><div class="bn">Northbound Coffee Co.</div><div class="bh">@northboundcoffee &middot; "Coffee for people who'd rather be outside." &middot; 6 cafés in northern Minnesota &middot; Trail-themed drinks, weekend hiking club, dog-friendly patios</div></div></div>
+    <div id="p2"></div>
+    <div class="partfoot"><button class="btn" id="sub2">Submit Part 2</button><span class="err" id="err2" style="margin:0"></span></div>
+    <div class="scorebox" id="sb2"></div>
+  </div>
+
+  <div class="card part" id="card3">
+    <h2>Part 3: Analyze Company 2, Ledger &amp; Bean Coffee Roasters<span class="pts">5 points</span></h2>
+    <p class="sub">Now do the same for Ledger &amp; Bean. Identify its brand identity, choose the benefit each post best shows, then find the post that doesn't fit the brand.</p>
+    <div class="brand"><div class="avatar av-l">L&amp;B</div><div><div class="bn">Ledger &amp; Bean Coffee Roasters</div><div class="bh">@ledgerandbean &middot; "Small-batch coffee for people who savor the details." &middot; 2 cafés and an online shop &middot; Single-origin beans, hand-sorted and roasted in small batches</div></div></div>
+    <div id="p3"></div>
+    <div class="partfoot"><button class="btn" id="sub3">Submit Part 3</button><span class="err" id="err3" style="margin:0"></span></div>
+    <div class="scorebox" id="sb3"></div>
+  </div>
+
+  <div class="card part" id="card4">
+    <h2>Part 4: Compare the two strategies<span class="pts">3 points</span></h2>
+    <p class="sub">Think about everything you saw in Parts 2 and 3. Decide which company each statement describes, then answer the tip question. <span class="hint">(Statements are 0.5 point each; the tip question is 1 point.)</span></p>
+    <div id="p4"></div>
+    <div class="partfoot"><button class="btn" id="sub4">Submit Part 4</button><span class="err" id="err4" style="margin:0"></span></div>
+    <div class="scorebox" id="sb4"></div>
+  </div>
+
+  <div class="card part" id="card5">
+    <h2>Part 5: Listen in<span class="pts">4 points</span></h2>
+    <p class="sub">Your social listening tool flagged these public posts. For each one, choose the <b>social media monitoring function</b> it gives the brand the best chance to perform.</p>
+    <div id="p5"></div>
+    <div class="partfoot"><button class="btn" id="sub5">Submit Part 5</button><span class="err" id="err5" style="margin:0"></span></div>
+    <div class="scorebox" id="sb5"></div>
+  </div>
+
+  <div class="card part" id="card6">
+    <h2>Part 6: Spot the trend<span class="pts">3 points</span></h2>
+    <p class="sub">Both brands are trying new ideas. Match each idea to the social media trend it uses.</p>
+    <div id="p6"></div>
+    <div class="partfoot"><button class="btn" id="sub6">Submit Part 6</button><span class="err" id="err6" style="margin:0"></span></div>
+    <div class="scorebox" id="sb6"></div>
+  </div>
+
+  <div class="card or" id="nextNote"><p class="waiting" style="margin:0" id="nextText">Submit Part 1 to unlock Part 2.</p></div>
+  <div class="card or hidden" id="finalCard">
+    <p style="margin-top:0"><b>All six parts are done.</b> Click below to see your final score and create your PDF.</p>
+    <button class="btn" id="finishBtn">Finish and create my PDF</button>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="resultView" class="hidden"></section>
+</main>
+<div class="printfoot" id="printFoot"></div>
+
+<script>
+(function(){
+"use strict";
+// ======= SETTINGS: change these two values if you like =======
+const STUDENT_CODE = "SOCIAL13";      // access code you give students
+const INSTRUCTOR_CODE = "INSTRUCTOR"; // universal bypass
+// ============================================================
+const KEY = "mmp_ch13_social_showdown_v1";
+const PKEY = KEY + "_progress";
+const SALT = "MSTATE-MMP-CH13";
+const TOTAL = 25;
+let previewMode = false;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = n => n.trim().replace(/\s+/g," ").toLowerCase();
+function store(get, val){try{ if(get) return JSON.parse(localStorage.getItem(KEY)); localStorage.setItem(KEY, JSON.stringify(val)); }catch(e){ return null; }}
+function pstore(get,val){try{ if(get) return JSON.parse(localStorage.getItem(PKEY)); if(val===null) localStorage.removeItem(PKEY); else localStorage.setItem(PKEY, JSON.stringify(val)); }catch(e){ return null; }}
+function hash(str){let h=0x811c9dc5;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return h>>>0;}
+function rng(seed){let a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function vcode(name,email,score,time){return hash(SALT+"|"+norm(name)+"|"+email.trim().toLowerCase()+"|"+score+"|"+time).toString(36).toUpperCase().padStart(7,"0").slice(-7);}
+const fmt = n => (Math.round(n*10)/10).toString();
+
+// ======= CONTENT =======
+const PLATFORMS = ["X","Instagram","Pinterest","Facebook","Snapchat","LinkedIn","YouTube","TikTok"];
+const PLAT_Q = [
+ ["A snowstorm is closing three Northbound cafés in 20 minutes. Northbound needs to post a short, real-time update that followers can share quickly.","X"],
+ ["Ledger & Bean wants people planning holiday parties to save its \"Holiday Coffee Bar\" idea board so they can come back to it later.","Pinterest"],
+ ["Ledger & Bean wants to sell its beans wholesale to restaurant and office managers (B2B) and post articles about its sourcing.","LinkedIn"],
+ ["Northbound wants to post how-to brewing tutorials that people can search for and that also show up in Google search results.","YouTube"],
+ ["Northbound wants a fun photo filter that only appears for young users who are physically near its campus café.","Snapchat"],
+ ["Ledger & Bean wants to share beautiful, artistic photos of latte art with a younger, visual audience.","Instagram"],
+ ["Northbound wants short, trend-driven videos that can go viral with Gen Z, even from a new account with few followers.","TikTok"],
+ ["Both brands want a business page that works like a mini website, where local customers of all ages check hours and events every week.","Facebook"]];
+
+const BENEFITS = ["Developing a loyal community","Improving brand image","Showing expertise or product quality","Improving customer service","Gaining customer feedback and ideas","Boosting traffic and search engine rating","Expanding sales and reaching a new audience","Cutting marketing costs","Maintaining top-of-mind awareness"];
+
+const ID_N = {q:"Which statement best describes Northbound Coffee's brand identity?", opts:[
+  "Adventurous, friendly, and outdoorsy: coffee for people who love being outside",
+  "Luxurious and exclusive: rare coffee for wealthy connoisseurs",
+  "Cheap and fast: the lowest price and quickest drive-thru in town",
+  "Serious and corporate: coffee service for large offices"], ans:0};
+const ID_L = {q:"Which statement best describes Ledger & Bean's brand identity?", opts:[
+  "Refined craftsmanship: carefully made, small-batch coffee for people who appreciate quality",
+  "Loud and silly: meme-filled humor and nonstop discounts",
+  "Budget convenience: big cups at the lowest possible price",
+  "Kid-friendly fun: bright colors, games, and birthday parties"], ans:0};
+
+// [platform, body, media, stats, reply|null, answer]
+const POSTS_N = [
+ ["Instagram","42 of you showed up at 6 a.m. for Saturday's Sunrise Club hike at Buffalo River State Park! 🥾☀️ Same time next month. Tag the hiking buddy you're bringing.","Photo: a big group of smiling hikers (and four dogs) holding Northbound cups on a ridge at sunrise","1,284 likes · 212 comments",null,"Developing a loyal community"],
+ ["X","",null,"",["@jess_hikes: @northboundcoffee my mobile order said ready 15 min ago and it still isn't made 😤","@northboundcoffee: So sorry, Jess! That's not the experience we want. Our manager is on it now. DM us your order number and your next drink is on us. ☕"],"Improving customer service"],
+ ["Instagram","STORY POLL 🗳️ Help us pick this winter's seasonal drink! Maple Pecan Latte or Campfire S'mores Mocha? The winner hits the menu December 1.","Poll sticker: Maple Pecan 48% · Campfire S'mores 52% (3,906 votes)","",null,"Gaining customer feedback and ideas"],
+ ["TikTok","How light vs. dark roast actually happens 🔥 Our head roaster walks you through the roaster, the \"first crack,\" and why we pull our Trailhead Blend at exactly 13 minutes.","60-second video filmed inside the roastery","88.2K views",null,"Showing expertise or product quality"],
+ ["Facebook","Hello, Duluth! 🎉 Our first café on Lake Superior opens Friday on Superior Street. New to Northbound? Show this post for 20% off your first drink.","Photo: the new café storefront with a grand-opening banner","640 likes · 155 shares",null,"Expanding sales and reaching a new audience"],
+ ["Instagram","#MountainMonday ⛰️ Week 87 of our Monday trail photo. Your coffee break is waiting. ☕","Photo: a Northbound mug on a rock overlooking a lake (posted every Monday morning)","932 likes",null,"Maintaining top-of-mind awareness"]];
+
+const POSTS_L = [
+ ["Instagram","Meet Ana. She has hand-sorted every bean we've roasted since we opened in 2014, about 1.2 million pounds. She says she can spot a flawed bean by sound. We believe her.","Photo: Ana smiling at a sorting table in the roastery, sleeves rolled up","2,410 likes · 301 comments",null,"Improving brand image"],
+ ["YouTube","The Perfect Pour-Over: our 4-step method. Water at 200°F, a 30-second bloom, and a slow spiral pour. Full video guide from our head roaster.","9-minute tutorial video","48K views",null,"Showing expertise or product quality"],
+ ["Pinterest","Holiday Coffee Bar: 12 ideas for your party. Tap through for the full guide, recipes, and printable menu cards on our website.","Pin linking to an article on ledgerandbean.com","Saved 6.3K times",null,"Boosting traffic and search engine rating"],
+ ["Facebook","Sponsored · New Ethiopia Guji beans are here. Fresh roasted this week.","Owner's note: \"We showed this ad only to coffee lovers within 10 miles of our cafés. It cost 60% less than our old newspaper ad, and almost none of it was wasted on people who'd never buy.\"","",null,"Cutting marketing costs"],
+ ["Instagram","Ask the roaster: tell us in the comments which single-origin coffee you want us to roast next. We'll pick from your answers for our spring release.","Photo: three burlap bean bags labeled Kenya, Guatemala, and Sumatra","1,102 comments",null,"Gaining customer feedback and ideas"]];
+
+const OFFBRAND = {q:"Ledger & Bean's intern drafted four posts. Which one does NOT fit Ledger & Bean's brand identity?", opts:[
+  "\"A slow Sunday, a single-origin Kenya, and a good book. Some things shouldn't be rushed.\" (calm photo of a pour-over by a window)",
+  "\"LOL our barista fell asleep in the bean bin 😂🤪🤪 FLASH SALE SALE SALE!!! EVERYTHING MUST GO!!!\" (blurry photo)",
+  "\"Our Colombia Huila arrived this morning. Notes of red apple and caramel. Roasting in small batches all week.\" (close-up of beans)",
+  "\"Behind the counter: Marcus dialing in the espresso grinder, one gram at a time.\" (photo of a barista weighing coffee)"], ans:1};
+
+const COMPARE_CHOICES = ["Northbound","Ledger & Bean","Both"];
+const COMPARE = [
+ ["Uses a casual, playful voice with lots of emojis and outdoor photos.","Northbound"],
+ ["Uses calm, polished photos and detailed, expert brewing guides.","Ledger & Bean"],
+ ["Posts on several different platforms and matches each post to how that platform is used.","Both"],
+ ["Used social media to promote a brand-new location and reach customers in a new city.","Northbound"]];
+
+const TIPS = [
+ {q:"Northbound's newest employee scheduled its next 10 posts. Seven of them say \"BUY NOW! 15% OFF!\" Which social media tip is this plan breaking?", opts:[
+   "Create and share value; don't just barrage followers with sales pitches (the 90/10 rule)",
+   "Remember to represent your brand identity",
+   "Look at what is working for your competitors",
+   "Use ephemeral marketing"], ans:0},
+ {q:"A customer posts publicly: \"$6 for a Ledger & Bean latte?? What a rip-off.\" What is the best response?", opts:[
+   "Reply that people who want cheap coffee should go to a gas station",
+   "Delete the comment and block the customer",
+   "Reply politely, explain the small-batch sourcing behind the price, and invite them to try a free sample",
+   "Ignore it and post three more ads"], ans:2},
+ {q:"Ledger & Bean posts a new product photo every day but never replies to comments or questions. Which tip is it breaking?", opts:[
+   "Remember to interact on social media; don't just post and disappear",
+   "Try out a platform or two and different types of content",
+   "Look at where your customers are on social media",
+   "Use influencer marketing"], ans:0}];
+
+const FUNCTIONS = ["To catch or address a public relations issue","To find out about relevant industry or competitor news","To further connect with customers","To encourage current brand fans","To provide support for complaints","To answer questions from potential customers who aren't messaging the company directly","To find trends and understand customer preferences","To gain business away from competitors"];
+const LISTEN = [
+ ["@maya.k: \"Ledger & Bean's pour-over is the BEST in town. I'm obsessed. ☕😍\"","To encourage current brand fans"],
+ ["@tyler_studies: \"Anyone know a good coffee shop near campus with fast Wi-Fi for studying?\" (no company tagged)","To answer questions from potential customers who aren't messaging the company directly"],
+ ["@danielle_r: \"Waited 25 minutes at the Brew Express drive-thru AGAIN. Done with them.\"","To gain business away from competitors"],
+ ["@ben.outdoors (to his own followers): \"Ugh, my Northbound cold brew tasted burnt today. 😕\"","To provide support for complaints"],
+ ["@local_news_fan: \"Rumor going around that Northbound's cups aren't actually recyclable. Is that true??\" (shared 400 times in an hour)","To catch or address a public relations issue"],
+ ["@sam.p: \"I wish a coffee shop around here sold oat-milk cold foam. Would buy it every day.\"","To find trends and understand customer preferences"],
+ ["#CoffeeIndustry: \"Green coffee bean prices hit a 10-year high this week, according to a new trade report.\"","To find out about relevant industry or competitor news"]];
+
+const TRENDS = ["Artificial intelligence (AI)","Video and livestream","Audio rooms","Augmented reality","Influencer marketing","Ephemeral marketing","Mobile use","TikTok challenges"];
+const TREND_Q = [
+ ["Northbound pays a hiking creator with 80,000 followers to feature its Trail Mix Latte in her weekend adventure videos.","Influencer marketing"],
+ ["Ledger & Bean posts a Story with a secret-menu code that disappears in 24 hours.","Ephemeral marketing"],
+ ["Northbound launches #SummitSipChallenge, inviting users to film their best mountaintop coffee pour with their own creative twist.","TikTok challenges"],
+ ["Ledger & Bean's app lets you point your phone camera at your kitchen table and see how its new ceramic mug would look there.","Augmented reality"],
+ ["A chatbot on Northbound's Instagram answers order questions instantly at 2 a.m.","Artificial intelligence (AI)"],
+ ["Ledger & Bean broadcasts its head roaster live during a new roast while viewers ask questions in real time.","Video and livestream"],
+ ["Northbound hosts a live, audio-only conversation on X Spaces about winter trail safety.","Audio rooms"],
+ ["Northbound redesigns every post so the text is large and readable on a small phone screen.","Mobile use"]];
+
+// ======= QUESTION SET (selected + shuffled from the name) =======
+function questionSet(name){
+  const r = rng(hash("set|"+norm(name)));
+  const s = {};
+  s.p1 = shuffle(PLAT_Q,r).slice(0,5);
+  s.p2 = shuffle(POSTS_N,r).slice(0,4);
+  s.p3 = shuffle(POSTS_L,r).slice(0,3);
+  s.p4 = shuffle(COMPARE,r);
+  s.tip = TIPS[Math.floor(r()*TIPS.length)];
+  s.p5 = shuffle(LISTEN,r).slice(0,4);
+  s.p6 = shuffle(TREND_Q,r).slice(0,3);
+  return s;
+}
+
+// ======= BUILD =======
+let state = {};
+const PART_NAMES = {1:"Part 1: Pick the platform",2:"Part 2: Northbound analysis",3:"Part 3: Ledger & Bean analysis",4:"Part 4: Compare strategies",5:"Part 5: Social listening",6:"Part 6: Trends"};
+const PART_MAX = {1:5,2:5,3:5,4:3,5:4,6:3};
+
+function segHTML(key, opts){ return `<div class="seg" data-k="${key}">${opts.map(o=>`<button type="button" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`; }
+function mcHTML(key, opts){ return `<div class="mc" data-k="${key}">${opts.map((o,i)=>`<button type="button" data-v="${i}">${esc(o)}</button>`).join("")}</div>`; }
+function selHTML(key, opts, ph){ return `<select data-k="${key}"><option value="">${ph}</option>${opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`; }
+function postHTML(p, who, key){
+  const av = who==="N" ? ["NB","av-n","@northboundcoffee"] : ["L&B","av-l","@ledgerandbean"];
+  let inner;
+  if(p[4]){ inner = `<div class="body">${esc(p[4][0])}</div><div class="reply"><b>${esc(av[2])}</b> replied: ${esc(p[4][1].replace(/^@northboundcoffee:\s*/,""))}</div>`; }
+  else { inner = `<div class="body">${esc(p[1])}</div>${p[2]?`<div class="media">${esc(p[2])}</div>`:""}${p[3]?`<div class="stats">${esc(p[3])}</div>`:""}`; }
+  return `<div class="post" data-row="${key}"><div class="ph"><span class="mini ${av[1]}">${esc(av[0])}</span><span class="handle">${esc(av[2])}</span><span class="plat">${esc(p[0])}</span></div>${inner}
+    <div class="askrow"><div class="q">Which benefit does this post best show?</div>${selHTML(key,BENEFITS,"Choose a benefit...")}</div></div>`;
+}
+function build(name, email){
+  state = {name:name.trim().replace(/\s+/g," "), email:email.trim().toLowerCase(), ans:{}, done:{}};
+  const s = questionSet(name); state.set = s;
+  const rr = rng(hash("opts|"+norm(name)));
+  // shuffle MC option order per student, keep track of the right answer
+  const mix = q => { const idx = shuffle(q.opts.map((_,i)=>i),rr); return {q:q.q, opts:idx.map(i=>q.opts[i]), ans:idx.indexOf(q.ans)}; };
+  state.idN = mix(ID_N); state.idL = mix(ID_L); state.off = mix(OFFBRAND); state.tip = mix(s.tip);
+
+  $("p1").innerHTML = s.p1.map((it,i)=>`<div class="row" data-row="p1_${i}"><div class="q"><span class="tag">${i+1}.</span>${esc(it[0])}</div>${segHTML("p1_"+i,PLATFORMS)}</div>`).join("");
+  $("p2").innerHTML = `<div class="row" data-row="p2_id"><div class="q" style="flex-basis:100%">${esc(state.idN.q)}</div>${mcHTML("p2_id",state.idN.opts)}</div>`
+     + `<h3>Northbound's recent posts</h3>` + s.p2.map((p,i)=>postHTML(p,"N","p2_"+i)).join("");
+  $("p3").innerHTML = `<div class="row" data-row="p3_id"><div class="q" style="flex-basis:100%">${esc(state.idL.q)}</div>${mcHTML("p3_id",state.idL.opts)}</div>`
+     + `<h3>Ledger &amp; Bean's recent posts</h3>` + s.p3.map((p,i)=>postHTML(p,"L","p3_"+i)).join("")
+     + `<div class="row" data-row="p3_off"><div class="q" style="flex-basis:100%">${esc(state.off.q)}</div>${mcHTML("p3_off",state.off.opts)}</div>`;
+  $("p4").innerHTML = s.p4.map((it,i)=>`<div class="row" data-row="p4_${i}"><div class="q">${esc(it[0])}</div>${segHTML("p4_"+i,COMPARE_CHOICES)}</div>`).join("")
+     + `<div class="row" data-row="p4_tip"><div class="q" style="flex-basis:100%">${esc(state.tip.q)}</div>${mcHTML("p4_tip",state.tip.opts)}</div>`;
+  $("p5").innerHTML = s.p5.map((it,i)=>`<div class="row" data-row="p5_${i}"><div class="q">${esc(it[0])}</div>${selHTML("p5_"+i,FUNCTIONS,"Choose a monitoring function...")}</div>`).join("");
+  $("p6").innerHTML = s.p6.map((it,i)=>`<div class="row" data-row="p6_${i}"><div class="q">${esc(it[0])}</div>${selHTML("p6_"+i,TRENDS,"Choose a trend...")}</div>`).join("");
+
+  document.querySelectorAll(".seg,.mc").forEach(g=>g.addEventListener("click",e=>{
+    const b=e.target.closest("button"); if(!b) return;
+    if(state.done[+g.dataset.k.charAt(1)]) return;
+    g.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+    state.ans[g.dataset.k]=b.dataset.v;
+  }));
+  document.querySelectorAll("select[data-k]").forEach(sel=>sel.addEventListener("change",()=>{ state.ans[sel.dataset.k]=sel.value; }));
+  for(let n=1;n<=6;n++){ $("sub"+n).onclick=()=>submitPart(n); }
+}
+
+// ======= KEYS FOR EACH PART: [key, question text, correct answer text, points, answer-display fn] =======
+function partKeys(n){
+  const s=state.set, out=[];
+  if(n===1) s.p1.forEach((it,i)=>out.push(["p1_"+i,it[0],it[1],1]));
+  if(n===2){ out.push(["p2_id",state.idN.q,String(state.idN.ans),1,state.idN.opts]); s.p2.forEach((p,i)=>out.push(["p2_"+i,"Northbound "+p[0]+" post: "+(p[4]?p[4][0]+" / reply: "+p[4][1]:p[1]),p[5],1])); }
+  if(n===3){ out.push(["p3_id",state.idL.q,String(state.idL.ans),1,state.idL.opts]); s.p3.forEach((p,i)=>out.push(["p3_"+i,"Ledger & Bean "+p[0]+" post: "+p[1],p[5],1])); out.push(["p3_off",state.off.q,String(state.off.ans),1,state.off.opts]); }
+  if(n===4){ s.p4.forEach((it,i)=>out.push(["p4_"+i,it[0],it[1],0.5])); out.push(["p4_tip",state.tip.q,String(state.tip.ans),1,state.tip.opts]); }
+  if(n===5) s.p5.forEach((it,i)=>out.push(["p5_"+i,it[0],it[1],1]));
+  if(n===6) s.p6.forEach((it,i)=>out.push(["p6_"+i,it[0],it[1],1]));
+  return out;
+}
+function gradePart(n){
+  let sc=0; const items=[], rows={};
+  partKeys(n).forEach(k=>{
+    const a=state.ans[k[0]], ok=a===k[2]; if(ok) sc+=k[3]; rows[k[0]]=ok;
+    const shown = k[4] ? (a!==undefined ? k[4][+a] : "") : a;
+    items.push([PART_NAMES[n].split(":")[0], k[1], shown, ok]);
+  });
+  return {score:sc, max:PART_MAX[n], items, rows};
+}
+function isComplete(n){ return partKeys(n).every(k=>state.ans[k[0]]!==undefined && state.ans[k[0]]!==""); }
+function runningTotal(){ let t=0,m=0,c=0; for(let n=1;n<=6;n++){ if(state.done[n]){t+=state.done[n].score; m+=state.done[n].max; c++;} } return {t,m,c}; }
+function submitPart(n){
+  if(state.done[n]) return;
+  if(!isComplete(n)){ $("err"+n).textContent="Answer every question in this part first."; return; }
+  $("err"+n).textContent="";
+  if(!confirm(`Submit Part ${n}? You can't change your answers after you submit.`)) return;
+  state.done[n]=gradePart(n);
+  applyPart(n); save(); updateVisibility(true); updateBar();
+}
+function applyPart(n){
+  const d=state.done[n]; const card=$("card"+n);
+  card.classList.add("locked"); $("sub"+n).classList.add("hidden");
+  card.querySelectorAll("select").forEach(x=>{x.disabled=true;});
+  Object.keys(d.rows).forEach(k=>{
+    const row=card.querySelector(`[data-row="${k}"]`); if(!row) return;
+    const ok=d.rows[k]; row.classList.add(ok?"okrow":"badrow");
+    const m=document.createElement("span"); m.className="mark "+(ok?"ok":"bad"); m.innerHTML=ok?"&#10003; Correct":"&#10007; Incorrect";
+    (row.querySelector(".askrow")||row).appendChild(m);
+  });
+  const rt=runningTotal(); const right=Object.values(d.rows).filter(Boolean).length, all=Object.keys(d.rows).length;
+  const sb=$("sb"+n);
+  sb.innerHTML = `<div><div class="big">${fmt(d.score)} / ${d.max}</div><div class="lab">Part ${n} score (${right} of ${all} correct)</div></div>
+    <div><div class="big" style="color:var(--navy)">${fmt(rt.t)} / ${rt.m}</div><div class="lab">Running total after ${rt.c} of 6 parts (out of ${TOTAL} possible)</div></div>`;
+  sb.classList.add("show");
+}
+function restoreUI(){
+  document.querySelectorAll(".seg,.mc").forEach(g=>{const v=state.ans[g.dataset.k]; g.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));});
+  document.querySelectorAll("select[data-k]").forEach(s=>{s.value=state.ans[s.dataset.k]||"";});
+}
+function nextPart(){ for(let n=1;n<=6;n++) if(!state.done[n]) return n; return 7; }
+function updateVisibility(scroll){
+  const k=nextPart();
+  for(let n=1;n<=6;n++) $("card"+n).classList.toggle("hidden", n>k);
+  if(k<=6){ $("nextNote").classList.remove("hidden"); $("finalCard").classList.add("hidden");
+    $("nextText").textContent = k<6 ? `Submit Part ${k} to unlock Part ${k+1}.` : "Submit Part 6 to unlock the final step.";
+    if(scroll && k>1) $("card"+k).scrollIntoView({behavior:"smooth",block:"start"}); }
+  else { $("nextNote").classList.add("hidden"); $("finalCard").classList.remove("hidden"); if(scroll) $("finalCard").scrollIntoView({behavior:"smooth",block:"center"}); }
+}
+function updateBar(){
+  const rt=runningTotal();
+  $("nameBar").innerHTML = esc(state.name) + " &middot; " + esc(state.email) + (previewMode?"  (instructor preview, not saved)":"")
+    + `<span class="run">Score so far: ${fmt(rt.t)} / ${rt.m} (${rt.c} of 6 parts submitted)</span>`;
+}
+function save(){ if(previewMode) return; pstore(false,{name:state.name,email:state.email,ans:state.ans,done:state.done}); }
+
+// ======= RESULTS =======
+function showResults(rec){
+  $("startView").classList.add("hidden"); $("activityView").classList.add("hidden"); $("instView").classList.add("hidden");
+  $("nameBar").textContent = rec.name + " · " + rec.email + (rec.preview?"  (instructor preview, not saved)":"");
+  $("nameBar").classList.remove("hidden");
+  const rows = rec.items.map(it=>`<tr><td>${esc(it[0])}</td><td>${esc(it[1])}</td><td>${esc(it[2]||"(no answer)")}</td><td class="${it[3]?"ok":"bad"}">${it[3]?"&#10003; Correct":"&#10007; Incorrect"}</td></tr>`).join("");
+  $("resultView").innerHTML = `
+   <div class="report-name"><div class="lbl">SUBMITTED BY</div><div class="nm">${esc(rec.name)}</div><div class="em">${esc(rec.email)}</div>
+   <div class="meta">Ch. 13 Social Strategy Showdown &middot; Completed ${esc(rec.time)} &middot; Verification code ${esc(rec.code)}</div></div>
+   <div class="card"><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center">
+     <div><div class="scorebig">${fmt(rec.total)} / ${TOTAL}</div><div class="sub" style="margin:0">Total score</div></div>
+     <table class="res" style="flex:1 1 300px;margin:0"><tr><th>Section</th><th>Points</th></tr>${rec.sec.map(s=>`<tr><td>${esc(s[0])}</td><td>${fmt(s[1])} / ${s[2]}</td></tr>`).join("")}</table>
+   </div></div>
+   <div class="card noprint or"><b>Next step:</b> click <b>Save as PDF</b>, choose "Save as PDF" as the printer, and upload the PDF to the Chapter 13 D2L assignment folder.<div style="margin-top:12px"><button class="btn" id="pdfBtn">Save as PDF</button></div></div>
+   <div class="card"><h2 style="font-size:18px">Your answers</h2><table class="res"><tr><th>Part</th><th>Question</th><th>Your answer</th><th>Result</th></tr>${rows}</table></div>`;
+  $("resultView").classList.remove("hidden");
+  $("pdfBtn").addEventListener("click",()=>window.print());
+  const wm = ("   " + rec.name.toUpperCase() + "  ·  " + rec.email + "   •").repeat(8);
+  $("watermark").innerHTML = Array.from({length:14},(_,i)=>`<div style="top:${i*9-10}%">${esc(wm)}</div>`).join("");
+  $("printFoot").textContent = `${rec.name}  |  ${rec.email}  |  Score ${fmt(rec.total)}/${TOTAL}  |  Completed ${rec.time}  |  Verification code ${rec.code}`;
+  document.title = `Ch13 Social Strategy Showdown - ${rec.name}`;
+  window.scrollTo(0,0);
+}
+
+// ======= START =======
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+$("startBtn").addEventListener("click",()=>{
+  const name=$("fname").value.trim().replace(/\s+/g," "); const email=$("femail").value.trim().toLowerCase(); const code=$("code").value.trim().toUpperCase();
+  if(code===INSTRUCTOR_CODE){ $("startView").classList.add("hidden"); $("instView").classList.remove("hidden"); return; }
+  if(code!==STUDENT_CODE){ $("startErr").textContent="That access code isn't right. Check the code in D2L."; return; }
+  if(name.split(" ").length<2){ $("startErr").textContent="Enter your first and last name."; return; }
+  if(!EMAIL_RE.test(email)){ $("startErr").textContent="Enter a valid school email address."; return; }
+  const prev = store(true);
+  if(prev){ showResults(prev); return; }
+  const prog = pstore(true);
+  if(prog && prog.name){ begin(prog.name, prog.email||email, prog, norm(prog.name)!==norm(name)); return; }
+  begin(name, email);
+});
+function begin(name, email, prog, otherName){
+  build(name, email);
+  if(prog){ state.ans=prog.ans||{}; state.done=prog.done||{}; restoreUI(); Object.keys(state.done).forEach(n=>applyPart(+n)); }
+  $("startView").classList.add("hidden"); $("instView").classList.add("hidden");
+  updateBar();
+  if(otherName) $("nameBar").innerHTML += "  (this device already has an activity in progress under this name)";
+  $("nameBar").classList.remove("hidden");
+  $("activityView").classList.remove("hidden"); updateVisibility(false); window.scrollTo(0,0);
+}
+$("finishBtn").addEventListener("click",()=>{
+  if(nextPart()<=6) return;
+  const sec=[], items=[];
+  for(let n=1;n<=6;n++){ const d=state.done[n]; sec.push([PART_NAMES[n],d.score,d.max]); items.push(...d.items); }
+  const total=Math.round(sec.reduce((a,b)=>a+b[1],0)*10)/10;
+  const time=new Date().toLocaleString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
+  const rec={name:state.name,email:state.email,total,sec,items,time,code:vcode(state.name,state.email,total,time),preview:previewMode};
+  if(!previewMode){ store(false,rec); pstore(false,null); }
+  showResults(rec);
+});
+
+// ======= INSTRUCTOR =======
+$("iLookup").addEventListener("click",()=>{
+  const n=$("iName").value.trim(); if(!n){$("iOut").textContent="Enter a name."; return;}
+  const s=questionSet(n); const R=[];
+  s.p1.forEach(it=>R.push(["Part 1",it[0],it[1]]));
+  R.push(["Part 2",ID_N.q,ID_N.opts[ID_N.ans]]);
+  s.p2.forEach(p=>R.push(["Part 2","Northbound "+p[0]+": "+(p[4]?p[4][0]:p[1]),p[5]]));
+  R.push(["Part 3",ID_L.q,ID_L.opts[ID_L.ans]]);
+  s.p3.forEach(p=>R.push(["Part 3","Ledger & Bean "+p[0]+": "+p[1],p[5]]));
+  R.push(["Part 3",OFFBRAND.q,OFFBRAND.opts[OFFBRAND.ans]]);
+  s.p4.forEach(it=>R.push(["Part 4",it[0],it[1]]));
+  R.push(["Part 4",s.tip.q,s.tip.opts[s.tip.ans]]);
+  s.p5.forEach(it=>R.push(["Part 5",it[0],it[1]]));
+  s.p6.forEach(it=>R.push(["Part 6",it[0],it[1]]));
+  $("iOut").innerHTML=`<table class="res"><tr><th>Part</th><th>Question for ${esc(n)}</th><th>Correct answer</th></tr>${R.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td><b>${esc(r[2])}</b></td></tr>`).join("")}</table><p class="hint">Question selection depends only on the name, ignoring capitalization and extra spaces. If a PDF shows questions that don't match its name, it was likely copied from another student.</p>`;
+});
+$("iVerify").addEventListener("click",()=>{
+  const n=$("iName").value.trim(), em=$("vEmail").value.trim(), sc=$("vScore").value.trim(), t=$("vTime").value.trim(), c=$("vCode").value.trim().toUpperCase();
+  if(!n||!em||!sc||!t||!c){$("vOut").textContent="Fill in the student name above plus all four fields."; return;}
+  const ok = vcode(n, em, Math.round(parseFloat(sc)*10)/10, t)===c;
+  $("vOut").innerHTML = ok?'<span class="ok">&#10003; Match. This PDF\'s name, email, score, and time are consistent.</span>':'<span class="bad">&#10007; No match. The name, email, score, or time was changed, or the PDF belongs to someone else.</span>';
+});
+$("iPreview").addEventListener("click",()=>{ previewMode=true; begin(($("iName").value.trim())||"Instructor Preview", "instructor@preview"); });
+})();
+</script>
+</body>
+</html>
