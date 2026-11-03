@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 8 The Sunrise HR Desk | Introduction to Business</title>
+<style>
+:root{--navy:#1F3864;--navy2:#2E4A7A;--orange:#E87722;--lor:#FDEBDD;--lt:#F3F5F9;--txt:#222A35;--mute:#5B6577;--ok:#1E7B4A;--bad:#B3261E;--line:#D5DAE2}
+*{box-sizing:border-box}
+body{margin:0;font-family:Calibri,"Segoe UI",Arial,sans-serif;color:var(--txt);background:#fff;line-height:1.45}
+header.top{background:var(--navy);color:#fff;padding:22px 16px}
+header.top .wrap{max-width:900px;margin:0 auto}
+header.top .eyebrow{color:var(--orange);font-weight:700;letter-spacing:.12em;font-size:13px}
+header.top h1{margin:4px 0 4px;font-size:30px}
+header.top p{margin:0;color:#CADCFC}
+main{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--lt);border-radius:10px;padding:18px 20px;margin:18px 0}
+.card.or{background:var(--lor)}
+h2{color:var(--navy);margin:0 0 4px;font-size:22px}
+h2 .pts{color:var(--orange);font-size:15px;font-weight:700;margin-left:8px}
+h3{color:var(--navy);margin:16px 0 6px;font-size:17px}
+.sub{color:var(--mute);margin:0 0 14px}
+label.f{display:block;font-weight:700;color:var(--navy);margin:12px 0 4px}
+input[type=text],input[type=email],select{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:6px;width:100%;max-width:420px;background:#fff}
+button{font:inherit;cursor:pointer;border-radius:6px;border:none}
+.btn{background:var(--orange);color:#fff;font-weight:700;padding:11px 22px;font-size:16px}
+.btn.navy{background:var(--navy)}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.err{color:var(--bad);font-weight:700;margin-top:10px;min-height:1em}
+.namebar{position:sticky;top:0;z-index:5;background:var(--navy2);color:#fff;padding:8px 16px;font-weight:700;text-align:center}
+.namebar .run{color:#FFD7B5;margin-left:10px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row .q{flex:1 1 260px;font-weight:600}
+.row select{flex:0 1 320px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{background:#fff;border:1px solid var(--line);padding:7px 12px;color:var(--txt)}
+.seg button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.mc{display:flex;flex-direction:column;gap:6px;width:100%}
+.mc button{text-align:left;background:#fff;border:1px solid var(--line);padding:9px 12px;color:var(--txt)}
+.mc button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.memo{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 10px}
+.memo .mh{font-size:13px;color:var(--mute);margin-bottom:6px}
+.memo .mh b{color:var(--navy)}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:10px}
+.legend div{background:#fff;border-radius:8px;padding:8px 10px;font-size:14px}
+.legend b{color:var(--navy)}
+.co{display:flex;gap:14px;align-items:center;background:#fff;border-radius:10px;padding:12px 14px;margin:12px 0}
+.avatar{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;flex:0 0 54px;background:var(--orange)}
+.co .bn{font-weight:800;color:var(--navy);font-size:18px}
+.co .bh{color:var(--mute);font-size:14px}
+.tag{display:inline-block;font-weight:800;color:var(--orange);margin-right:6px}
+.hint{font-size:13px;color:var(--mute)}
+.hidden{display:none!important}
+.scorebig{font-size:44px;font-weight:800;color:var(--orange)}
+table.res{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:14px}
+table.res th,table.res td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+table.res th{background:var(--navy);color:#fff}
+.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}
+.report-name{background:var(--navy);color:#fff;border-radius:10px;padding:18px 20px;margin:16px 0}
+.report-name .lbl{color:var(--orange);font-weight:700;letter-spacing:.1em;font-size:12px}
+.report-name .nm{font-size:40px;font-weight:800;line-height:1.1;word-break:break-word}
+.report-name .em{font-size:20px;font-weight:700;color:#fff;margin-top:4px;word-break:break-all}
+.report-name .meta{color:#CADCFC;margin-top:6px;font-size:14px}
+#watermark{display:none}
+.inst{border:2px dashed var(--orange)}
+.partfoot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.scorebox{display:none;background:#fff;border:2px solid var(--orange);border-radius:10px;padding:10px 14px;margin-top:12px}
+.scorebox.show{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.scorebox .big{font-size:26px;font-weight:800;color:var(--orange)}
+.scorebox .lab{font-size:13px;color:var(--mute)}
+.mark{font-weight:700;font-size:14px;white-space:nowrap}
+.mark.ok{color:var(--ok)}.mark.bad{color:var(--bad)}
+.fix{font-size:13px;color:var(--ok);font-weight:700;flex-basis:100%}
+.locked .seg button,.locked .mc button,.locked select{pointer-events:none;opacity:.75}
+.okrow{background:rgba(30,123,74,.07)}
+.badrow{background:rgba(179,38,30,.07)}
+.waiting{color:var(--mute);font-style:italic}
+#activityView{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none}
+.lec{display:inline-block;background:var(--orange);color:#fff;font-size:11px;font-weight:800;letter-spacing:.06em;border-radius:10px;padding:1px 8px;margin-right:6px;vertical-align:middle}
+@media print{
+  header.top,.namebar,#startView,#activityView,.noprint,#instView{display:none!important}
+  main{padding:0;max-width:none}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #watermark{display:block;position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  #watermark div{position:absolute;left:-20%;width:140%;transform:rotate(-30deg);font-size:30px;font-weight:800;color:rgba(31,56,100,.09);white-space:nowrap}
+  #resultView{position:relative;z-index:1}
+  .card{break-inside:avoid;background:rgba(243,245,249,.55)!important}
+  table.res tr{break-inside:avoid}
+  table.res td:first-child{white-space:nowrap}
+  .printfoot{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:11px;color:var(--mute)}
+}
+.printfoot{display:none}
+@media print{.printfoot{display:block}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="eyebrow">INTRODUCTION TO BUSINESS &nbsp;|&nbsp; CHAPTER 8</div>
+  <h1>The Sunrise HR Desk</h1>
+  <p>Managing Human Resources and Labor Relations &middot; <span class="totpts">25</span> points</p>
+</div></header>
+<div class="namebar hidden" id="nameBar"></div>
+<div id="watermark"></div>
+
+<main>
+<!-- START -->
+<section id="startView">
+  <div class="card">
+    <h2>Before you begin</h2>
+    <p class="sub">You've just been hired as the new HR coordinator for <b>Sunrise Quick Stop</b>, a regional chain of 14 convenience stores. Your inbox is full. You'll plan for staffing needs, recruit and select new hires, set up training, sort out pay and benefits, and handle a few labor relations and legal questions, one part at a time.</p>
+    <ul>
+      <li>Six parts, <span class="totpts">25</span> points. Every question is click or select. No essays.</li>
+      <li>The activity records how long you spend on each part, and that time prints on your PDF.</li>
+      <li>Submit one part at a time. As soon as you submit a part, you'll see your score for that part, your running total, and which answers were correct. Then the next part unlocks.</li>
+      <li>You get <b>one attempt</b> at each part. You can't change a part after you submit it.</li>
+      <li>Your questions are selected and shuffled based on your name, so your activity is different from your classmates'.</li>
+      <li>After Part 6, click <b>Finish and create my PDF</b>, save the PDF, and upload it to the Chapter 8 D2L assignment folder.</li>
+    </ul>
+    <label class="f" for="fname">First and last name (exactly as it appears in D2L)</label>
+    <input type="text" id="fname" autocomplete="name">
+    <label class="f" for="femail">School email address</label>
+    <input type="email" id="femail" autocomplete="email" placeholder="Your school email">
+    <label class="f" for="code">Access code</label>
+    <input type="text" id="code" autocomplete="off">
+    <div class="err" id="startErr"></div>
+    <button class="btn" id="startBtn">Start</button>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section id="instView" class="hidden">
+  <div class="card inst">
+    <h2>Instructor tools</h2>
+    <p class="sub">Not visible to students. Look up the questions and answers a student received, or check a submitted PDF.</p>
+    <label class="f" for="iName">Student name</label>
+    <input type="text" id="iName">
+    <div style="margin-top:10px"><button class="btn navy" id="iLookup">Show this student's questions and answers</button></div>
+    <div id="iOut" style="margin-top:12px"></div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--line)">
+    <h2 style="font-size:18px">Verify a PDF</h2>
+    <p class="sub">Enter the student name above, then copy the email, score, completion time, and verification code from the student's PDF footer.</p>
+    <label class="f" for="vEmail">Email (exactly as printed)</label><input type="text" id="vEmail">
+    <label class="f" for="vScore">Score (number only, e.g. 21.5)</label><input type="text" id="vScore">
+    <label class="f" for="vTime">Completed (exactly as printed)</label><input type="text" id="vTime">
+    <label class="f" for="vCode">Verification code</label><input type="text" id="vCode">
+    <div style="margin-top:10px"><button class="btn navy" id="iVerify">Verify</button></div>
+    <div id="vOut" style="margin-top:12px;font-weight:700"></div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--line)">
+    <button class="btn ghost" id="iPreview">Preview the activity as a student (not saved)</button>
+  </div>
+</section>
+
+<!-- ACTIVITY -->
+<section id="activityView" class="hidden">
+  <div class="co"><div class="avatar">SQS</div><div><div class="bn">Sunrise Quick Stop</div><div class="bh">14 convenience stores &middot; about 210 employees &middot; cashiers, shift leads, store managers, a delivery driver team, and a small corporate office</div></div></div>
+
+  <div class="card part" id="card1">
+    <h2>Part 1: Plan for the people you need<span class="pts" id="pts1"></span></h2>
+    <p class="sub">HR planning starts with job analysis and forecasting. Label each item from your files, then decide what the forecast tells you.</p>
+    <div class="legend">
+      <div><b>Job analysis:</b> a study of the tasks required to do a job well</div>
+      <div><b>Job description:</b> lists the tasks and responsibilities of a job</div>
+      <div><b>Job specification:</b> the skills, knowledge, and abilities a person needs to fill the job</div>
+    </div>
+    <div id="p1"></div>
+    <div class="partfoot"><button class="btn" id="sub1">Submit Part 1</button><span class="err" id="err1" style="margin:0"></span></div>
+    <div class="scorebox" id="sb1"></div>
+  </div>
+
+  <div class="card part" id="card2">
+    <h2>Part 2: Recruit applicants<span class="pts" id="pts2"></span></h2>
+    <p class="sub">Sunrise has openings at several stores. Choose the recruiting term that best matches each situation. When more than one term could apply, choose the most specific one.</p>
+    <div id="p2"></div>
+    <div class="partfoot"><button class="btn" id="sub2">Submit Part 2</button><span class="err" id="err2" style="margin:0"></span></div>
+    <div class="scorebox" id="sb2"></div>
+  </div>
+
+  <div class="card part" id="card3">
+    <h2>Part 3: Select the right candidate<span class="pts" id="pts3"></span></h2>
+    <p class="sub">The selection process has five steps: initial screening, employment testing, the selection interview, a background and reference check, and a physical exam. Identify which step each moment belongs to, then pick the correct order.</p>
+    <div id="p3"></div>
+    <div class="partfoot"><button class="btn" id="sub3">Submit Part 3</button><span class="err" id="err3" style="margin:0"></span></div>
+    <div class="scorebox" id="sb3"></div>
+  </div>
+
+  <div class="card part" id="card4">
+    <h2>Part 4: Train, develop, and evaluate<span class="pts" id="pts4"></span></h2>
+    <p class="sub">Your new hires and current employees need training. Choose the training or development method each situation describes, then answer the performance appraisal question.</p>
+    <div id="p4"></div>
+    <div class="partfoot"><button class="btn" id="sub4">Submit Part 4</button><span class="err" id="err4" style="margin:0"></span></div>
+    <div class="scorebox" id="sb4"></div>
+  </div>
+
+  <div class="card part" id="card5">
+    <h2>Part 5: Pay and benefits<span class="pts" id="pts5"></span></h2>
+    <p class="sub">Payroll sent you questions about how different employees are paid. Choose the type of compensation each one describes.</p>
+    <div id="p5"></div>
+    <div class="partfoot"><button class="btn" id="sub5">Submit Part 5</button><span class="err" id="err5" style="margin:0"></span></div>
+    <div class="scorebox" id="sb5"></div>
+  </div>
+
+  <div class="card part" id="card6">
+    <h2>Part 6: Labor relations and the law<span class="pts" id="pts6"></span></h2>
+    <p class="sub">Some Sunrise employees are talking about forming a union, and a few legal questions just landed on your desk. Choose the term, law, or agency that fits each situation.</p>
+    <div id="p6"></div>
+    <div class="partfoot"><button class="btn" id="sub6">Submit Part 6</button><span class="err" id="err6" style="margin:0"></span></div>
+    <div class="scorebox" id="sb6"></div>
+  </div>
+
+  <div class="card or" id="nextNote"><p class="waiting" style="margin:0" id="nextText">Submit Part 1 to unlock Part 2.</p></div>
+  <div class="card or hidden" id="finalCard">
+    <p style="margin-top:0"><b>All six parts are done.</b> Click below to see your final score and create your PDF.</p>
+    <button class="btn" id="finishBtn">Finish and create my PDF</button>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="resultView" class="hidden"></section>
+</main>
+<div class="printfoot" id="printFoot"></div>
+
+<script>
+(function(){
+"use strict";
+// ======= SETTINGS: change these two values if you like =======
+const STUDENT_CODE = "BIZ8HR";        // access code you give students
+const INSTRUCTOR_CODE = "INSTRUCTOR"; // universal bypass
+// ============================================================
+const KEY = "i2b_ch8_hr_desk_v1";
+const PKEY = KEY + "_progress";
+const SALT = "MSTATE-I2B-CH8";
+const NPARTS = 6;
+
+// ======= LECTURE QUESTIONS (optional, 1 point each) =======
+// Add a question that only students who watched your Chapter 8 lecture can answer.
+// Leave a part as null to skip it. Each one you add raises that part (and the total) by 1 point.
+// Format: { q: "Question text", opts: ["Right answer", "Wrong", "Wrong", "Wrong"], ans: 0 }
+// (ans is the position of the right answer in opts, starting at 0; options are shuffled for each student.)
+const LECTURE = {
+  1: null,
+  2: null,
+  3: null,
+  4: null,
+  5: null,
+  6: null
+};
+// ==========================================================
+let previewMode = false;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = n => n.trim().replace(/\s+/g," ").toLowerCase();
+function store(get, val){try{ if(get) return JSON.parse(localStorage.getItem(KEY)); localStorage.setItem(KEY, JSON.stringify(val)); }catch(e){ return null; }}
+function pstore(get,val){try{ if(get) return JSON.parse(localStorage.getItem(PKEY)); if(val===null) localStorage.removeItem(PKEY); else localStorage.setItem(PKEY, JSON.stringify(val)); }catch(e){ return null; }}
+function hash(str){let h=0x811c9dc5;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return h>>>0;}
+function rng(seed){let a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function vcode(name,email,score,time){return hash(SALT+"|"+norm(name)+"|"+email.trim().toLowerCase()+"|"+score+"|"+time).toString(36).toUpperCase().padStart(7,"0").slice(-7);}
+const fmt = n => (Math.round(n*10)/10).toString();
+const dur = s => (s===null||s===undefined) ? "n/a" : (s>=3600 ? Math.floor(s/3600)+" hr "+Math.floor(s%3600/60)+" min" : Math.floor(s/60)+" min "+(s%60)+" sec");
+
+// ======= CONTENT =======
+// Part 1: job analysis / description / specification
+const DOC_CHOICES = ["Job analysis","Job description","Job specification"];
+const DOCS = [
+ ["You spend two days shadowing three shift leads, timing each task and interviewing them about what the job really takes.","Job analysis"],
+ ["You survey every store manager about which tasks fill their week, so you can set fair pay and design training for the role.","Job analysis"],
+ ["Posted for the Shift Lead opening: opens and closes the store, counts register drawers, schedules cashiers, and checks in fuel and grocery deliveries.","Job description"],
+ ["Cashier duties: runs the register, stocks the coolers, keeps the coffee station clean, and greets every customer.","Job description"],
+ ["Delivery Driver role: delivers stock from the warehouse to all 14 stores and keeps the daily delivery log.","Job description"],
+ ["Shift Lead candidates must be at least 18, have one year of retail experience, and be able to lift 40 pounds.","Job specification"],
+ ["Delivery Drivers must hold a valid commercial driver's license and have a clean driving record.","Job specification"],
+ ["Store Managers need strong math skills, a food handler certificate, and the ability to coach a team.","Job specification"]];
+const FC_CHOICES = ["Personnel shortage","Personnel surplus","No gap"];
+const FORECASTS = [
+ ["Your HR demand forecast says Sunrise will need 52 cashiers next summer when two new stores open. Your internal supply forecast shows 41 current cashiers who will still be available.","Personnel shortage"],
+ ["Sunrise is replacing staffed registers with self-checkout at four stores next year. You will need 30 cashiers, and 38 current cashiers are expected to stay.","Personnel surplus"],
+ ["You will need 14 store managers next year. All 14 current managers plan to stay, and none are being promoted.","No gap"],
+ ["Holiday traffic means you will need 25 extra seasonal workers in December, and no current employees are available to cover the extra shifts.","Personnel shortage"]];
+
+// Part 2: recruitment terms
+const REC_TERMS = ["Internal labor market","External labor market","Succession planning","Electronic job board","Job fair","Recruitment branding","Contingent worker"];
+const RECRUIT = [
+ ["A cashier at the Fargo store is promoted to fill the open Shift Lead job at the same store.","Internal labor market"],
+ ["No current employees qualify for the new Payroll Specialist job, so Sunrise has to look to the pool of potential applicants outside the firm.","External labor market"],
+ ["You list each store manager's likely replacement in case a manager retires or leaves.","Succession planning"],
+ ["You post the Delivery Driver opening on Indeed so job seekers can search for it, upload a résumé, and apply.","Electronic job board"],
+ ["You set up a Sunrise booth at a one-day event at the community college where dozens of employers meet hundreds of job seekers.","Job fair"],
+ ["Your careers page honestly shows early-morning shifts and busy rushes, along with flexible scheduling and tuition help, so applicants know what the job is really like.","Recruitment branding"],
+ ["For the summer rush, you bring in people who prefer temporary, part-time work instead of permanent jobs.","Contingent worker"]];
+
+// Part 3: selection steps
+const SEL_STEPS = ["Initial screening","Employment testing","Selection interview","Background and reference check","Physical exam"];
+const SELECT = [
+ ["You review 60 online applications and set aside anyone who isn't available for weekend shifts.","Initial screening"],
+ ["Applicants for the Bookkeeper job take a 20-minute test that checks how accurately they can reconcile a cash drawer.","Employment testing"],
+ ["You meet with a candidate for an in-depth conversation about her work experience, skills, education, and career interests.","Selection interview"],
+ ["You call two former supervisors listed by your top Shift Lead candidate to confirm his work history.","Background and reference check"],
+ ["Your top Delivery Driver candidate completes a required medical exam to confirm he can safely load and drive the truck.","Physical exam"],
+ ["Applicants for the Cashier job take a short personality test about how they would handle a rude customer.","Employment testing"]];
+const ORDER_Q = {q:"Which list shows the five steps of the selection process in the correct order?", opts:[
+ "Initial screening → Employment testing → Selection interview → Background and reference check → Physical exam",
+ "Selection interview → Initial screening → Employment testing → Physical exam → Background and reference check",
+ "Employment testing → Initial screening → Background and reference check → Selection interview → Physical exam",
+ "Initial screening → Selection interview → Physical exam → Employment testing → Background and reference check"], ans:0};
+
+// Part 4: training and development
+const TRAIN = ["Employee orientation","On-the-job training","Job rotation","Apprenticeship","Mentoring","Vestibule training","Programmed instruction"];
+const TRAINQ = [
+ ["On her first morning, a new cashier tours the store, learns the dress code and break policy, and meets her team.","Employee orientation"],
+ ["A new cashier learns the register by working real shifts with an experienced cashier coaching her through each sale.","On-the-job training"],
+ ["To prepare him for management, an assistant manager spends two months each in stocking, scheduling, and ordering.","Job rotation"],
+ ["A future maintenance technician combines hands-on work fixing store coolers with classroom instruction at a technical college.","Apprenticeship"],
+ ["A veteran district manager meets monthly with a new store manager to give job and career advice.","Mentoring"],
+ ["New hires practice on a training register set up in the back office, using fake transactions, before they ever face a customer.","Vestibule training"],
+ ["Employees complete self-paced online modules on food safety, each with short questions they must pass before moving to the next module.","Programmed instruction"]];
+const APPRAISAL = [
+ {q:"Sunrise's district manager compares each store manager's actual results this year with the goals set in January. What is this called, and what is it used for?", opts:[
+  "A performance appraisal, used to make decisions about pay, training, and promotion",
+  "A job analysis, used to write job descriptions",
+  "A selection interview, used to decide whom to hire",
+  "Collective bargaining, used to negotiate a union contract"], ans:0},
+ {q:"A shift lead's performance appraisal shows strong customer service but weak scheduling skills. What is the best use of this result?", opts:[
+  "Set up scheduling training for her and consider it when deciding her raise",
+  "File it away, since appraisals are only for paperwork",
+  "Use it to write a new job specification for cashiers",
+  "Send it to the NLRB for review"], ans:0}];
+
+// Part 5: compensation
+const COMP = ["Hourly wage","Salary","Piecework","Commission","Bonus","Profit sharing","Benefit required by law","Benefit not required by law"];
+const COMPQ = [
+ ["Cashiers earn $15.50 for every hour they work.","Hourly wage"],
+ ["The payroll manager earns $58,000 a year, no matter how many hours she works in a given week.","Salary"],
+ ["Sunrise's lottery-ticket sales rep earns 6% of the value of every vending contract he signs with a new store.","Commission"],
+ ["The Moorhead store beat its sales goal, so every employee there gets a one-time $300 payment.","Bonus"],
+ ["At year end, Sunrise sets aside 5% of company profits and divides it among all employees.","Profit sharing"],
+ ["Sunrise pays into Social Security, unemployment insurance, and workers' compensation for every employee.","Benefit required by law"],
+ ["Sunrise offers tuition reimbursement and paid vacation to full-time employees.","Benefit not required by law"],
+ ["A seasonal worker is paid $0.75 for each gift basket he assembles.","Piecework"]];
+
+// Part 6: labor relations and law
+const LAB = ["Union certification election","Collective bargaining","Grievance","Arbitration","Strike","Lockout","Union shop","EEOC","OSHA","Family and Medical Leave Act (FMLA)","Americans with Disabilities Act (ADA)"];
+const LABQ = [
+ ["After 30% of the delivery drivers sign authorization cards, the National Labor Relations Board holds a vote to see whether a majority wants the union.","Union certification election"],
+ ["Union and Sunrise negotiators meet, exchange proposals on wages and benefits, and trade compromises until they reach a tentative agreement.","Collective bargaining"],
+ ["A driver files a formal complaint saying Sunrise broke the contract's overtime rules.","Grievance"],
+ ["The overtime dispute can't be settled, so both sides let a neutral third party hear the case and decide it.","Arbitration"],
+ ["When the contract expires without a new agreement, union drivers refuse to work until a deal is reached.","Strike"],
+ ["To pressure the union to accept its offer, Sunrise temporarily keeps union drivers from working.","Lockout"],
+ ["The contract lets Sunrise hire nonunion drivers, but they must join the union within 60 days.","Union shop"],
+ ["An applicant believes she was not hired because of her age and files a discrimination charge with this federal agency.","EEOC"],
+ ["A cashier reports an unsafe, slippery walk-in cooler floor to the federal agency that enforces workplace safety rules.","OSHA"],
+ ["A store manager takes 12 weeks of unpaid, job-protected leave after adopting a child.","Family and Medical Leave Act (FMLA)"],
+ ["Sunrise lowers a counter and adds a stool so a cashier who uses a wheelchair can do her job.","Americans with Disabilities Act (ADA)"]];
+
+// ======= QUESTION SET (selected + shuffled from the name) =======
+function questionSet(name){
+  const r = rng(hash("set|"+norm(name)));
+  const s = {};
+  const pick = (arr, choices, n) => { const out=[]; choices.forEach(c=>{ const m=shuffle(arr.filter(x=>x[1]===c),r); if(m.length) out.push(m[0]); }); return shuffle(out,r).slice(0,n); };
+  s.p1 = pick(DOCS, DOC_CHOICES, 3);
+  s.fc = FORECASTS[Math.floor(r()*FORECASTS.length)];
+  s.p2 = shuffle(RECRUIT,r).slice(0,4);
+  s.p3 = shuffle(SELECT,r).slice(0,3);
+  s.p4 = shuffle(TRAINQ,r).slice(0,4);
+  s.ap = APPRAISAL[Math.floor(r()*APPRAISAL.length)];
+  s.p5 = shuffle(COMPQ,r).slice(0,4);
+  s.p6 = shuffle(LABQ,r).slice(0,4);
+  return s;
+}
+
+// ======= BUILD =======
+let state = {};
+const PART_NAMES = {1:"Part 1: HR planning",2:"Part 2: Recruitment",3:"Part 3: Selection",4:"Part 4: Training and appraisal",5:"Part 5: Pay and benefits",6:"Part 6: Labor relations and law"};
+const BASE_MAX = {1:4,2:4,3:4,4:5,5:4,6:4};
+const PART_MAX = {}; for(let n=1;n<=NPARTS;n++) PART_MAX[n] = BASE_MAX[n] + (LECTURE[n]?1:0);
+const TOTAL = Object.values(PART_MAX).reduce((a,b)=>a+b,0);
+document.querySelectorAll(".totpts").forEach(e=>e.textContent=TOTAL);
+for(let n=1;n<=NPARTS;n++){ const e=$("pts"+n); if(e) e.textContent = PART_MAX[n] + " points"; }
+
+function segHTML(key, opts){ return `<div class="seg" data-k="${key}">${opts.map(o=>`<button type="button" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`; }
+function mcHTML(key, opts){ return `<div class="mc" data-k="${key}">${opts.map((o,i)=>`<button type="button" data-v="${i}">${esc(o)}</button>`).join("")}</div>`; }
+function selHTML(key, opts, ph){ return `<select data-k="${key}"><option value="">${ph}</option>${opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`; }
+function memoRow(key, from, text, control){ return `<div class="row" data-row="${key}"><div class="q"><div class="memo" style="margin:0"><div class="mh"><b>${esc(from)}</b></div>${esc(text)}</div></div>${control}</div>`; }
+function rowQ(key, i, text, control){ return `<div class="row" data-row="${key}"><div class="q"><span class="tag">${i}.</span>${esc(text)}</div>${control}</div>`; }
+
+function build(name, email){
+  state = {name:name.trim().replace(/\s+/g," "), email:email.trim().toLowerCase(), ans:{}, done:{}, started:{}};
+  const s = questionSet(name); state.set = s;
+  const rr = rng(hash("opts|"+norm(name)));
+  const mix = q => { const idx = shuffle(q.opts.map((_,i)=>i),rr); return {q:q.q, opts:idx.map(i=>q.opts[i]), ans:idx.indexOf(q.ans)}; };
+  state.order = mix(ORDER_Q); state.ap = mix(s.ap);
+  state.lec = {}; for(let n=1;n<=NPARTS;n++) if(LECTURE[n]) state.lec[n] = mix(LECTURE[n]);
+
+  $("p1").innerHTML = s.p1.map((it,i)=>rowQ("p1_"+i,i+1,it[0],segHTML("p1_"+i,DOC_CHOICES))).join("")
+     + `<h3>The forecast</h3>` + memoRow("p1_fc","Forecast summary",s.fc[0],segHTML("p1_fc",FC_CHOICES));
+  $("p2").innerHTML = s.p2.map((it,i)=>rowQ("p2_"+i,i+1,it[0],selHTML("p2_"+i,REC_TERMS,"Choose a recruiting term..."))).join("");
+  $("p3").innerHTML = s.p3.map((it,i)=>rowQ("p3_"+i,i+1,it[0],selHTML("p3_"+i,SEL_STEPS,"Choose a selection step..."))).join("")
+     + `<div class="row" data-row="p3_ord"><div class="q" style="flex-basis:100%">${esc(state.order.q)}</div>${mcHTML("p3_ord",state.order.opts)}</div>`;
+  $("p4").innerHTML = s.p4.map((it,i)=>rowQ("p4_"+i,i+1,it[0],selHTML("p4_"+i,TRAIN,"Choose a training method..."))).join("")
+     + `<div class="row" data-row="p4_ap"><div class="q" style="flex-basis:100%">${esc(state.ap.q)}</div>${mcHTML("p4_ap",state.ap.opts)}</div>`;
+  $("p5").innerHTML = s.p5.map((it,i)=>rowQ("p5_"+i,i+1,it[0],selHTML("p5_"+i,COMP,"Choose a type of compensation..."))).join("");
+  $("p6").innerHTML = s.p6.map((it,i)=>rowQ("p6_"+i,i+1,it[0],selHTML("p6_"+i,LAB,"Choose a term, law, or agency..."))).join("");
+
+  for(let n=1;n<=NPARTS;n++) if(state.lec[n]){
+    $("p"+n).insertAdjacentHTML("beforeend", `<div class="row" data-row="p${n}_lec"><div class="q" style="flex-basis:100%"><span class="lec">FROM THE LECTURE</span>${esc(state.lec[n].q)}</div>${mcHTML("p"+n+"_lec",state.lec[n].opts)}</div>`);
+  }
+  document.querySelectorAll(".seg,.mc").forEach(g=>g.addEventListener("click",e=>{
+    const b=e.target.closest("button"); if(!b) return;
+    if(state.done[+g.dataset.k.charAt(1)]) return;
+    g.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+    state.ans[g.dataset.k]=b.dataset.v;
+  }));
+  document.querySelectorAll("select[data-k]").forEach(sel=>sel.addEventListener("change",()=>{ state.ans[sel.dataset.k]=sel.value; }));
+  for(let n=1;n<=NPARTS;n++){ $("sub"+n).onclick=()=>submitPart(n); }
+}
+
+// ======= KEYS: [key, question text, correct answer, points, options-for-MC] =======
+function partKeys(n){
+  const s=state.set, out=[];
+  if(n===1){ s.p1.forEach((it,i)=>out.push(["p1_"+i,it[0],it[1],1])); out.push(["p1_fc","Forecast: "+s.fc[0],s.fc[1],1]); }
+  if(n===2) s.p2.forEach((it,i)=>out.push(["p2_"+i,it[0],it[1],1]));
+  if(n===3){ s.p3.forEach((it,i)=>out.push(["p3_"+i,it[0],it[1],1])); out.push(["p3_ord",state.order.q,String(state.order.ans),1,state.order.opts]); }
+  if(n===4){ s.p4.forEach((it,i)=>out.push(["p4_"+i,it[0],it[1],1])); out.push(["p4_ap",state.ap.q,String(state.ap.ans),1,state.ap.opts]); }
+  if(n===5) s.p5.forEach((it,i)=>out.push(["p5_"+i,it[0],it[1],1]));
+  if(n===6) s.p6.forEach((it,i)=>out.push(["p6_"+i,it[0],it[1],1]));
+  if(state.lec && state.lec[n]) out.push(["p"+n+"_lec","From the lecture: "+state.lec[n].q,String(state.lec[n].ans),1,state.lec[n].opts]);
+  return out;
+}
+function gradePart(n){
+  let sc=0; const items=[], rows={}, fixes={};
+  partKeys(n).forEach(k=>{
+    const a=state.ans[k[0]], ok=a===k[2]; if(ok) sc+=k[3]; rows[k[0]]=ok;
+    const shown = k[4] ? (a!==undefined ? k[4][+a] : "") : a;
+    const right = k[4] ? k[4][+k[2]] : k[2];
+    fixes[k[0]] = right;
+    items.push([PART_NAMES[n].split(":")[0], k[1], shown, ok, right]);
+  });
+  return {score:sc, max:PART_MAX[n], items, rows, fixes};
+}
+function isComplete(n){ return partKeys(n).every(k=>state.ans[k[0]]!==undefined && state.ans[k[0]]!==""); }
+function runningTotal(){ let t=0,m=0,c=0; for(let n=1;n<=NPARTS;n++){ if(state.done[n]){t+=state.done[n].score; m+=state.done[n].max; c++;} } return {t,m,c}; }
+function submitPart(n){
+  if(state.done[n]) return;
+  if(!isComplete(n)){ $("err"+n).textContent="Answer every question in this part first."; return; }
+  $("err"+n).textContent="";
+  if(!confirm(`Submit Part ${n}? You can't change your answers after you submit.`)) return;
+  state.done[n]=gradePart(n);
+  state.done[n].secs = state.started[n] ? Math.max(1, Math.round((Date.now()-state.started[n])/1000)) : null;
+  applyPart(n); save(); updateVisibility(true); updateBar();
+}
+function applyPart(n){
+  const d=state.done[n]; const card=$("card"+n);
+  card.classList.add("locked"); $("sub"+n).classList.add("hidden");
+  card.querySelectorAll("select").forEach(x=>{x.disabled=true;});
+  Object.keys(d.rows).forEach(k=>{
+    const row=card.querySelector(`[data-row="${k}"]`); if(!row || row.querySelector(".mark")) return;
+    const ok=d.rows[k]; row.classList.add(ok?"okrow":"badrow");
+    const m=document.createElement("span"); m.className="mark "+(ok?"ok":"bad"); m.innerHTML=ok?"&#10003; Correct":"&#10007; Incorrect";
+    row.appendChild(m);
+  });
+  const rt=runningTotal(); const right=Object.values(d.rows).filter(Boolean).length, all=Object.keys(d.rows).length;
+  const sb=$("sb"+n);
+  sb.innerHTML = `<div><div class="big">${fmt(d.score)} / ${d.max}</div><div class="lab">Part ${n} score (${right} of ${all} correct)</div></div>
+    <div><div class="big" style="color:var(--navy)">${fmt(rt.t)} / ${rt.m}</div><div class="lab">Running total after ${rt.c} of ${NPARTS} parts (out of ${TOTAL} possible)</div></div>`;
+  sb.classList.add("show");
+}
+function restoreUI(){
+  document.querySelectorAll(".seg,.mc").forEach(g=>{const v=state.ans[g.dataset.k]; g.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));});
+  document.querySelectorAll("select[data-k]").forEach(s=>{s.value=state.ans[s.dataset.k]||"";});
+}
+function nextPart(){ for(let n=1;n<=NPARTS;n++) if(!state.done[n]) return n; return NPARTS+1; }
+function updateVisibility(scroll){
+  const k=nextPart();
+  for(let n=1;n<=NPARTS;n++) $("card"+n).classList.toggle("hidden", n>k);
+  if(k<=NPARTS && !state.started[k]){ state.started[k]=Date.now(); save(); }
+  if(k<=NPARTS){ $("nextNote").classList.remove("hidden"); $("finalCard").classList.add("hidden");
+    $("nextText").textContent = k<NPARTS ? `Submit Part ${k} to unlock Part ${k+1}.` : `Submit Part ${NPARTS} to unlock the final step.`;
+    if(scroll && k>1) $("card"+k).scrollIntoView({behavior:"smooth",block:"start"}); }
+  else { $("nextNote").classList.add("hidden"); $("finalCard").classList.remove("hidden"); if(scroll) $("finalCard").scrollIntoView({behavior:"smooth",block:"center"}); }
+}
+function updateBar(){
+  const rt=runningTotal();
+  $("nameBar").innerHTML = esc(state.name) + " &middot; " + esc(state.email) + (previewMode?"  (instructor preview, not saved)":"")
+    + `<span class="run">Score so far: ${fmt(rt.t)} / ${rt.m} (${rt.c} of ${NPARTS} parts submitted)</span>`;
+}
+function save(){ if(previewMode) return; pstore(false,{name:state.name,email:state.email,ans:state.ans,done:state.done,started:state.started}); }
+
+// ======= RESULTS =======
+function showResults(rec){
+  $("startView").classList.add("hidden"); $("activityView").classList.add("hidden"); $("instView").classList.add("hidden");
+  $("nameBar").textContent = rec.name + " · " + rec.email + (rec.preview?"  (instructor preview, not saved)":"");
+  $("nameBar").classList.remove("hidden");
+  const rows = rec.items.map(it=>`<tr><td>${esc(it[0])}</td><td>${esc(it[1])}</td><td>${esc(it[2]||"(no answer)")}</td><td class="${it[3]?"ok":"bad"}">${it[3]?"&#10003; Correct":"&#10007; Incorrect"}</td></tr>`).join("");
+  $("resultView").innerHTML = `
+   <div class="report-name"><div class="lbl">SUBMITTED BY</div><div class="nm">${esc(rec.name)}</div><div class="em">${esc(rec.email)}</div>
+   <div class="meta">Ch. 8 The Sunrise HR Desk &middot; Completed ${esc(rec.time)} &middot; Verification code ${esc(rec.code)}</div></div>
+   <div class="card"><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center">
+     <div><div class="scorebig">${fmt(rec.total)} / ${TOTAL}</div><div class="sub" style="margin:0">Total score</div></div>
+     <table class="res" style="flex:1 1 300px;margin:0"><tr><th>Section</th><th>Points</th><th>Time spent</th></tr>${rec.sec.map(s=>`<tr><td>${esc(s[0])}</td><td>${fmt(s[1])} / ${s[2]}</td><td>${dur(s[3])}</td></tr>`).join("")}<tr><td><b>Total</b></td><td><b>${fmt(rec.total)} / ${TOTAL}</b></td><td><b>${dur(rec.sec.reduce((a,b)=>a+(b[3]||0),0))}</b></td></tr></table>
+   </div></div>
+   <div class="card noprint or"><b>Next step:</b> click <b>Save as PDF</b>, choose "Save as PDF" as the printer, and upload the PDF to the Chapter 8 D2L assignment folder.<div style="margin-top:12px"><button class="btn" id="pdfBtn">Save as PDF</button></div></div>
+   <div class="card"><h2 style="font-size:18px">Your answers</h2><table class="res"><tr><th>Part</th><th>Question</th><th>Your answer</th><th>Result</th></tr>${rows}</table></div>`;
+  $("resultView").classList.remove("hidden");
+  $("pdfBtn").addEventListener("click",()=>window.print());
+  const wm = ("   " + rec.name.toUpperCase() + "  ·  " + rec.email + "   •").repeat(8);
+  $("watermark").innerHTML = Array.from({length:14},(_,i)=>`<div style="top:${i*9-10}%">${esc(wm)}</div>`).join("");
+  $("printFoot").textContent = `${rec.name}  |  ${rec.email}  |  Score ${fmt(rec.total)}/${TOTAL}  |  Time ${dur(rec.sec.reduce((a,b)=>a+(b[3]||0),0))}  |  Completed ${rec.time}  |  Verification code ${rec.code}`;
+  document.title = `Ch8 Sunrise HR Desk - ${rec.name}`;
+  window.scrollTo(0,0);
+}
+
+// ======= NO COPYING FROM THE ACTIVITY =======
+(function(){
+  const av = $("activityView");
+  ["copy","cut","contextmenu","dragstart","selectstart"].forEach(ev=>av.addEventListener(ev,e=>{ if(e.target.closest("select")) return; e.preventDefault(); }));
+  document.addEventListener("keydown",e=>{
+    if(av.classList.contains("hidden")) return;
+    const k=(e.key||"").toLowerCase();
+    if((e.ctrlKey||e.metaKey) && (k==="c"||k==="x"||k==="a"||k==="s"||k==="u"||k==="p")) e.preventDefault();
+  });
+})();
+
+// ======= START =======
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+$("startBtn").addEventListener("click",()=>{
+  const name=$("fname").value.trim().replace(/\s+/g," "); const email=$("femail").value.trim().toLowerCase(); const code=$("code").value.trim().toUpperCase();
+  if(code===INSTRUCTOR_CODE){ $("startView").classList.add("hidden"); $("instView").classList.remove("hidden"); return; }
+  if(code!==STUDENT_CODE){ $("startErr").textContent="That access code isn't right. Check the code in D2L."; return; }
+  if(name.split(" ").length<2){ $("startErr").textContent="Enter your first and last name."; return; }
+  if(!EMAIL_RE.test(email)){ $("startErr").textContent="Enter a valid school email address."; return; }
+  const prev = store(true);
+  if(prev){ showResults(prev); return; }
+  const prog = pstore(true);
+  if(prog && prog.name){ begin(prog.name, prog.email||email, prog, norm(prog.name)!==norm(name)); return; }
+  begin(name, email);
+});
+function begin(name, email, prog, otherName){
+  build(name, email);
+  if(prog){ state.ans=prog.ans||{}; state.done=prog.done||{}; state.started=prog.started||{}; restoreUI(); Object.keys(state.done).forEach(n=>applyPart(+n)); }
+  $("startView").classList.add("hidden"); $("instView").classList.add("hidden");
+  updateBar();
+  if(otherName) $("nameBar").innerHTML += "  (this device already has an activity in progress under this name)";
+  $("nameBar").classList.remove("hidden");
+  $("activityView").classList.remove("hidden"); updateVisibility(false); window.scrollTo(0,0);
+}
+$("finishBtn").addEventListener("click",()=>{
+  if(nextPart()<=NPARTS) return;
+  const sec=[], items=[];
+  for(let n=1;n<=NPARTS;n++){ const d=state.done[n]; sec.push([PART_NAMES[n],d.score,d.max,d.secs]); items.push(...d.items); }
+  const total=Math.round(sec.reduce((a,b)=>a+b[1],0)*10)/10;
+  const time=new Date().toLocaleString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
+  const rec={name:state.name,email:state.email,total,sec,items,time,code:vcode(state.name,state.email,total,time),preview:previewMode};
+  if(!previewMode){ store(false,rec); pstore(false,null); }
+  showResults(rec);
+});
+
+// ======= INSTRUCTOR =======
+$("iLookup").addEventListener("click",()=>{
+  const n=$("iName").value.trim(); if(!n){$("iOut").textContent="Enter a name."; return;}
+  const s=questionSet(n); const R=[];
+  s.p1.forEach(it=>R.push(["Part 1",it[0],it[1]]));
+  R.push(["Part 1","Forecast: "+s.fc[0],s.fc[1]]);
+  s.p2.forEach(it=>R.push(["Part 2",it[0],it[1]]));
+  s.p3.forEach(it=>R.push(["Part 3",it[0],it[1]]));
+  R.push(["Part 3",ORDER_Q.q,ORDER_Q.opts[ORDER_Q.ans]]);
+  s.p4.forEach(it=>R.push(["Part 4",it[0],it[1]]));
+  R.push(["Part 4",s.ap.q,s.ap.opts[s.ap.ans]]);
+  s.p5.forEach(it=>R.push(["Part 5",it[0],it[1]]));
+  s.p6.forEach(it=>R.push(["Part 6",it[0],it[1]]));
+  for(let k=1;k<=NPARTS;k++) if(LECTURE[k]) R.push(["Part "+k,"From the lecture: "+LECTURE[k].q,LECTURE[k].opts[LECTURE[k].ans]]);
+  $("iOut").innerHTML=`<table class="res"><tr><th>Part</th><th>Question for ${esc(n)}</th><th>Correct answer</th></tr>${R.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td><b>${esc(r[2])}</b></td></tr>`).join("")}</table><p class="hint">Question selection depends only on the name, ignoring capitalization and extra spaces. If a PDF shows questions that don't match its name, it was likely copied from another student.</p>`;
+});
+$("iVerify").addEventListener("click",()=>{
+  const n=$("iName").value.trim(), em=$("vEmail").value.trim(), sc=$("vScore").value.trim(), t=$("vTime").value.trim(), c=$("vCode").value.trim().toUpperCase();
+  if(!n||!em||!sc||!t||!c){$("vOut").textContent="Fill in the student name above plus all four fields."; return;}
+  const ok = vcode(n, em, Math.round(parseFloat(sc)*10)/10, t)===c;
+  $("vOut").innerHTML = ok?'<span class="ok">&#10003; Match. This PDF\'s name, email, score, and time are consistent.</span>':'<span class="bad">&#10007; No match. The name, email, score, or time was changed, or the PDF belongs to someone else.</span>';
+});
+$("iPreview").addEventListener("click",()=>{ previewMode=true; begin(($("iName").value.trim())||"Instructor Preview", "instructor@preview"); });
+})();
+</script>
+</body>
+</html>
