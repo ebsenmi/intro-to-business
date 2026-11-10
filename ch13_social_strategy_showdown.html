@@ -284,7 +284,7 @@ const POSTS_N = [
  ["Instagram","#MountainMonday ⛰️ Week 87 of our Monday trail photo. Your coffee break is waiting. ☕","Photo: a Northbound mug on a rock overlooking a lake (posted every Monday morning)","932 likes",null,"Maintaining top-of-mind awareness"]];
 
 const POSTS_L = [
- ["Instagram","Meet Ana. She has hand-sorted every bean we've roasted since we opened in 2014, about 1.2 million pounds. She says she can spot a flawed bean by sound. We believe her.","Photo: Ana smiling at a sorting table in the roastery, sleeves rolled up","2,410 likes · 301 comments",null,"Improving brand image"],
+ ["Instagram","Meet Ana. She's been with us since day one in 2014, knows half our regulars' orders by heart, and brings her famous cardamom buns to every Friday staff meeting. We're lucky to have her.","Photo: Ana laughing behind the café counter in her Ledger & Bean apron","2,410 likes · 301 comments",null,"Improving brand image"],
  ["YouTube","The Perfect Pour-Over: our 4-step method. Water at 200°F, a 30-second bloom, and a slow spiral pour. Full video guide from our head roaster.","9-minute tutorial video","48K views",null,"Showing expertise or product quality"],
  ["Pinterest","Holiday Coffee Bar: 12 ideas for your party. Tap through for the full guide, recipes, and printable menu cards on our website.","Pin linking to an article on ledgerandbean.com","Saved 6.3K times",null,"Boosting traffic and search engine rating"],
  ["Facebook","Sponsored · New Ethiopia Guji beans are here. Fresh roasted this week.","Owner's note: \"We showed this ad only to coffee lovers within 10 miles of our cafés. It cost 60% less than our old newspaper ad, and almost none of it was wasted on people who'd never buy.\"","",null,"Cutting marketing costs"],
@@ -346,8 +346,10 @@ function questionSet(name){
   const r = rng(hash("set|"+norm(name)));
   const s = {};
   s.p1 = shuffle(PLAT_Q,r).slice(0,5);
-  s.p2 = shuffle(POSTS_N,r).slice(0,4);
-  s.p3 = shuffle(POSTS_L,r).slice(0,3);
+  // one post per platform, so every student sees each brand on 3+ different platforms
+  const onePerPlatform = posts => posts.filter((p,i,a)=>a.findIndex(q=>q[0]===p[0])===i);
+  s.p2 = onePerPlatform(shuffle(POSTS_N,r)).slice(0,4);
+  s.p3 = onePerPlatform(shuffle(POSTS_L,r)).slice(0,3);
   s.p4 = shuffle(COMPARE,r);
   s.tip = TIPS[Math.floor(r()*TIPS.length)];
   s.p5 = shuffle(LISTEN,r).slice(0,4);
