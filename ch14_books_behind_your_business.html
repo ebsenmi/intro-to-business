@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 14 The Books Behind Your Business | Introduction to Business</title>
+<style>
+:root{--navy:#1F3864;--navy2:#2E4A7A;--orange:#E87722;--lor:#FDEBDD;--lt:#F3F5F9;--txt:#222A35;--mute:#5B6577;--ok:#1E7B4A;--bad:#B3261E;--line:#D5DAE2}
+*{box-sizing:border-box}
+body{margin:0;font-family:Calibri,"Segoe UI",Arial,sans-serif;color:var(--txt);background:#fff;line-height:1.45}
+header.top{background:var(--navy);color:#fff;padding:22px 16px}
+header.top .wrap{max-width:900px;margin:0 auto}
+header.top .eyebrow{color:var(--orange);font-weight:700;letter-spacing:.12em;font-size:13px}
+header.top h1{margin:4px 0 4px;font-size:30px}
+header.top p{margin:0;color:#CADCFC}
+main{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--lt);border-radius:10px;padding:18px 20px;margin:18px 0}
+.card.or{background:var(--lor)}
+h2{color:var(--navy);margin:0 0 4px;font-size:22px}
+h2 .pts{color:var(--orange);font-size:15px;font-weight:700;margin-left:8px}
+h3{color:var(--navy);margin:16px 0 6px;font-size:17px}
+.sub{color:var(--mute);margin:0 0 14px}
+label.f{display:block;font-weight:700;color:var(--navy);margin:12px 0 4px}
+input[type=text],input[type=email],select{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:6px;width:100%;max-width:420px;background:#fff}
+button{font:inherit;cursor:pointer;border-radius:6px;border:none}
+.btn{background:var(--orange);color:#fff;font-weight:700;padding:11px 22px;font-size:16px}
+.btn.navy{background:var(--navy)}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.err{color:var(--bad);font-weight:700;margin-top:10px;min-height:1em}
+.namebar{position:sticky;top:0;z-index:5;background:var(--navy2);color:#fff;padding:8px 16px;font-weight:700;text-align:center}
+.namebar .run{color:#FFD7B5;margin-left:10px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row .q{flex:1 1 260px;font-weight:600}
+.row select{flex:0 1 320px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{background:#fff;border:1px solid var(--line);padding:7px 12px;color:var(--txt)}
+.seg button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.mc{display:flex;flex-direction:column;gap:6px;width:100%}
+.mc button{text-align:left;background:#fff;border:1px solid var(--line);padding:9px 12px;color:var(--txt)}
+.mc button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.memo{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 10px}
+.memo .mh{font-size:13px;color:var(--mute);margin-bottom:6px}
+.memo .mh b{color:var(--navy)}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:10px}
+.legend div{background:#fff;border-radius:8px;padding:8px 10px;font-size:14px}
+.legend b{color:var(--navy)}
+.co{display:flex;gap:14px;align-items:center;background:#fff;border-radius:10px;padding:12px 14px;margin:12px 0}
+.avatar{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;flex:0 0 54px;background:var(--orange)}
+.co .bn{font-weight:800;color:var(--navy);font-size:18px}
+.co .bh{color:var(--mute);font-size:14px}
+.tag{display:inline-block;font-weight:800;color:var(--orange);margin-right:6px}
+.hint{font-size:13px;color:var(--mute)}
+.hidden{display:none!important}
+.scorebig{font-size:44px;font-weight:800;color:var(--orange)}
+table.res{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:14px}
+table.res th,table.res td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+table.res th{background:var(--navy);color:#fff}
+.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}
+.report-name{background:var(--navy);color:#fff;border-radius:10px;padding:18px 20px;margin:16px 0}
+.report-name .lbl{color:var(--orange);font-weight:700;letter-spacing:.1em;font-size:12px}
+.report-name .nm{font-size:40px;font-weight:800;line-height:1.1;word-break:break-word}
+.report-name .em{font-size:20px;font-weight:700;color:#fff;margin-top:4px;word-break:break-all}
+.report-name .meta{color:#CADCFC;margin-top:6px;font-size:14px}
+#watermark{display:none}
+.inst{border:2px dashed var(--orange)}
+.partfoot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.scorebox{display:none;background:#fff;border:2px solid var(--orange);border-radius:10px;padding:10px 14px;margin-top:12px}
+.scorebox.show{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.scorebox .big{font-size:26px;font-weight:800;color:var(--orange)}
+.scorebox .lab{font-size:13px;color:var(--mute)}
+.mark{font-weight:700;font-size:14px;white-space:nowrap}
+.mark.ok{color:var(--ok)}.mark.bad{color:var(--bad)}
+.fix{font-size:13px;color:var(--ok);font-weight:700;flex-basis:100%}
+.locked .seg button,.locked .mc button,.locked select{pointer-events:none;opacity:.75}
+.okrow{background:rgba(30,123,74,.07)}
+.badrow{background:rgba(179,38,30,.07)}
+.waiting{color:var(--mute);font-style:italic}
+#activityView{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none}
+.lec{display:inline-block;background:var(--orange);color:#fff;font-size:11px;font-weight:800;letter-spacing:.06em;border-radius:10px;padding:1px 8px;margin-right:6px;vertical-align:middle}
+@media print{
+  header.top,.namebar,#startView,#activityView,.noprint,#instView{display:none!important}
+  main{padding:0;max-width:none}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #watermark{display:block;position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  #watermark div{position:absolute;left:-20%;width:140%;transform:rotate(-30deg);font-size:30px;font-weight:800;color:rgba(31,56,100,.09);white-space:nowrap}
+  #resultView{position:relative;z-index:1}
+  .card{break-inside:avoid;background:rgba(243,245,249,.55)!important}
+  table.res tr{break-inside:avoid}
+  table.res td:first-child{white-space:nowrap}
+  .printfoot{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:11px;color:var(--mute)}
+}
+.printfoot{display:none}
+@media print{.printfoot{display:block}}
+</style>
+<style>
+input.num{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:6px;width:170px;background:#fff;text-align:right}
+.locked input.num{pointer-events:none;opacity:.75}
+.ledger{background:#fff;border-radius:10px;padding:12px 14px;margin:0 0 12px}
+.ledger table{width:100%;border-collapse:collapse;font-size:15px}
+.ledger td{padding:5px 6px;border-bottom:1px solid var(--line)}
+.ledger td:last-child{text-align:right;font-weight:700;white-space:nowrap}
+.ledger .lh{font-weight:800;color:var(--navy);margin-bottom:6px}
+.recap{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin:8px 0 0}
+.recap div{background:#fff;border-radius:8px;padding:8px 10px;font-size:14px}
+.recap .wk{display:block;color:var(--orange);font-weight:800;font-size:12px;letter-spacing:.06em}
+.formula{background:#fff;border-radius:8px;padding:8px 10px;font-size:14px}
+.formula b{color:var(--navy)}
+.rule{font-size:14px;background:#fff;border-left:none;border-radius:8px;padding:8px 10px;margin-bottom:10px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="eyebrow">INTRODUCTION TO BUSINESS &nbsp;|&nbsp; CHAPTER 14</div>
+  <h1>The Books Behind Your Business</h1>
+  <p>Using Financial Information and Accounting &middot; <span class="totpts">25</span> points</p>
+</div></header>
+<div class="namebar hidden" id="nameBar"></div>
+<div id="watermark"></div>
+
+<main>
+<!-- START -->
+<section id="startView">
+  <div class="card">
+    <h2>Before you begin</h2>
+    <p class="sub">You've just been hired as the part-time bookkeeper for a small online business that is going through the same steps you are in your AI Assisted Mini Business Plan: a fulfillment model, a legal structure, booth supplies, pricing, ads, and a festival booth. It's the end of the month, and the owner needs the books done.</p>
+    <ul>
+      <li>Six parts, <span class="totpts">25</span> points. Every question is click, select, or a number you calculate. No essays.</li>
+      <li><b>Your business and every number in it are created from your name.</b> Your classmates have different businesses and different numbers, so their answers will not work for you.</li>
+      <li>Have a calculator ready. Round dollars to the nearest cent, ratios to two decimal places, and percentages to one decimal place.</li>
+      <li>If an earlier answer was wrong but you used it correctly in a later step, you still earn the later point.</li>
+      <li>Submit one part at a time. You'll see your score for that part and your running total right away. You get <b>one attempt</b> at each part.</li>
+      <li>The activity records how long you spend on each part, and that time prints on your PDF.</li>
+      <li>After Part 6, click <b>Finish and create my PDF</b>, save the PDF, and upload it to the Chapter 14 D2L assignment folder.</li>
+    </ul>
+    <label class="f" for="fname">First and last name (exactly as it appears in D2L)</label>
+    <input type="text" id="fname" autocomplete="name">
+    <label class="f" for="femail">School email address</label>
+    <input type="email" id="femail" autocomplete="email" placeholder="Your school email">
+    <label class="f" for="code">Access code</label>
+    <input type="text" id="code" autocomplete="off">
+    <div class="err" id="startErr"></div>
+    <button class="btn" id="startBtn">Start</button>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section id="instView" class="hidden">
+  <div class="card inst">
+    <h2>Instructor tools</h2>
+    <p class="sub">Not visible to students. Look up the business, numbers, and answer key a student received, or check a submitted PDF.</p>
+    <label class="f" for="iName">Student name</label>
+    <input type="text" id="iName">
+    <div style="margin-top:10px"><button class="btn navy" id="iLookup">Show this student's business and answers</button></div>
+    <div id="iOut" style="margin-top:12px"></div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--line)">
+    <h2 style="font-size:18px">Verify a PDF</h2>
+    <p class="sub">Enter the student name above, then copy the email, score, completion time, and verification code from the student's PDF footer.</p>
+    <label class="f" for="vEmail">Email (exactly as printed)</label><input type="text" id="vEmail">
+    <label class="f" for="vScore">Score (number only, e.g. 21.5)</label><input type="text" id="vScore">
+    <label class="f" for="vTime">Completed (exactly as printed)</label><input type="text" id="vTime">
+    <label class="f" for="vCode">Verification code</label><input type="text" id="vCode">
+    <div style="margin-top:10px"><button class="btn navy" id="iVerify">Verify</button></div>
+    <div id="vOut" style="margin-top:12px;font-weight:700"></div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--line)">
+    <button class="btn ghost" id="iPreview">Preview the activity as a student (not saved)</button>
+  </div>
+</section>
+
+<!-- ACTIVITY -->
+<section id="activityView" class="hidden">
+  <div class="co"><div class="avatar" id="bizAv"></div><div><div class="bn" id="bizName"></div><div class="bh" id="bizDesc"></div></div></div>
+  <div class="card or">
+    <h2 style="font-size:18px">The owner's mini business plan decisions</h2>
+    <p class="sub" style="margin-bottom:4px">These are the same decisions you are making in your own plan. You'll see each of them show up in the books.</p>
+    <div class="recap" id="recap"></div>
+  </div>
+
+  <div class="card part" id="card1">
+    <h2>Part 1: Who does what in accounting<span class="pts" id="pts1"></span></h2>
+    <p class="sub">Accounting is how a business collects, records, classifies, summarizes, reports, and analyzes its financial activity. Choose the term that best matches each situation at your business.</p>
+    <div id="p1"></div>
+    <div class="partfoot"><button class="btn" id="sub1">Submit Part 1</button><span class="err" id="err1" style="margin:0"></span></div>
+    <div class="scorebox" id="sb1"></div>
+  </div>
+
+  <div class="card part" id="card2">
+    <h2>Part 2: Sort the accounts<span class="pts" id="pts2"></span></h2>
+    <p class="sub">The balance sheet is built on the accounting equation: <b>Assets = Liabilities + Owners' equity</b>. Classify each item from the business's records.</p>
+    <div class="legend">
+      <div><b>Current asset:</b> cash, or something that will become cash or be used up within a year</div>
+      <div><b>Fixed asset:</b> long-term, physical items used to run the business</div>
+      <div><b>Intangible asset:</b> long-term items with no physical form</div>
+      <div><b>Current liability:</b> a debt due within a year</div>
+      <div><b>Long-term liability:</b> a debt due in more than a year</div>
+      <div><b>Owners' equity:</b> the owner's investment plus profits kept in the business</div>
+    </div>
+    <div id="p2"></div>
+    <div class="partfoot"><button class="btn" id="sub2">Submit Part 2</button><span class="err" id="err2" style="margin:0"></span></div>
+    <div class="scorebox" id="sb2"></div>
+  </div>
+
+  <div class="card part" id="card3">
+    <h2>Part 3: Build the income statement<span class="pts" id="pts3"></span></h2>
+    <p class="sub">The income statement shows revenues, expenses, and profit or loss over a period of time. Use the October records below.</p>
+    <div id="p3data"></div>
+    <div class="rule">Net sales = Gross sales &minus; discounts &nbsp;&middot;&nbsp; Gross profit = Net sales &minus; Cost of goods sold &nbsp;&middot;&nbsp; Net profit = Gross profit &minus; Total operating expenses</div>
+    <div id="p3"></div>
+    <div class="partfoot"><button class="btn" id="sub3">Submit Part 3</button><span class="err" id="err3" style="margin:0"></span></div>
+    <div class="scorebox" id="sb3"></div>
+  </div>
+
+  <div class="card part" id="card4">
+    <h2>Part 4: Build the balance sheet<span class="pts" id="pts4"></span></h2>
+    <p class="sub">The balance sheet is a snapshot of what the business owns and owes on one date. These items are in no particular order. Sort them yourself, then total them.</p>
+    <div id="p4data"></div>
+    <div id="p4"></div>
+    <div class="partfoot"><button class="btn" id="sub4">Submit Part 4</button><span class="err" id="err4" style="margin:0"></span></div>
+    <div class="scorebox" id="sb4"></div>
+  </div>
+
+  <div class="card part" id="card5">
+    <h2>Part 5: Follow the cash<span class="pts" id="pts5"></span></h2>
+    <p class="sub">The statement of cash flows sorts cash coming in and going out into three activities.</p>
+    <div class="legend">
+      <div><b>Operating:</b> day-to-day buying and selling</div>
+      <div><b>Investing:</b> buying or selling long-term assets</div>
+      <div><b>Financing:</b> borrowing, repaying loans, and owner money going in or out</div>
+    </div>
+    <div id="p5"></div>
+    <div class="partfoot"><button class="btn" id="sub5">Submit Part 5</button><span class="err" id="err5" style="margin:0"></span></div>
+    <div class="scorebox" id="sb5"></div>
+  </div>
+
+  <div class="card part" id="card6">
+    <h2>Part 6: Read the ratios<span class="pts" id="pts6"></span></h2>
+    <p class="sub">Ratio analysis turns your statements into numbers a lender or investor can compare. Use your answers from Parts 3 and 4.</p>
+    <div class="legend">
+      <div class="formula"><b>Current ratio</b> (liquidity) = Current assets &divide; Current liabilities</div>
+      <div class="formula"><b>Net profit margin</b> (profitability) = Net profit &divide; Net sales &times; 100</div>
+      <div class="formula"><b>Debt-to-equity</b> (debt) = Total liabilities &divide; Owners' equity</div>
+    </div>
+    <div id="p6"></div>
+    <div class="partfoot"><button class="btn" id="sub6">Submit Part 6</button><span class="err" id="err6" style="margin:0"></span></div>
+    <div class="scorebox" id="sb6"></div>
+  </div>
+
+  <div class="card or" id="nextNote"><p class="waiting" style="margin:0" id="nextText">Submit Part 1 to unlock Part 2.</p></div>
+  <div class="card or hidden" id="finalCard">
+    <p style="margin-top:0"><b>All six parts are done.</b> Click below to see your final score and create your PDF.</p>
+    <button class="btn" id="finishBtn">Finish and create my PDF</button>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="resultView" class="hidden"></section>
+</main>
+<div class="printfoot" id="printFoot"></div>
+
+<script>
+(function(){
+"use strict";
+// ======= SETTINGS: change these two values if you like =======
+const STUDENT_CODE = "BIZ14BOOKS";    // access code you give students
+const INSTRUCTOR_CODE = "INSTRUCTOR"; // universal bypass
+// ============================================================
+const KEY = "i2b_ch14_books_v1";
+const PKEY = KEY + "_progress";
+const SALT = "MSTATE-I2B-CH14";
+const NPARTS = 6;
+
+// ======= LECTURE QUESTIONS (optional, 1 point each) =======
+// Add a question that only students who watched your Chapter 14 lecture can answer.
+// Leave a part as null to skip it. Each one you add raises that part (and the total) by 1 point.
+// Format: { q: "Question text", opts: ["Right answer", "Wrong", "Wrong", "Wrong"], ans: 0 }
+const LECTURE = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null };
+// ==========================================================
+let previewMode = false;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = n => n.trim().replace(/\s+/g," ").toLowerCase();
+function store(get, val){try{ if(get) return JSON.parse(localStorage.getItem(KEY)); localStorage.setItem(KEY, JSON.stringify(val)); }catch(e){ return null; }}
+function pstore(get,val){try{ if(get) return JSON.parse(localStorage.getItem(PKEY)); if(val===null) localStorage.removeItem(PKEY); else localStorage.setItem(PKEY, JSON.stringify(val)); }catch(e){ return null; }}
+function hash(str){let h=0x811c9dc5;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return h>>>0;}
+function rng(seed){let a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function vcode(name,email,score,time){return hash(SALT+"|"+norm(name)+"|"+email.trim().toLowerCase()+"|"+score+"|"+time).toString(36).toUpperCase().padStart(7,"0").slice(-7);}
+const fmt = n => (Math.round(n*10)/10).toString();
+const dur = s => (s===null||s===undefined) ? "n/a" : (s>=3600 ? Math.floor(s/3600)+" hr "+Math.floor(s%3600/60)+" min" : Math.floor(s/60)+" min "+(s%60)+" sec");
+const money = c => (c<0?"-":"") + "$" + (Math.abs(c)/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const pickOf = (arr,r) => arr[Math.floor(r()*arr.length)];
+const between = (lo,hi,step,r) => lo + step*Math.floor(r()*(Math.floor((hi-lo)/step)+1));
+function parseNum(s){
+  if(s===undefined||s===null) return NaN;
+  let t=String(s).trim(); let neg=false;
+  if(/^\(.*\)$/.test(t)){neg=true;t=t.slice(1,-1);}
+  t=t.replace(/[$,%\s]/g,"");
+  if(t.startsWith("-")){neg=!neg;t=t.slice(1);}
+  if(!/^\d*\.?\d+$|^\d+\.$/.test(t)) return NaN;
+  const v=parseFloat(t); return neg?-v:v;
+}
+
+// ======= THE BUSINESSES (one per fulfillment model from Week 2) =======
+const BIZ = [
+ {id:"A", name:"Lakeside Pup Co.", av:"LPC", item:"bandana", items:"bandanas",
+  desc:"Custom dog bandanas sold online and at summer festivals",
+  model:"Print-on-demand", vendor:"a print-on-demand vendor that prints each bandana after it's ordered",
+  prices:[2400,2500,2600,2800], costs:[1150,1200,1250,1300,1350],
+  extra:["Design tool subscription",1500], invLabel:"Bandanas on hand, ready to sell at the next festival", invUnits:[3,8]},
+ {id:"B", name:"Ember & Pine Candle Co.", av:"EPC", item:"candle", items:"candles",
+  desc:"Hand-poured soy candles sold online and at craft fairs",
+  model:"Stored inventory", vendor:"a wholesaler, buying candles in bulk and storing them",
+  prices:[1800,2000,2200,2400], costs:[700,750,800,850,900],
+  extra:["Storage unit rent",6500], invLabel:"Candles in the storage unit, ready to ship", invUnits:[40,90]},
+ {id:"C", name:"ChargeUp Gear", av:"CUG", item:"phone accessory kit", items:"phone accessory kits",
+  desc:"Phone cases and charging kits sold online and at summer markets",
+  model:"Dropship", vendor:"a dropship supplier that ships each order straight to the customer",
+  prices:[1900,2200,2500,2900], costs:[850,900,950,1000,1100],
+  extra:["Dropship app subscription",2900], invLabel:"Kits on hand, ready to sell at the next market", invUnits:[3,8]}
+];
+
+// Part 1 terms
+const TERMS = ["Accounting cycle","Managerial accounting","Financial accounting","GAAP","FASB","Certified public accountant (CPA)","Private accountant","Double-entry bookkeeping","Depreciation"];
+const TERMQ = [
+ ["Each month the owner gathers receipts, records them in a journal, posts them to the ledger, and then prepares financial statements.","Accounting cycle"],
+ ["The owner builds a report just for herself comparing ad spending to sales by week, to decide whether to keep running ads.","Managerial accounting"],
+ ["The owner breaks down cost per {item} by vendor so she can decide which supplier to use next season.","Managerial accounting"],
+ ["The owner prepares an income statement and balance sheet that a bank will review before approving a small business loan.","Financial accounting"],
+ ["The rules accountants follow so that every company's financial statements are prepared the same way and can be compared.","GAAP"],
+ ["The independent organization that writes and updates the rules accountants follow when preparing financial statements.","FASB"],
+ ["The owner hires an accountant who passed a national exam and is state-licensed to audit statements and give tax advice to the public.","Certified public accountant (CPA)"],
+ ["The business grows, and the owner hires a bookkeeper who works only for this company as an employee.","Private accountant"],
+ ["When a customer pays for an order, the bookkeeper records two entries, one increasing cash and one increasing revenue, so the accounting equation stays in balance.","Double-entry bookkeeping"],
+ ["The owner spreads the cost of the canopy tent and tables over the three years she expects to use them, instead of counting it all in one month.","Depreciation"]];
+
+// Part 2 classifications
+const CLASSES = ["Current asset","Fixed asset","Intangible asset","Current liability","Long-term liability","Owners' equity"];
+const CLASSQ = [
+ ["Money in the business checking account","Current asset"],
+ ["{inv}","Current asset"],
+ ["Canopy tent, folding tables, and storage bins bought for festival booths (Week 3)","Fixed asset"],
+ ["The laptop the owner uses only for the business","Fixed asset"],
+ ["The registered trademark for the business name and logo","Intangible asset"],
+ ["The website domain name the business owns","Intangible asset"],
+ ["The balance owed to the {vendorShort} for last week's order, due in 30 days","Current liability"],
+ ["Sales tax collected from customers that must be paid to the Minnesota Department of Revenue this month (Week 4)","Current liability"],
+ ["A small business loan that will be repaid over the next three years","Long-term liability"],
+ ["The owner's personal savings she put into the business to get it started","Owners' equity"],
+ ["Profits from earlier months that the owner kept in the business","Owners' equity"]];
+
+// Part 5 cash flows
+const FLOWS = ["Operating","Investing","Financing"];
+const FLOWQ = [
+ ["Cash received from customers for online orders","Operating"],
+ ["Paying the {vendorShort} for this month's {items}","Operating"],
+ ["Paying for this month's social media ads (Week 5)","Operating"],
+ ["Paying the festival booth fee (Week 6)","Operating"],
+ ["Buying a canopy tent and tables for festival booths","Investing"],
+ ["Buying a new laptop for the business","Investing"],
+ ["Selling an old display rack the business no longer uses","Investing"],
+ ["Receiving the money from a small business loan","Financing"],
+ ["Repaying part of the loan amount to the bank","Financing"],
+ ["The owner putting more of her own savings into the business","Financing"],
+ ["The owner taking money out of the business for personal use","Financing"]];
+
+// ======= QUESTION SET (business + numbers from the name) =======
+function questionSet(name){
+  const r = rng(hash("set|"+norm(name)));
+  const s = {};
+  const b = BIZ[Math.floor(r()*BIZ.length)]; s.b = b;
+  const vendorShort = b.id==="A"?"print-on-demand vendor":(b.id==="B"?"wholesaler":"dropship supplier");
+  const fill = t => t.replace("{item}",b.item).replace("{items}",b.items).replace("{inv}",b.invLabel).replace("{vendorShort}",vendorShort);
+  // numbers (in cents)
+  const n = {};
+  n.price = pickOf(b.prices,r); n.cost = pickOf(b.costs,r);
+  n.units = between(60,140,1,r);
+  n.discOrders = between(5,15,1,r); n.discEach = 300;
+  n.disc = n.discOrders*n.discEach;
+  n.gross = n.units*n.price; n.net = n.gross-n.disc; n.cogs = n.units*n.cost; n.gp = n.net-n.cogs;
+  n.platform = 3900;
+  n.fee = Math.round(n.net*0.029) + 30*n.units;
+  n.ads = between(7500,15000,500,r); n.booth = between(4000,12000,500,r);
+  n.extraName = b.extra[0]; n.extra = b.extra[1];
+  n.opex = n.platform+n.fee+n.ads+n.booth+n.extra; n.np = n.gp-n.opex;
+  // balance sheet
+  n.cash = between(40000,150000,500,r);
+  n.invUnits = between(b.invUnits[0],b.invUnits[1],1,r); n.inv = n.invUnits*n.cost;
+  n.laptop = between(50000,90000,2500,r); n.boothEq = between(25000,45000,500,r);
+  n.tm = between(15000,35000,500,r); // trademark + domain
+  n.ap = between(10000,40000,500,r); n.tax = between(3000,9000,50,r); n.loan = between(30000,80000,5000,r);
+  const totals = () => { n.ca=n.cash+n.inv; n.ta=n.ca+n.laptop+n.boothEq+n.tm; n.cl=n.ap+n.tax; n.tl=n.cl+n.loan; n.eq=n.ta-n.tl; };
+  totals(); if(n.eq<30000){ n.cash += Math.ceil((30000-n.eq)/500)*500 + 20000; totals(); }
+  n.cr = n.ca/n.cl; n.npm = n.np/n.net*100; n.de = n.tl/n.eq;
+  s.n = n;
+  // part 1: 4 terms, different answers
+  const t = shuffle(TERMQ,r); const used=new Set(); s.p1=[];
+  t.forEach(x=>{ if(s.p1.length<4 && !used.has(x[1])){ used.add(x[1]); s.p1.push([fill(x[0]),x[1]]); } });
+  // part 2: 4 classes, one item each
+  const cls = shuffle(CLASSES,r).slice(0,4);
+  s.p2 = shuffle(cls.map(c=>{ const m=shuffle(CLASSQ.filter(x=>x[1]===c),r)[0]; return [fill(m[0]),c]; }),r);
+  // part 5: one of each flow
+  s.p5 = shuffle(FLOWS.map(f=>{ const m=shuffle(FLOWQ.filter(x=>x[1]===f),r)[0]; return [fill(m[0]),f]; }),r);
+  s.vendorShort = vendorShort;
+  return s;
+}
+
+// ======= BUILD =======
+let state = {};
+const PART_NAMES = {1:"Part 1: Accounting terms",2:"Part 2: Sort the accounts",3:"Part 3: Income statement",4:"Part 4: Balance sheet",5:"Part 5: Cash flows",6:"Part 6: Ratios"};
+const BASE_MAX = {1:4,2:4,3:6,4:4,5:3,6:4};
+const PART_MAX = {}; for(let n=1;n<=NPARTS;n++) PART_MAX[n] = BASE_MAX[n] + (LECTURE[n]?1:0);
+const TOTAL = Object.values(PART_MAX).reduce((a,b)=>a+b,0);
+document.querySelectorAll(".totpts").forEach(e=>e.textContent=TOTAL);
+for(let n=1;n<=NPARTS;n++){ const e=$("pts"+n); if(e) e.textContent = PART_MAX[n] + " points"; }
+
+function segHTML(key, opts){ return `<div class="seg" data-k="${key}">${opts.map(o=>`<button type="button" data-v="${esc(o)}">${esc(o)}</button>`).join("")}</div>`; }
+function mcHTML(key, opts){ return `<div class="mc" data-k="${key}">${opts.map((o,i)=>`<button type="button" data-v="${i}">${esc(o)}</button>`).join("")}</div>`; }
+function selHTML(key, opts, ph){ return `<select data-k="${key}"><option value="">${ph}</option>${opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`; }
+function numHTML(key, ph){ return `<input type="text" class="num" inputmode="decimal" autocomplete="off" data-k="${key}" placeholder="${ph}">`; }
+function rowQ(key, i, text, control){ return `<div class="row" data-row="${key}"><div class="q"><span class="tag">${i}.</span>${text}</div>${control}</div>`; }
+function ledger(title, rows){ return `<div class="ledger"><div class="lh">${esc(title)}</div><table>${rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table></div>`; }
+
+// Income statement and balance sheet questions
+const ISQ = [
+ ["p3_gross","Gross sales"],["p3_net","Net sales"],["p3_cogs","Cost of goods sold"],
+ ["p3_gp","Gross profit"],["p3_opex","Total operating expenses (include the payment processing fee you calculate)"],["p3_np","Net profit"]];
+const BSQ = [["p4_ca","Total current assets"],["p4_ta","Total assets"],["p4_tl","Total liabilities"],["p4_eq","Owners' equity (use the accounting equation)"]];
+const RQ = [["p6_cr","Current ratio (two decimal places)","0.00"],["p6_npm","Net profit margin, as a percent (one decimal place)","0.0"],["p6_de","Debt-to-equity ratio (two decimal places)","0.00"]];
+
+function bsItems(s){
+  const n=s.n, b=s.b;
+  return [
+   ["Business checking account", money(n.cash)],
+   [b.invLabel+" ("+n.invUnits+" at "+money(n.cost)+" each)", money(n.inv)],
+   ["Laptop used for the business", money(n.laptop)],
+   ["Canopy tent, tables, and storage bins for festival booths", money(n.boothEq)],
+   ["Registered trademark and website domain name", money(n.tm)],
+   ["Owed to the "+s.vendorShort+", due in 30 days", money(n.ap)],
+   ["Sales tax owed to the Minnesota Department of Revenue, due this month", money(n.tax)],
+   ["Small business loan, repaid over the next three years", money(n.loan)]];
+}
+function isItems(s){
+  const n=s.n, b=s.b;
+  return [
+   [b.items.charAt(0).toUpperCase()+b.items.slice(1)+" sold in October", String(n.units)],
+   ["Selling price per "+b.item+" (Week 4)", money(n.price)],
+   ["Discount codes used: "+n.discOrders+" orders at $3.00 off each", money(n.disc)],
+   ["Cost per "+b.item+" from the "+s.vendorShort+" (Week 2)", money(n.cost)],
+   ["E-commerce platform subscription (Week 3)", money(n.platform)],
+   ["Payment processing: 2.9% of net sales + $0.30 per order (one "+b.item+" per order)", "calculate it"],
+   ["Social media ads (Week 5)", money(n.ads)],
+   ["Festival booth fee (Week 6)", money(n.booth)],
+   [n.extraName, money(n.extra)]];
+}
+
+function build(name, email){
+  state = {name:name.trim().replace(/\s+/g," "), email:email.trim().toLowerCase(), ans:{}, done:{}, started:{}};
+  const s = questionSet(name); state.set = s; const n=s.n, b=s.b;
+  const rr = rng(hash("opts|"+norm(name)));
+  const mix = q => { const idx = shuffle(q.opts.map((_,i)=>i),rr); return {q:q.q, opts:idx.map(i=>q.opts[i]), ans:idx.indexOf(q.ans)}; };
+  state.lec = {}; for(let k=1;k<=NPARTS;k++) if(LECTURE[k]) state.lec[k] = mix(LECTURE[k]);
+  state.interp = mix(interpQ(n));
+
+  $("bizAv").textContent=b.av; $("bizName").textContent=b.name;
+  $("bizDesc").textContent=b.desc+" · "+b.model+" business";
+  $("recap").innerHTML = [
+    ["WEEK 2 · FULFILLMENT", b.model+": buys from "+b.vendor+" at "+money(n.cost)+" per "+b.item],
+    ["WEEK 2 · LEGAL STRUCTURE","LLC, with the business name protected by a registered trademark"],
+    ["WEEK 3 · STARTUP COSTS","Laptop, e-commerce platform at "+money(n.platform)+" a month, and booth supplies"],
+    ["WEEK 4 · PRICING","Sells each "+b.item+" for "+money(n.price)+" and collects Minnesota sales tax"],
+    ["WEEK 5 · PROMOTION",money(n.ads)+" of social media ads this month"],
+    ["WEEK 6 · FESTIVAL","Paid a "+money(n.booth)+" booth fee for a local festival"]
+  ].map(x=>`<div><span class="wk">${x[0]}</span>${esc(x[1])}</div>`).join("");
+
+  $("p1").innerHTML = s.p1.map((it,i)=>rowQ("p1_"+i,i+1,esc(it[0]),selHTML("p1_"+i,TERMS,"Choose a term..."))).join("");
+  $("p2").innerHTML = s.p2.map((it,i)=>rowQ("p2_"+i,i+1,esc(it[0]),segHTML("p2_"+i,CLASSES))).join("");
+  $("p3data").innerHTML = ledger(b.name+" · October records", isItems(s));
+  $("p3").innerHTML = ISQ.map((q,i)=>rowQ(q[0],i+1,esc(q[1]),numHTML(q[0],"$0.00"))).join("");
+  $("p4data").innerHTML = ledger(b.name+" · Balance sheet items as of October 31", shuffle(bsItems(s), rng(hash("bs|"+norm(name)))));
+  $("p4").innerHTML = BSQ.map((q,i)=>rowQ(q[0],i+1,esc(q[1]),numHTML(q[0],"$0.00"))).join("");
+  $("p5").innerHTML = s.p5.map((it,i)=>rowQ("p5_"+i,i+1,esc(it[0]),segHTML("p5_"+i,FLOWS))).join("");
+  $("p6").innerHTML = RQ.map((q,i)=>rowQ(q[0],i+1,esc(q[1]),numHTML(q[0],q[2]))).join("")
+     + `<div class="row" data-row="p6_int"><div class="q" style="flex-basis:100%"><span class="tag">4.</span>${esc(state.interp.q)}</div>${mcHTML("p6_int",state.interp.opts)}</div>`;
+
+  for(let k=1;k<=NPARTS;k++) if(state.lec[k]){
+    $("p"+k).insertAdjacentHTML("beforeend", `<div class="row" data-row="p${k}_lec"><div class="q" style="flex-basis:100%"><span class="lec">FROM THE LECTURE</span>${esc(state.lec[k].q)}</div>${mcHTML("p"+k+"_lec",state.lec[k].opts)}</div>`);
+  }
+  document.querySelectorAll(".seg,.mc").forEach(g=>g.addEventListener("click",e=>{
+    const bt=e.target.closest("button"); if(!bt) return;
+    if(state.done[+g.dataset.k.charAt(1)]) return;
+    g.querySelectorAll("button").forEach(x=>x.classList.remove("on")); bt.classList.add("on");
+    state.ans[g.dataset.k]=bt.dataset.v; save();
+  }));
+  document.querySelectorAll("select[data-k]").forEach(sel=>sel.addEventListener("change",()=>{ state.ans[sel.dataset.k]=sel.value; save(); }));
+  document.querySelectorAll("input.num").forEach(inp=>inp.addEventListener("input",()=>{ state.ans[inp.dataset.k]=inp.value; save(); }));
+  for(let k=1;k<=NPARTS;k++){ $("sub"+k).onclick=()=>submitPart(k); }
+}
+
+function interpQ(n){
+  const opts = [
+    "Its current assets are greater than its current liabilities, so it should be able to pay the bills due within the next year.",
+    "Its current assets are less than its current liabilities, so it may have trouble paying the bills due within the next year.",
+    "It shows how much profit the business earns on each dollar of sales.",
+    "It shows how much of the business is paid for with borrowed money compared with the owner's money."];
+  return {q:"Look at the current ratio you calculated. Which statement is true about this business?", opts, ans: n.cr>=1?0:1};
+}
+
+// ======= GRADING =======
+// Number check: exact answer within tolerance, OR "follow-through" from the student's own earlier answers.
+const v = k => parseNum(state.ans[k]);
+const near = (x, target, tol) => isFinite(x) && isFinite(target) && Math.abs(x-target) <= tol + 1e-9;
+function numKeys(n){
+  const N=state.set.n, d=c=>c/100;
+  if(n===3) return [
+    ["p3_gross", d(N.gross), x=>near(x,d(N.gross),0.02)],
+    ["p3_net", d(N.net), x=>near(x,d(N.net),0.02)||near(x,v("p3_gross")-d(N.disc),0.02)],
+    ["p3_cogs", d(N.cogs), x=>near(x,d(N.cogs),0.02)],
+    ["p3_gp", d(N.gp), x=>near(x,d(N.gp),0.02)||near(x,v("p3_net")-v("p3_cogs"),0.02)],
+    ["p3_opex", d(N.opex), x=>near(x,d(N.opex),0.05)||near(x,d(N.opex-N.fee)+Math.round((isFinite(v("p3_net"))?v("p3_net"):0)*2.9)/100+0.30*N.units,0.05)],
+    ["p3_np", d(N.np), x=>near(x,d(N.np),0.05)||near(x,v("p3_gp")-v("p3_opex"),0.02)]];
+  if(n===4) return [
+    ["p4_ca", d(N.ca), x=>near(x,d(N.ca),0.02)],
+    ["p4_ta", d(N.ta), x=>near(x,d(N.ta),0.02)||near(x,v("p4_ca")+d(N.laptop+N.boothEq+N.tm),0.02)],
+    ["p4_tl", d(N.tl), x=>near(x,d(N.tl),0.02)],
+    ["p4_eq", d(N.eq), x=>near(x,d(N.eq),0.02)||near(x,v("p4_ta")-v("p4_tl"),0.02)]];
+  if(n===6){
+    const ownNp=v("p3_np"), ownNet=v("p3_net"), ownCa=v("p4_ca"), ownTl=v("p4_tl"), ownEq=v("p4_eq");
+    return [
+    ["p6_cr", N.cr, x=>near(x,N.cr,0.011)||(isFinite(ownCa)&&near(x,ownCa/d(N.cl),0.011))],
+    ["p6_npm", N.npm, x=>near(x,N.npm,0.11)||(isFinite(ownNp)&&ownNet?near(x,ownNp/ownNet*100,0.11):false)],
+    ["p6_de", N.de, x=>near(x,N.de,0.011)||(isFinite(ownTl)&&ownEq?near(x,ownTl/ownEq,0.011):false)]];
+  }
+  return [];
+}
+const showNum = (k, val) => k.startsWith("p6_") ? (k==="p6_npm"? val.toFixed(1)+"%" : val.toFixed(2)) : money(Math.round(val*100));
+const QTEXT = {}; ISQ.concat(BSQ).forEach(q=>QTEXT[q[0]]=q[1]); RQ.forEach(q=>QTEXT[q[0]]=q[1]);
+
+function partKeys(n){
+  // [key, question text, correct answer (display), points, check(answer)->bool, display(answer)]
+  const s=state.set, out=[];
+  const choice = (k,q,right) => out.push([k,q,right,1,a=>a===right,a=>a]);
+  if(n===1) s.p1.forEach((it,i)=>choice("p1_"+i,it[0],it[1]));
+  if(n===2) s.p2.forEach((it,i)=>choice("p2_"+i,it[0],it[1]));
+  if(n===5) s.p5.forEach((it,i)=>choice("p5_"+i,it[0],it[1]));
+  numKeys(n).forEach(k=>out.push([k[0],QTEXT[k[0]],showNum(k[0],k[1]),1,a=>k[2](parseNum(a)),a=>a]));
+  if(n===6){ const it=state.interp; out.push(["p6_int",it.q,it.opts[it.ans],1,a=>a===String(it.ans),a=>a!==undefined?it.opts[+a]:""]); }
+  if(state.lec && state.lec[n]){ const L=state.lec[n]; out.push(["p"+n+"_lec","From the lecture: "+L.q,L.opts[L.ans],1,a=>a===String(L.ans),a=>a!==undefined?L.opts[+a]:""]); }
+  return out;
+}
+function gradePart(n){
+  let sc=0; const items=[], rows={};
+  partKeys(n).forEach(k=>{
+    const a=state.ans[k[0]], ok=!!k[4](a); if(ok) sc+=k[3]; rows[k[0]]=ok;
+    items.push([PART_NAMES[n].split(":")[0], k[1], k[5](a), ok]);
+  });
+  return {score:sc, max:PART_MAX[n], items, rows};
+}
+function isComplete(n){ return partKeys(n).every(k=>state.ans[k[0]]!==undefined && String(state.ans[k[0]]).trim()!==""); }
+function badNumbers(n){ return partKeys(n).filter(k=>/^p[346]_(?!int|lec)/.test(k[0]) && !isFinite(parseNum(state.ans[k[0]]))).length; }
+function runningTotal(){ let t=0,m=0,c=0; for(let n=1;n<=NPARTS;n++){ if(state.done[n]){t+=state.done[n].score; m+=state.done[n].max; c++;} } return {t,m,c}; }
+function submitPart(n){
+  if(state.done[n]) return;
+  if(!isComplete(n)){ $("err"+n).textContent="Answer every question in this part first."; return; }
+  if(badNumbers(n)){ $("err"+n).textContent="Enter numbers only (for example 1234.56). Check the highlighted boxes."; markBad(n); return; }
+  $("err"+n).textContent="";
+  if(!confirm(`Submit Part ${n}? You can't change your answers after you submit.`)) return;
+  state.done[n]=gradePart(n);
+  state.done[n].secs = state.started[n] ? Math.max(1, Math.round((Date.now()-state.started[n])/1000)) : null;
+  applyPart(n); save(); updateVisibility(true); updateBar();
+}
+function markBad(n){ $("card"+n).querySelectorAll("input.num").forEach(i=>{ i.style.borderColor = isFinite(parseNum(i.value))?"":"var(--bad)"; }); }
+function applyPart(n){
+  const d=state.done[n]; const card=$("card"+n);
+  card.classList.add("locked"); $("sub"+n).classList.add("hidden");
+  card.querySelectorAll("select,input.num").forEach(x=>{x.disabled=true;});
+  Object.keys(d.rows).forEach(k=>{
+    const row=card.querySelector(`[data-row="${k}"]`); if(!row || row.querySelector(".mark")) return;
+    const ok=d.rows[k]; row.classList.add(ok?"okrow":"badrow");
+    const m=document.createElement("span"); m.className="mark "+(ok?"ok":"bad"); m.innerHTML=ok?"&#10003; Correct":"&#10007; Incorrect";
+    row.appendChild(m);
+  });
+  const rt=runningTotal(); const right=Object.values(d.rows).filter(Boolean).length, all=Object.keys(d.rows).length;
+  const sb=$("sb"+n);
+  sb.innerHTML = `<div><div class="big">${fmt(d.score)} / ${d.max}</div><div class="lab">Part ${n} score (${right} of ${all} correct)</div></div>
+    <div><div class="big" style="color:var(--navy)">${fmt(rt.t)} / ${rt.m}</div><div class="lab">Running total after ${rt.c} of ${NPARTS} parts (out of ${TOTAL} possible)</div></div>`;
+  sb.classList.add("show");
+}
+function restoreUI(){
+  document.querySelectorAll(".seg,.mc").forEach(g=>{const val=state.ans[g.dataset.k]; g.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.v===val));});
+  document.querySelectorAll("select[data-k]").forEach(s=>{s.value=state.ans[s.dataset.k]||"";});
+  document.querySelectorAll("input.num").forEach(i=>{i.value=state.ans[i.dataset.k]||"";});
+}
+function nextPart(){ for(let n=1;n<=NPARTS;n++) if(!state.done[n]) return n; return NPARTS+1; }
+function updateVisibility(scroll){
+  const k=nextPart();
+  for(let n=1;n<=NPARTS;n++) $("card"+n).classList.toggle("hidden", n>k);
+  if(k<=NPARTS && !state.started[k]){ state.started[k]=Date.now(); save(); }
+  if(k<=NPARTS){ $("nextNote").classList.remove("hidden"); $("finalCard").classList.add("hidden");
+    $("nextText").textContent = k<NPARTS ? `Submit Part ${k} to unlock Part ${k+1}.` : `Submit Part ${NPARTS} to unlock the final step.`;
+    if(scroll && k>1) $("card"+k).scrollIntoView({behavior:"smooth",block:"start"}); }
+  else { $("nextNote").classList.add("hidden"); $("finalCard").classList.remove("hidden"); if(scroll) $("finalCard").scrollIntoView({behavior:"smooth",block:"center"}); }
+}
+function updateBar(){
+  const rt=runningTotal();
+  $("nameBar").innerHTML = esc(state.name) + " &middot; " + esc(state.email) + (previewMode?"  (instructor preview, not saved)":"")
+    + `<span class="run">Score so far: ${fmt(rt.t)} / ${rt.m} (${rt.c} of ${NPARTS} parts submitted)</span>`;
+}
+function save(){ if(previewMode) return; pstore(false,{name:state.name,email:state.email,ans:state.ans,done:state.done,started:state.started}); }
+
+// ======= RESULTS =======
+function showResults(rec){
+  $("startView").classList.add("hidden"); $("activityView").classList.add("hidden"); $("instView").classList.add("hidden");
+  $("nameBar").textContent = rec.name + " · " + rec.email + (rec.preview?"  (instructor preview, not saved)":"");
+  $("nameBar").classList.remove("hidden");
+  const rows = rec.items.map(it=>`<tr><td>${esc(it[0])}</td><td>${esc(it[1])}</td><td>${esc(it[2]||"(no answer)")}</td><td class="${it[3]?"ok":"bad"}">${it[3]?"&#10003; Correct":"&#10007; Incorrect"}</td></tr>`).join("");
+  $("resultView").innerHTML = `
+   <div class="report-name"><div class="lbl">SUBMITTED BY</div><div class="nm">${esc(rec.name)}</div><div class="em">${esc(rec.email)}</div>
+   <div class="meta">Ch. 14 The Books Behind Your Business &middot; ${esc(rec.biz||"")} &middot; Completed ${esc(rec.time)} &middot; Verification code ${esc(rec.code)}</div></div>
+   <div class="card"><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center">
+     <div><div class="scorebig">${fmt(rec.total)} / ${TOTAL}</div><div class="sub" style="margin:0">Total score</div></div>
+     <table class="res" style="flex:1 1 300px;margin:0"><tr><th>Section</th><th>Points</th><th>Time spent</th></tr>${rec.sec.map(s=>`<tr><td>${esc(s[0])}</td><td>${fmt(s[1])} / ${s[2]}</td><td>${dur(s[3])}</td></tr>`).join("")}<tr><td><b>Total</b></td><td><b>${fmt(rec.total)} / ${TOTAL}</b></td><td><b>${dur(rec.sec.reduce((a,b)=>a+(b[3]||0),0))}</b></td></tr></table>
+   </div></div>
+   <div class="card noprint or"><b>Next step:</b> click <b>Save as PDF</b>, choose "Save as PDF" as the printer, and upload the PDF to the Chapter 14 D2L assignment folder.<div style="margin-top:12px"><button class="btn" id="pdfBtn">Save as PDF</button></div></div>
+   <div class="card"><h2 style="font-size:18px">Your answers</h2><table class="res"><tr><th>Part</th><th>Question</th><th>Your answer</th><th>Result</th></tr>${rows}</table></div>`;
+  $("resultView").classList.remove("hidden");
+  $("pdfBtn").addEventListener("click",()=>window.print());
+  const wm = ("   " + rec.name.toUpperCase() + "  ·  " + rec.email + "   •").repeat(8);
+  $("watermark").innerHTML = Array.from({length:14},(_,i)=>`<div style="top:${i*9-10}%">${esc(wm)}</div>`).join("");
+  $("printFoot").textContent = `${rec.name}  |  ${rec.email}  |  Score ${fmt(rec.total)}/${TOTAL}  |  Time ${dur(rec.sec.reduce((a,b)=>a+(b[3]||0),0))}  |  Completed ${rec.time}  |  Verification code ${rec.code}`;
+  document.title = `Ch14 Books Behind Your Business - ${rec.name}`;
+  window.scrollTo(0,0);
+}
+
+// ======= NO COPYING FROM THE ACTIVITY =======
+(function(){
+  const av = $("activityView");
+  ["copy","cut","contextmenu","dragstart","selectstart"].forEach(ev=>av.addEventListener(ev,e=>{ if(e.target.closest("select,input")) return; e.preventDefault(); }));
+  document.addEventListener("keydown",e=>{
+    if(av.classList.contains("hidden")) return;
+    const k=(e.key||"").toLowerCase();
+    if(e.target.closest && e.target.closest("input") && (k==="a"||k==="v"||k==="c"||k==="x")) return;
+    if((e.ctrlKey||e.metaKey) && (k==="c"||k==="x"||k==="a"||k==="s"||k==="u"||k==="p")) e.preventDefault();
+  });
+})();
+
+// ======= START =======
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+$("startBtn").addEventListener("click",()=>{
+  const name=$("fname").value.trim().replace(/\s+/g," "); const email=$("femail").value.trim().toLowerCase(); const code=$("code").value.trim().toUpperCase();
+  if(code===INSTRUCTOR_CODE){ $("startView").classList.add("hidden"); $("instView").classList.remove("hidden"); return; }
+  if(code!==STUDENT_CODE){ $("startErr").textContent="That access code isn't right. Check the code in D2L."; return; }
+  if(name.split(" ").length<2){ $("startErr").textContent="Enter your first and last name."; return; }
+  if(!EMAIL_RE.test(email)){ $("startErr").textContent="Enter a valid school email address."; return; }
+  const prev = store(true);
+  if(prev){ showResults(prev); return; }
+  const prog = pstore(true);
+  if(prog && prog.name){ begin(prog.name, prog.email||email, prog, norm(prog.name)!==norm(name)); return; }
+  begin(name, email);
+});
+function begin(name, email, prog, otherName){
+  build(name, email);
+  if(prog){ state.ans=prog.ans||{}; state.done=prog.done||{}; state.started=prog.started||{}; restoreUI(); Object.keys(state.done).forEach(n=>applyPart(+n)); }
+  $("startView").classList.add("hidden"); $("instView").classList.add("hidden");
+  updateBar();
+  if(otherName) $("nameBar").innerHTML += "  (this device already has an activity in progress under this name)";
+  $("nameBar").classList.remove("hidden");
+  $("activityView").classList.remove("hidden"); updateVisibility(false); window.scrollTo(0,0);
+}
+$("finishBtn").addEventListener("click",()=>{
+  if(nextPart()<=NPARTS) return;
+  const sec=[], items=[];
+  for(let n=1;n<=NPARTS;n++){ const d=state.done[n]; sec.push([PART_NAMES[n],d.score,d.max,d.secs]); items.push(...d.items); }
+  const total=Math.round(sec.reduce((a,b)=>a+b[1],0)*10)/10;
+  const time=new Date().toLocaleString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
+  const rec={name:state.name,email:state.email,biz:state.set.b.name,total,sec,items,time,code:vcode(state.name,state.email,total,time),preview:previewMode};
+  if(!previewMode){ store(false,rec); pstore(false,null); }
+  showResults(rec);
+});
+
+// ======= INSTRUCTOR =======
+$("iLookup").addEventListener("click",()=>{
+  const nm=$("iName").value.trim(); if(!nm){$("iOut").textContent="Enter a name."; return;}
+  const s=questionSet(nm), N=s.n; const R=[];
+  s.p1.forEach(it=>R.push(["Part 1",it[0],it[1]]));
+  s.p2.forEach(it=>R.push(["Part 2",it[0],it[1]]));
+  R.push(["Part 3","Gross sales",money(N.gross)],["Part 3","Net sales",money(N.net)],["Part 3","Cost of goods sold",money(N.cogs)],["Part 3","Gross profit",money(N.gp)],
+         ["Part 3","Total operating expenses (processing fee "+money(N.fee)+")",money(N.opex)],["Part 3","Net profit",money(N.np)]);
+  R.push(["Part 4","Total current assets",money(N.ca)],["Part 4","Total assets",money(N.ta)],["Part 4","Total liabilities",money(N.tl)],["Part 4","Owners' equity",money(N.eq)]);
+  s.p5.forEach(it=>R.push(["Part 5",it[0],it[1]]));
+  const iq=interpQ(N);
+  R.push(["Part 6","Current ratio",N.cr.toFixed(2)],["Part 6","Net profit margin",N.npm.toFixed(1)+"%"],["Part 6","Debt-to-equity",N.de.toFixed(2)],["Part 6",iq.q,iq.opts[iq.ans]]);
+  for(let k=1;k<=NPARTS;k++) if(LECTURE[k]) R.push(["Part "+k,"From the lecture: "+LECTURE[k].q,LECTURE[k].opts[LECTURE[k].ans]]);
+  $("iOut").innerHTML=`<p><b>${esc(nm)}</b> received <b>${esc(s.b.name)}</b> (${esc(s.b.model)}).</p><table class="res"><tr><th>Part</th><th>Question for ${esc(nm)}</th><th>Correct answer</th></tr>${R.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td><b>${esc(r[2])}</b></td></tr>`).join("")}</table><p class="hint">The business, numbers, and questions depend only on the name, ignoring capitalization and extra spaces. Number answers also earn credit when they follow correctly from the student's own earlier answers, so a student's later answers may differ from this key and still be marked correct.</p>`;
+});
+$("iVerify").addEventListener("click",()=>{
+  const nm=$("iName").value.trim(), em=$("vEmail").value.trim(), sc=$("vScore").value.trim(), t=$("vTime").value.trim(), c=$("vCode").value.trim().toUpperCase();
+  if(!nm||!em||!sc||!t||!c){$("vOut").textContent="Fill in the student name above plus all four fields."; return;}
+  const ok = vcode(nm, em, Math.round(parseFloat(sc)*10)/10, t)===c;
+  $("vOut").innerHTML = ok?'<span class="ok">&#10003; Match. This PDF\'s name, email, score, and time are consistent.</span>':'<span class="bad">&#10007; No match. The name, email, score, or time was changed, or the PDF belongs to someone else.</span>';
+});
+$("iPreview").addEventListener("click",()=>{ previewMode=true; begin(($("iName").value.trim())||"Instructor Preview", "instructor@preview"); });
+})();
+</script>
+</body>
+</html>
