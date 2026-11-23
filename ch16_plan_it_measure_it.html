@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 16 Plan It, Measure It Challenge | Principles of Marketing</title>
+<style>
+/* Colors chosen for WCAG 2.1 AA contrast: text colors are 4.5:1 or better on their backgrounds */
+:root{--navy:#1F3864;--navy2:#2E4A7A;--orange:#A34407;--orangeLt:#F4A261;--lor:#FDEBDD;--lt:#F3F5F9;--txt:#222A35;--mute:#5B6577;--ok:#1B6B3F;--bad:#A3221B;--line:#C3CAD5;--focus:#0B5FCC}
+*{box-sizing:border-box}
+body{margin:0;font-family:Calibri,"Segoe UI",Arial,sans-serif;color:var(--txt);background:#fff;line-height:1.5;font-size:17px}
+.skip{position:absolute;left:-9999px}.skip:focus{left:10px;top:10px;background:#fff;color:var(--navy);padding:8px 12px;z-index:99;border:2px solid var(--focus)}
+header.top{background:var(--navy);color:#fff;padding:22px 16px}
+header.top .wrap{max-width:900px;margin:0 auto}
+header.top .eyebrow{color:var(--orangeLt);font-weight:700;letter-spacing:.12em;font-size:14px}
+header.top h1{margin:4px 0;font-size:30px}
+header.top p{margin:0;color:#DCE6FA}
+main{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+.card{background:var(--lt);border-radius:10px;padding:18px 20px;margin:18px 0}
+.card.or{background:var(--lor)}
+h2{color:var(--navy);margin:0 0 4px;font-size:23px}
+h2 .pts{color:var(--orange);font-size:16px;font-weight:700;margin-left:8px}
+.sub{color:var(--mute);margin:0 0 14px}
+label.f{display:block;font-weight:700;color:var(--navy);margin:12px 0 4px}
+input[type=text],input[type=email],input[type=number],select{font:inherit;padding:9px 10px;border:1px solid #8C96A6;border-radius:6px;width:100%;max-width:420px;background:#fff;color:var(--txt)}
+button{font:inherit;cursor:pointer;border-radius:6px;border:none}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn{background:var(--orange);color:#fff;font-weight:700;padding:11px 22px;font-size:17px}
+.btn.navy{background:var(--navy)}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.err{color:var(--bad);font-weight:700;margin-top:10px;min-height:1em}
+.namebar{position:sticky;top:0;z-index:5;background:var(--navy2);color:#fff;padding:8px 16px;font-weight:700;text-align:center}
+.scenario{background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:12px;border-left:5px solid var(--navy)}
+.scenario b{color:var(--navy)}
+fieldset.qq{border:none;margin:0;padding:12px 0;border-bottom:1px solid var(--line)}
+fieldset.qq:last-child{border-bottom:none}
+fieldset.qq legend{font-weight:700;padding:0;margin-bottom:8px;float:left;width:100%}
+fieldset.qq legend + *{clear:both}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts.col{flex-direction:column}
+.opt{display:flex;align-items:flex-start;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer}
+.opt input{margin-top:4px;width:18px;height:18px;flex:0 0 18px}
+.opt:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy);background:#EEF2FA}
+.srow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.srow:last-child{border-bottom:none}
+.srow .q{flex:1 1 380px}
+.srow select{flex:0 1 300px}
+.math .ans{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.math input{width:140px}
+.hint{font-size:15px;color:var(--mute)}
+.hidden{display:none!important}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin-bottom:10px}
+.legend div{background:#fff;border-radius:8px;padding:8px 10px;font-size:15px}
+.legend b{color:var(--navy)}
+.fb{flex-basis:100%;margin-top:6px;font-size:15px;padding:8px 10px;border-radius:6px;background:#fff}
+.fb.fbok{border-left:5px solid var(--ok)}.fb.fbbad{border-left:5px solid var(--bad)}
+.fb .tag{font-weight:800}.fb.fbok .tag{color:var(--ok)}.fb.fbbad .tag{color:var(--bad)}
+.locked input,.locked select{pointer-events:none}
+.locked .opt{cursor:default}
+.partfoot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.partscore{font-weight:800;color:var(--navy);font-size:18px}
+.waiting{color:var(--mute);font-style:italic}
+.scorebig{font-size:44px;font-weight:800;color:var(--orange)}
+table.res{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:15px}
+table.res th,table.res td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+table.res th{background:var(--navy);color:#fff}
+.ok{color:var(--ok);font-weight:700}.bad{color:var(--bad);font-weight:700}
+.report-name{background:var(--navy);color:#fff;border-radius:10px;padding:18px 20px;margin:16px 0}
+.report-name .lbl{color:var(--orangeLt);font-weight:700;letter-spacing:.1em;font-size:13px}
+.report-name .nm{font-size:40px;font-weight:800;line-height:1.1;word-break:break-word}
+.report-name .em{font-size:20px;font-weight:700;margin-top:4px;word-break:break-all}
+.report-name .meta{color:#DCE6FA;margin-top:6px;font-size:15px}
+#watermark{display:none}
+.inst{border:2px dashed var(--orange)}
+.formula td,.formula th{font-size:15px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media print{
+  header.top,.namebar,#startView,#activityView,.noprint,#instView,.skip{display:none!important}
+  main{padding:0;max-width:none}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:13px}
+  #watermark{display:block;position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  #watermark div{position:absolute;left:-20%;width:140%;transform:rotate(-30deg);font-size:30px;font-weight:800;color:rgba(31,56,100,.09);white-space:nowrap}
+  #resultView{position:relative;z-index:1}
+  .card{break-inside:avoid;background:rgba(243,245,249,.55)!important}
+  .printfoot{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:11px;color:var(--mute)}
+}
+.printfoot{display:none}
+@media print{.printfoot{display:block}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the activity</a>
+<header class="top"><div class="wrap">
+  <div class="eyebrow">PRINCIPLES OF MARKETING &nbsp;|&nbsp; CHAPTER 16</div>
+  <h1>Plan It, Measure It Challenge</h1>
+  <p>Marketing Plan and Analytics Process &middot; 25 points</p>
+</div></header>
+<div class="namebar hidden" id="nameBar" role="status"></div>
+<div id="watermark" aria-hidden="true"></div>
+
+<main id="main">
+<!-- START -->
+<section id="startView" aria-labelledby="startH">
+  <div class="card">
+    <h2 id="startH">Before you begin</h2>
+    <p class="sub">Watch the Chapter 16 lecture first. Several questions refer to the stories and comparisons from the lecture.</p>
+    <ul>
+      <li>Five parts, 25 questions, 25 points. Every question is click, select, or a number. No essays.</li>
+      <li>Submit one part at a time. After you submit a part, you'll see your score, which answers are correct, and the right answer for anything you missed. Then the next part unlocks.</li>
+      <li>You get <b>one attempt</b> at each part. You can't change a part after you submit it.</li>
+      <li>Your business, questions, and numbers are generated from your name, so your activity is different from your classmates'.</li>
+      <li>After Part 5, click <b>Finish and create my PDF</b>, save the PDF, and upload it to the Chapter 16 D2L assignment folder.</li>
+    </ul>
+    <label class="f" for="fname">First and last name (exactly as it appears in D2L)</label>
+    <input type="text" id="fname" autocomplete="name" aria-describedby="startErr">
+    <label class="f" for="femail">College email address</label>
+    <input type="email" id="femail" autocomplete="email" aria-describedby="startErr">
+    <label class="f" for="code">Access code</label>
+    <input type="text" id="code" autocomplete="off" aria-describedby="startErr">
+    <div class="err" id="startErr" role="alert"></div>
+    <button class="btn" id="startBtn" type="button">Start</button>
+  </div>
+</section>
+
+<!-- INSTRUCTOR -->
+<section id="instView" class="hidden" aria-labelledby="instH">
+  <div class="card inst">
+    <h2 id="instH">Instructor tools</h2>
+    <p class="sub">Not visible to students. Look up any student's version and answer key, or check a submitted PDF.</p>
+    <label class="f" for="iName">Student name</label>
+    <input type="text" id="iName">
+    <div style="margin-top:10px"><button class="btn navy" id="iLookup" type="button">Show this student's answer key</button></div>
+    <div id="iOut" style="margin-top:12px"></div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--line)">
+    <h2 style="font-size:19px">Verify a PDF</h2>
+    <p class="sub">Enter the student name above, then copy the score, completion time, and verification code from the PDF footer.</p>
+    <label class="f" for="vScore">Score (number only, e.g. 21)</label><input type="text" id="vScore">
+    <label class="f" for="vTime">Completed (exactly as printed)</label><input type="text" id="vTime">
+    <label class="f" for="vCode">Verification code</label><input type="text" id="vCode">
+    <div style="margin-top:10px"><button class="btn navy" id="iVerify" type="button">Verify</button></div>
+    <div id="vOut" style="margin-top:12px;font-weight:700" role="status"></div>
+    <hr style="margin:20px 0;border:none;border-top:1px solid var(--line)">
+    <button class="btn ghost" id="iPreview" type="button">Preview the activity as a student (not saved)</button>
+  </div>
+</section>
+
+<!-- ACTIVITY -->
+<section id="activityView" class="hidden">
+  <div class="card part" id="card1">
+    <h2 id="h1">Part 1: Build the plan<span class="pts">6 points</span></h2>
+    <p class="sub" id="intro1"></p>
+    <div id="p1"></div>
+    <div class="partfoot"><button class="btn" id="sub1" type="button">Submit Part 1</button><span class="partscore" id="score1" role="status"></span><span class="err" id="err1" role="alert" style="margin:0"></span></div>
+  </div>
+
+  <div class="card part" id="card2">
+    <h2 id="h2">Part 2: Think first, then do<span class="pts">4 points</span></h2>
+    <p class="sub">In the lecture, the plan was split into three zones. Decide which zone each planning task belongs to.</p>
+    <div class="legend">
+      <div><b>Strategy (top):</b> the thinking part</div>
+      <div><b>The hinge (middle):</b> connects thinking to doing</div>
+      <div><b>Tactics (bottom):</b> the doing part</div>
+    </div>
+    <div id="p2"></div>
+    <div class="partfoot"><button class="btn" id="sub2" type="button">Submit Part 2</button><span class="partscore" id="score2" role="status"></span><span class="err" id="err2" role="alert" style="margin:0"></span></div>
+  </div>
+
+  <div class="card part" id="card3">
+    <h2 id="h3">Part 3: Lessons from the lecture<span class="pts">5 points</span></h2>
+    <p class="sub">These questions are about the stories and comparisons from the Chapter 16 lecture. Choose the answer that matches how the lecture used each one.</p>
+    <div id="p3"></div>
+    <div class="partfoot"><button class="btn" id="sub3" type="button">Submit Part 3</button><span class="partscore" id="score3" role="status"></span><span class="err" id="err3" role="alert" style="margin:0"></span></div>
+  </div>
+
+  <div class="card part" id="card4">
+    <h2 id="h4">Part 4: Busy or better? Name the metric<span class="pts">6 points</span></h2>
+    <p class="sub" id="intro4"></p>
+    <div class="legend">
+      <div><b>Activity:</b> effort (posts, mailers, emails)</div>
+      <div><b>Output:</b> results of the work (clicks, visitors)</div>
+      <div><b>Operational:</b> team efficiency (cost per order, leads per rep)</div>
+      <div><b>Outcome:</b> business impact (revenue, market share, lifetime value)</div>
+      <div><b>Leading indicator:</b> signals of future success (share of wallet, market growth)</div>
+      <div><b>Predictive:</b> expected outcomes (likelihood to buy or leave)</div>
+    </div>
+    <div id="p4"></div>
+    <div class="partfoot"><button class="btn" id="sub4" type="button">Submit Part 4</button><span class="partscore" id="score4" role="status"></span><span class="err" id="err4" role="alert" style="margin:0"></span></div>
+  </div>
+
+  <div class="card part" id="card5">
+    <h2 id="h5">Part 5: Compare the results<span class="pts">4 points</span></h2>
+    <p class="sub">It's 12 months after launch. Use your numbers below to see whether the plan worked. <span class="hint">Enter numbers only, no $ or % signs.</span></p>
+    <div class="scenario">
+      <b>Formulas</b>
+      <table class="res formula" style="margin-top:6px">
+        <tr><th scope="col">To find</th><th scope="col">Formula</th></tr>
+        <tr><td>Brand awareness (%)</td><td>People who recognized the brand ÷ People surveyed × 100</td></tr>
+        <tr><td>Marketing ROI (%)</td><td>(Revenue from marketing − Marketing cost) ÷ Marketing cost × 100</td></tr>
+        <tr><td>Percent change (%)</td><td>(This period − Last period) ÷ Last period × 100 (a drop is a negative number)</td></tr>
+      </table>
+    </div>
+    <div id="p5"></div>
+    <div class="partfoot"><button class="btn" id="sub5" type="button">Submit Part 5</button><span class="partscore" id="score5" role="status"></span><span class="err" id="err5" role="alert" style="margin:0"></span></div>
+  </div>
+
+  <div class="card or" id="nextNote"><p class="waiting" style="margin:0" id="nextText">Submit Part 1 to unlock Part 2.</p></div>
+  <div class="card or hidden" id="finalCard">
+    <p style="margin-top:0"><b>All five parts are done.</b> Click below to see your final score and create your PDF.</p>
+    <button class="btn" id="finishBtn" type="button">Finish and create my PDF</button>
+  </div>
+</section>
+
+<section id="resultView" class="hidden" aria-label="Your results"></section>
+</main>
+<div class="printfoot" id="printFoot"></div>
+
+<script>
+(function(){
+"use strict";
+// ======= SETTINGS: change these two values if you like =======
+const STUDENT_CODE = "PLAN16";        // access code you give students
+const INSTRUCTOR_CODE = "INSTRUCTOR"; // universal bypass
+// ============================================================
+const KEY = "mmp_ch16_plan_measure_v1";
+const PKEY = KEY + "_progress";
+const SALT = "MSTATE-MMP-CH16";
+let previewMode = false;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = n => n.trim().replace(/\s+/g," ").toLowerCase();
+function store(get,val){try{ if(get) return JSON.parse(localStorage.getItem(KEY)); localStorage.setItem(KEY, JSON.stringify(val)); }catch(e){ return null; }}
+function pstore(get,val){try{ if(get) return JSON.parse(localStorage.getItem(PKEY)); if(val===null) localStorage.removeItem(PKEY); else localStorage.setItem(PKEY, JSON.stringify(val)); }catch(e){ return null; }}
+function hash(str){let h=0x811c9dc5;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return h>>>0;}
+function rng(seed){let a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+function shuffle(arr,r){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const pick = (arr,r) => arr[Math.floor(r()*arr.length)];
+function vcode(name,score,time){return hash(SALT+"|"+norm(name)+"|"+score+"|"+time).toString(36).toUpperCase().padStart(7,"0").slice(-7);}
+
+// ======= CONTENT =======
+const ELEMENTS = ["Brand identity","Target market","Product / service","Situation analysis","Product / market objectives","Positioning statement","Marketing tools (7 Ps)","Customer response assessment plan"];
+const WHY = {
+ "Brand identity":"It answers who the company is and why it exists.",
+ "Target market":"It describes the ideal customer and what they value.",
+ "Product / service":"It describes what the product is and how it meets needs.",
+ "Situation analysis":"It scans the environment for opportunities and threats.",
+ "Product / market objectives":"It states measurable goals for the next 12 months.",
+ "Positioning statement":"It follows the For / is / ideal for / because template that connects the top and bottom halves.",
+ "Marketing tools (7 Ps)":"It makes decisions about price, place, promotion, product details, people, process, or physical evidence.",
+ "Customer response assessment plan":"It plans how to measure whether the plan is working and why."};
+const BIZ = [
+ {name:"Prairie Pup Treats", desc:"a new brand of single-ingredient dog treats", items:[
+  ["“We exist to make dog treats our grandparents would recognize: real meat, real oats, nothing else.”","Brand identity"],
+  ["“New dog owners, ages 25 to 40, who read every ingredient label and worry about recalls.”","Target market"],
+  ["“A new state law will require clearer pet food labels next year, and two big brands just had recalls.”","Situation analysis"],
+  ["“Sell 8,000 bags and get into 25 independent pet stores within 12 months of launch.”","Product / market objectives"],
+  ["“For label-reading dog owners, Prairie Pup is a single-ingredient treat. It is ideal for training because each piece is small, soft, and has nothing to hide.”","Positioning statement"],
+  ["“Every quarter, survey buyers about satisfaction, and track repeat purchases and reviews to learn why they come back.”","Customer response assessment plan"]]},
+ {name:"Ridgeline Rain Gear", desc:"a new line of kids' rain jackets", items:[
+  ["“A kids' rain jacket with sleeves and a hem that let out two inches as the child grows.”","Product / service"],
+  ["“Price it at $59, sell it on our website and in outdoor stores, and run spring ads on parenting podcasts.”","Marketing tools (7 Ps)"],
+  ["“Our purpose: get kids outside in every kind of weather.”","Brand identity"],
+  ["“Parents of kids ages 4 to 10 who are tired of buying a new jacket every year.”","Target market"],
+  ["“Reach 30% brand awareness among parents in our region by next spring.”","Product / market objectives"],
+  ["“Rainy springs are becoming more common, but a big-box store just launched a $25 kids' rain jacket.”","Situation analysis"]]},
+ {name:"Ottertail Hot Sauce Co.", desc:"a new small-batch hot sauce", items:[
+  ["“For home cooks who want flavor more than burn, Ottertail is a small-batch hot sauce. It is ideal for eggs and tacos because it uses Minnesota-grown peppers and adds heat without covering up the food.”","Positioning statement"],
+  ["“Two months after launch, compare sales to our goal and use an online poll to ask customers why they did or didn't buy again.”","Customer response assessment plan"],
+  ["“Sell at co-ops and farmers markets, use glass bottles with hand-drawn labels, and hand out free samples on Saturdays.”","Marketing tools (7 Ps)"],
+  ["“Three heat levels of hot sauce made with peppers from local farms.”","Product / service"],
+  ["“Interest in local food is rising, but grocery shelf space for hot sauce is already crowded.”","Situation analysis"],
+  ["“We started Ottertail to prove that great flavor can come from small Minnesota farms.”","Brand identity"]]}];
+
+const ZONES = ["Strategy (top)","The hinge (middle)","Tactics (bottom)"];
+const ZWHY = {"Strategy (top)":"Strategy is the thinking part: who we are, what's happening, and what we want to accomplish.","The hinge (middle)":"The positioning statement is the hinge that connects the thinking half to the doing half.","Tactics (bottom)":"Tactics are the doing part: how we'll make it happen and how we'll know it worked."};
+const ZONE_HINGE = [["Writing one sentence that names the target audience, describes the product, and gives its main benefit","The hinge (middle)"],
+ ["Filling in the template “For (audience), (product) is (description). It is ideal for (use) because (benefit).”","The hinge (middle)"]];
+const ZONE_OTHER = [
+ ["Deciding what the company stands for and why it exists","Strategy (top)"],
+ ["Scanning political, economic, and social trends for opportunities and threats","Strategy (top)"],
+ ["Setting a goal to reach 25% brand awareness within 12 months","Strategy (top)"],
+ ["Choosing between penetration and skimming pricing","Tactics (bottom)"],
+ ["Training store employees on how to greet and help customers","Tactics (bottom)"],
+ ["Planning a customer survey to find out why people stopped buying","Tactics (bottom)"]];
+
+// Lecture questions: [question, correct, [distractors], explanation]
+const LECTURE = [
+ ["In the lecture's GPS comparison, what does the GPS saying “Recalculating!” stand for?","Analytics telling you you're off course","The 7 Ps",["The positioning statement","Changing your target market"],"Objectives are the destination, the 7 Ps are the route, and analytics is “recalculating.”"],
+ ["The lecture used Blockbuster's decision to pass on buying Netflix to show the danger of a weak:","Situation analysis",null,["Brand identity","Positioning statement","Customer response assessment plan"],"Blockbuster didn't take the threat of mail-order and streaming seriously. Spotting threats is the job of the situation analysis."],
+ ["Starbucks once dropped its warm breakfast sandwiches because the burnt-cheese smell covered up the coffee aroma. Which of the 7 Ps did the lecture use this story to show?","Physical evidence",null,["Product","Process","Promotion"],"The smell of the store is part of the experience customers judge, which makes it physical evidence."],
+ ["What did Domino's “cardboard crust” turnaround show about customer response assessment?","Measure the WHY behind results, not just the WHAT",null,["Track efficiency metrics before effectiveness metrics","Lower prices when sales drop","Copy what competitors are doing"],"Domino's listened to customer research about why people disliked the pizza, then remade it."],
+ ["Quibi's headlines about millions of early downloads are an example of:","Vanity metrics",null,["Leading indicators","Predictive metrics","Outcome metrics"],"Downloads made Quibi feel successful, but too few people stayed and paid. Vanity metrics make you feel good; real metrics make you better."],
+ ["Besides showing how powerful predictive metrics are, what was the other big lesson of Target's pregnancy-prediction story?","Customer trust is a metric too",null,["Activity metrics are the most useful","Predictive metrics are always wrong","Analytics only works for big companies"],"Target's offers felt creepy, so it started mixing baby ads in with unrelated items. Just because data can predict something doesn't mean you should say it out loud."],
+ ["In the lecture's Netflix example from 2023, what did Netflix do in the “Use the insights” step?","Raised prices on some plans the same day it reported results",null,["Cut prices to win back canceled subscribers","Ended its password-sharing crackdown","Stopped reporting subscriber numbers"],"The data showed people were sticking around after the crackdown, so Netflix acted on it by raising prices."],
+ ["In the poppi story, which threat did poppi turn into an opening?","Americans have been drinking less regular soda for about 20 years",null,["A new law banning sugary drinks","A shortage of apple cider vinegar","PepsiCo launching a competing prebiotic soda"],"This threat came from poppi's situation analysis. poppi answered it with a soda that feels healthier."],
+ ["The lecture compared the positioning statement to:","The hinge on a door",null,["The engine of a car","The foundation of a house","The roof of a building"],"The positioning statement connects the strategy half of the plan to the tactics half, like a hinge."],
+ ["The lecture used the Moneyball story of the Oakland A's to explain the difference between:","Metrics (the ingredients) and analytics (the recipe)",null,["Strategy and tactics","Efficiency and effectiveness","Brand identity and positioning"],"Every team had the same stats (ingredients). The A's analyzed them differently (a better recipe)."],
+ ["In the lecture, a local bakery posting 30 times on Instagram in a month was an example of what kind of metric?","A busy (efficiency) metric",null,["A better (effectiveness) metric","A predictive metric","An outcome metric"],"Posting counts measure effort, not impact. The “better” metric was the 60 new orders those posts brought in."],
+ ["According to the lecture, which group do about 30% of marketing teams fall into, the group that is seen as a revenue center?","Real analytics",null,["Vanity analytics","No analytics","Predictive analytics"],"Teams with real analytics link marketing to revenue, so the company sees marketing as a revenue center instead of an expense."]];
+
+const TYPES = ["Activity","Output","Operational","Outcome","Leading indicator","Predictive"];
+const TWHY = {"Activity":"It counts effort: how much marketing work got done.","Output":"It measures the direct results of that work, like clicks and visitors.","Operational":"It measures how efficiently the team or budget works.","Outcome":"It measures business impact, like revenue, market share, or lifetime value.","Leading indicator":"It's an early signal of future success.","Predictive":"It estimates what customers are likely to do next."};
+const MET = [
+ {name:"Sweet Rise Bakery", items:[
+  ["Posted 30 times on Instagram this month","Activity"],
+  ["1,200 people clicked through to the online order page","Output"],
+  ["Marketing spent $4.10 for every order it brought in","Operational"],
+  ["Revenue from online orders grew 18% this quarter","Outcome"],
+  ["Loyalty program sign-ups doubled, a sign of more repeat visits ahead","Leading indicator"],
+  ["An AI model flags 40 regular customers who are likely to stop coming in","Predictive"]]},
+ {name:"Spoke & Pine Bikes", items:[
+  ["Sent four email newsletters this month","Activity"],
+  ["The newsletters brought 600 visitors to the website","Output"],
+  ["Each salesperson generated 22 leads this month","Operational"],
+  ["The shop now has 12% of all bike sales in its area","Outcome"],
+  ["Customers now spend 35% of their cycling budget at the shop, up from 25% (share of wallet)","Leading indicator"],
+  ["Software estimates which customers have a high propensity to buy an e-bike this spring","Predictive"]]},
+ {name:"Lakeside Paws Grooming", items:[
+  ["Mailed 2,000 postcards to nearby homes","Activity"],
+  ["Website visitors rose to 3,500 this month","Output"],
+  ["Marketing cost per employee is $310 a month","Operational"],
+  ["Average customer lifetime value rose to $640","Outcome"],
+  ["The local pet care market is growing 9% a year","Leading indicator"],
+  ["An AI tool predicts each customer's likelihood to book again within 60 days","Predictive"]]}];
+
+// ======= PERSONALIZED VERSION =======
+function version(name){
+  const n = norm(name);
+  const r = rng(hash("v|"+n));
+  const biz = BIZ[hash("biz|"+n)%BIZ.length];
+  const p1 = shuffle(biz.items, r);
+  const p2 = shuffle([pick(ZONE_HINGE,r), ...shuffle(ZONE_OTHER,r).slice(0,3)], r);
+  const lect = shuffle(LECTURE, r).slice(0,5).map(q=>({q:q[0], ans:q[1], opts:shuffle([q[1], ...(q[2]?[q[2]]:[]), ...q[3]].slice(0,4), r), why:q[4]}));
+  const met = MET[hash("met|"+n)%MET.length];
+  const p4 = shuffle(met.items, r);
+  // Part 5 numbers
+  const surveyed = pick([250,300,350,400,450,500], r);
+  const goal = pick([30,35,40,45], r);
+  let pct, recog;
+  do { recog = Math.round(surveyed*(0.22 + r()*0.36)); pct = Math.round(recog/surveyed*1000)/10; } while(Math.abs(pct-goal) < 2);
+  const cost = pick([2000,2500,3000,3500,4000,4500,5000,6000], r);
+  const rev = Math.round(cost*(1.4 + r()*2.6)/10)*10;
+  const roi = Math.round((rev-cost)/cost*100);
+  const last = 80 + Math.floor(r()*81);
+  let now; do { now = Math.round(last*(0.75 + r()*0.9)); } while(now===last);
+  const chg = Math.round((now-last)/last*1000)/10;
+  const p5 = [
+   {kind:"num", q:`You surveyed <b>${surveyed}</b> people in your target market. <b>${recog}</b> of them recognized your brand. What is your brand awareness?`, ans:pct, unit:"%", tol:0.15, hint:"Percent, 1 decimal", show:pct+"%", why:`${recog} ÷ ${surveyed} × 100 = ${pct}%`},
+   {kind:"yn", q:`Your 12-month objective was <b>${goal}%</b> brand awareness. Did you meet it?`, ans: pct>=goal?"Yes":"No", why:`${pct}% is ${pct>=goal?"at or above":"below"} the ${goal}% objective.`},
+   {kind:"num", q:`You spent <b>$${cost.toLocaleString()}</b> on marketing, and it brought in <b>$${rev.toLocaleString()}</b> in revenue. What is your marketing ROI?`, ans:roi, unit:"%", tol:0.6, hint:"Percent, whole number", show:roi+"%", why:`($${rev.toLocaleString()} − $${cost.toLocaleString()}) ÷ $${cost.toLocaleString()} × 100 = ${roi}%`},
+   {kind:"num", q:`Last quarter you gained <b>${last}</b> new customers. This quarter you gained <b>${now}</b>. What is the percent change?`, ans:chg, unit:"%", tol:0.15, hint:"Percent, 1 decimal; use a minus sign for a drop", show:chg+"%", why:`(${now} − ${last}) ÷ ${last} × 100 = ${chg}%`}];
+  return {biz, p1, p2, lect, met, p4, p5};
+}
+
+// ======= BUILD =======
+let state = {};
+const PART_NAMES = {1:"Part 1: Build the plan",2:"Part 2: Think first, then do",3:"Part 3: Lessons from the lecture",4:"Part 4: Name the metric",5:"Part 5: Compare the results"};
+const QCOUNT = {1:6,2:4,3:5,4:6,5:4};
+function radios(group, opts, col){
+  return `<div class="opts${col?" col":""}">${opts.map((o,j)=>`<label class="opt"><input type="radio" name="${group}" value="${esc(o)}" id="${group}_${j}"><span>${esc(o)}</span></label>`).join("")}</div>`;
+}
+function build(name, email){
+  const V = version(name);
+  state = {name:name.trim().replace(/\s+/g," "), email:email, V, a:{1:{},2:{},3:{},4:{},5:{}}, done:{}};
+  $("intro1").innerHTML = `You're helping launch <b>${esc(V.biz.name)}</b>, ${esc(V.biz.desc)}. Each line comes from the draft marketing plan. Choose the part of the plan it belongs in. Not every plan element is used.`;
+  $("p1").innerHTML = V.p1.map((it,i)=>`<div class="srow" data-p="1" data-i="${i}"><div class="q" id="q1_${i}"><b>${i+1}.</b> ${esc(it[0])}</div><select data-p="1" data-i="${i}" aria-labelledby="q1_${i}"><option value="">Choose a plan element...</option>${ELEMENTS.map(f=>`<option>${esc(f)}</option>`).join("")}</select></div>`).join("");
+  $("p2").innerHTML = V.p2.map((it,i)=>`<fieldset class="qq" data-p="2" data-i="${i}"><legend>${i+1}. ${esc(it[0])}</legend>${radios("p2_"+i, ZONES)}</fieldset>`).join("");
+  $("p3").innerHTML = V.lect.map((it,i)=>`<fieldset class="qq" data-p="3" data-i="${i}"><legend>${i+1}. ${esc(it.q)}</legend>${radios("p3_"+i, it.opts, true)}</fieldset>`).join("");
+  $("intro4").innerHTML = `<b>${esc(V.met.name)}</b> pulled six numbers from its monthly marketing report. Match each one to its type of metric. Each type is used once.`;
+  $("p4").innerHTML = V.p4.map((it,i)=>`<div class="srow" data-p="4" data-i="${i}"><div class="q" id="q4_${i}"><b>${i+1}.</b> ${esc(it[0])}</div><select data-p="4" data-i="${i}" aria-labelledby="q4_${i}"><option value="">Choose a metric type...</option>${TYPES.map(f=>`<option>${esc(f)}</option>`).join("")}</select></div>`).join("");
+  $("p5").innerHTML = `<div class="scenario">Your numbers are generated from your name: <b>${esc(state.name)}</b>.</div>` + V.p5.map((it,i)=> it.kind==="num"
+    ? `<div class="srow math" data-p="5" data-i="${i}"><div class="q" id="q5_${i}"><b>${i+1}.</b> ${it.q}</div><div class="ans"><input type="number" step="any" inputmode="decimal" data-p="5" data-i="${i}" aria-labelledby="q5_${i}" aria-describedby="h5_${i}"><b aria-hidden="true">${it.unit}</b><span class="hint" id="h5_${i}">${it.hint}</span></div></div>`
+    : `<fieldset class="qq" data-p="5" data-i="${i}"><legend>${i+1}. ${it.q.replace(/<\/?b>/g,"")}</legend>${radios("p5_"+i, ["Yes","No"])}</fieldset>`).join("");
+  document.querySelectorAll('#activityView select[data-p]').forEach(s=>s.addEventListener("change",()=>{ state.a[s.dataset.p][s.dataset.i]=s.value; save(); }));
+  document.querySelectorAll('#activityView input[type=radio]').forEach(x=>x.addEventListener("change",()=>{ const [p,i]=x.name.slice(1).split("_"); state.a[p][i]=x.value; save(); }));
+  document.querySelectorAll('#activityView input[type=number]').forEach(x=>x.addEventListener("input",()=>{ state.a[5][x.dataset.i]=x.value.trim(); save(); }));
+  for(let n=1;n<=5;n++){ $("sub"+n).onclick=()=>submitPart(n); }
+}
+
+// ======= GRADE =======
+function key(n,i){
+  const V=state.V;
+  if(n===1) return {ans:V.p1[i][1], q:V.p1[i][0], why:WHY[V.p1[i][1]]};
+  if(n===2) return {ans:V.p2[i][1], q:V.p2[i][0], why:ZWHY[V.p2[i][1]]};
+  if(n===3) return {ans:V.lect[i].ans, q:V.lect[i].q, why:V.lect[i].why};
+  if(n===4) return {ans:V.p4[i][1], q:V.p4[i][0], why:TWHY[V.p4[i][1]]};
+  const it=V.p5[i]; return {ans:it.ans, q:it.q.replace(/<[^>]+>/g,""), why:it.why, num:it.kind==="num", tol:it.tol, show:it.show||it.ans, unit:it.unit};
+}
+function gradePart(n){
+  const items=[], rows=[]; let s=0;
+  for(let i=0;i<QCOUNT[n];i++){
+    const k=key(n,i), a=state.a[n][i];
+    const ok = k.num ? (a!==undefined && a!=="" && !isNaN(parseFloat(a)) && Math.abs(parseFloat(a)-k.ans)<=k.tol) : a===k.ans;
+    if(ok) s+=1; rows.push(ok);
+    items.push(["Part "+n, k.q, k.num ? (a+(k.unit||"")) : a, ok, String(k.show!==undefined?k.show:k.ans)]);
+  }
+  return {score:s,max:QCOUNT[n],items,rows};
+}
+function isComplete(n){
+  for(let i=0;i<QCOUNT[n];i++){ const a=state.a[n][i]; if(a===undefined||a==="") return false; if(n===5&&state.V.p5[i].kind==="num"&&isNaN(parseFloat(a))) return false; }
+  return true;
+}
+function submitPart(n){
+  if(state.done[n]) return;
+  if(!isComplete(n)){ $("err"+n).textContent="Answer every question in this part first."; return; }
+  $("err"+n).textContent="";
+  if(!confirm(`Submit Part ${n}? You can't change your answers after you submit.`)) return;
+  state.done[n]=gradePart(n);
+  applyPart(n); save(); updateVisibility(true);
+}
+function applyPart(n){
+  const d=state.done[n], card=$("card"+n);
+  card.classList.add("locked"); $("sub"+n).classList.add("hidden");
+  $("score"+n).textContent = `Part ${n} score: ${d.score} / ${d.max} points`;
+  card.querySelectorAll('[data-i]').forEach(el=>{
+    if(el.tagName==="SELECT"||el.tagName==="INPUT") return;
+    const i=+el.dataset.i, ok=d.rows[i], k=key(n,i);
+    const fb=document.createElement("div"); fb.className="fb "+(ok?"fbok":"fbbad");
+    fb.innerHTML = ok ? `<span class="tag">&#10003; Correct.</span> ${esc(k.why)}` : `<span class="tag">&#10007; Incorrect.</span> Correct answer: <b>${esc(String(k.show!==undefined?k.show:k.ans))}</b>. ${esc(k.why)}`;
+    el.appendChild(fb);
+  });
+  card.querySelectorAll("select,input").forEach(x=>{x.disabled=true;});
+}
+function restoreUI(){
+  for(let n=1;n<=5;n++) for(const i in state.a[n]){
+    const v=state.a[n][i];
+    const sel=document.querySelector(`select[data-p="${n}"][data-i="${i}"]`); if(sel){sel.value=v; continue;}
+    const num=document.querySelector(`input[type=number][data-p="${n}"][data-i="${i}"]`); if(num){num.value=v; continue;}
+    document.querySelectorAll(`input[name="p${n}_${i}"]`).forEach(x=>{x.checked = x.value===v;});
+  }
+}
+function nextPart(){ for(let n=1;n<=5;n++) if(!state.done[n]) return n; return 6; }
+function updateVisibility(scroll){
+  const k=nextPart();
+  for(let n=1;n<=5;n++) $("card"+n).classList.toggle("hidden", n>k);
+  if(k<=5){ $("nextNote").classList.remove("hidden"); $("finalCard").classList.add("hidden");
+    $("nextText").textContent = k<5 ? `Review your feedback, then submit Part ${k} to unlock Part ${k+1}.` : "Submit Part 5 to unlock the final step.";
+    if(scroll && k>1){ $("card"+k).scrollIntoView({behavior:"smooth",block:"start"}); $("h"+k).setAttribute("tabindex","-1"); $("h"+k).focus({preventScroll:true}); } }
+  else { $("nextNote").classList.add("hidden"); $("finalCard").classList.remove("hidden"); if(scroll){ $("finalCard").scrollIntoView({behavior:"smooth",block:"center"}); } }
+}
+function save(){ if(previewMode) return; pstore(false,{name:state.name,email:state.email,a:state.a,done:state.done}); }
+
+// ======= RESULTS =======
+function showResults(rec){
+  $("startView").classList.add("hidden"); $("activityView").classList.add("hidden"); $("instView").classList.add("hidden");
+  $("nameBar").textContent = rec.name + (rec.preview?"  (instructor preview, not saved)":"");
+  $("nameBar").classList.remove("hidden");
+  const rows = rec.items.map(it=>`<tr><td>${esc(it[0])}</td><td>${esc(it[1])}</td><td>${esc(it[2]||"(no answer)")}</td><td class="${it[3]?"ok":"bad"}">${it[3]?"&#10003; Correct":"&#10007; Incorrect<br><span style=\"font-weight:400;color:#222A35\">Answer: "+esc(it[4])+"</span>"}</td></tr>`).join("");
+  $("resultView").innerHTML = `
+   <div class="report-name"><div class="lbl">SUBMITTED BY</div><div class="nm">${esc(rec.name)}</div><div class="em">${esc(rec.email)}</div>
+   <div class="meta">Ch. 16 Plan It, Measure It Challenge &middot; Completed ${esc(rec.time)} &middot; Verification code ${esc(rec.code)}</div></div>
+   <div class="card"><div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center">
+     <div><div class="scorebig">${rec.total} / 25</div><div class="sub" style="margin:0">Total score</div></div>
+     <table class="res" style="flex:1 1 300px;margin:0"><caption class="sr">Score by part</caption><tr><th scope="col">Part</th><th scope="col">Points</th></tr>${rec.sec.map(s=>`<tr><td>${esc(s[0])}</td><td>${s[1]} / ${s[2]}</td></tr>`).join("")}</table>
+   </div></div>
+   <div class="card noprint or"><b>Next step:</b> click <b>Save as PDF</b>, choose “Save as PDF” as the printer, and upload the PDF to the Chapter 16 D2L assignment folder.<div style="margin-top:12px"><button class="btn" id="pdfBtn" type="button">Save as PDF</button></div></div>
+   <div class="card"><h2 style="font-size:19px">Your answers</h2><table class="res"><caption class="sr">All answers</caption><tr><th scope="col">Part</th><th scope="col">Question</th><th scope="col">Your answer</th><th scope="col">Result</th></tr>${rows}</table></div>`;
+  $("resultView").classList.remove("hidden");
+  $("pdfBtn").addEventListener("click",()=>window.print());
+  const wm = ("   " + rec.name.toUpperCase() + "  " + rec.email.toUpperCase() + "   •").repeat(8);
+  $("watermark").innerHTML = Array.from({length:14},(_,i)=>`<div style="top:${i*9-10}%">${esc(wm)}</div>`).join("");
+  $("printFoot").textContent = `${rec.name}  |  ${rec.email}  |  Score ${rec.total}/25  |  Completed ${rec.time}  |  Verification code ${rec.code}`;
+  document.title = `Ch16 Plan It Measure It - ${rec.name}`;
+  window.scrollTo(0,0);
+}
+
+// ======= START =======
+$("startBtn").addEventListener("click",()=>{
+  const name=$("fname").value.trim().replace(/\s+/g," "), email=$("femail").value.trim(), code=$("code").value.trim().toUpperCase();
+  if(code===INSTRUCTOR_CODE){ $("startView").classList.add("hidden"); $("instView").classList.remove("hidden"); return; }
+  if(code!==STUDENT_CODE){ $("startErr").textContent="That access code isn't right. Check the code in D2L."; return; }
+  if(name.split(" ").length<2){ $("startErr").textContent="Enter your first and last name."; return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ $("startErr").textContent="Enter a valid email address."; return; }
+  const prev = store(true);
+  if(prev){ showResults(prev); return; }
+  const prog = pstore(true);
+  if(prog && prog.name){ begin(prog.name, prog.email||email, prog, norm(prog.name)!==norm(name)); return; }
+  begin(name, email);
+});
+function begin(name, email, prog, otherName){
+  build(name, email);
+  if(prog){ if(prog.a) state.a=prog.a; if(prog.done) state.done=prog.done; restoreUI(); Object.keys(state.done).forEach(n=>applyPart(+n)); }
+  $("startView").classList.add("hidden"); $("instView").classList.add("hidden");
+  $("nameBar").textContent = name + (previewMode?"  (instructor preview, not saved)":"") + (otherName?"  (this device already has an activity in progress under this name)":"");
+  $("nameBar").classList.remove("hidden");
+  $("activityView").classList.remove("hidden"); updateVisibility(false); window.scrollTo(0,0);
+  $("h1").setAttribute("tabindex","-1"); $("h1").focus({preventScroll:true});
+}
+$("finishBtn").addEventListener("click",()=>{
+  if(nextPart()<=5) return;
+  const sec=[], items=[];
+  for(let n=1;n<=5;n++){ const d=state.done[n]; sec.push([PART_NAMES[n],d.score,d.max]); items.push(...d.items); }
+  const total=sec.reduce((a,b)=>a+b[1],0);
+  const time=new Date().toLocaleString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
+  const rec={name:state.name,email:state.email,total,sec,items,time,code:vcode(state.name,total,time),preview:previewMode};
+  if(!previewMode){ store(false,rec); pstore(false,null); }
+  showResults(rec);
+});
+
+// ======= INSTRUCTOR =======
+$("iLookup").addEventListener("click",()=>{
+  const n=$("iName").value.trim(); if(!n){$("iOut").textContent="Enter a name."; return;}
+  const V=version(n);
+  const tbl=(title,rows)=>`<h3 style="color:var(--navy);margin:14px 0 4px;font-size:17px">${title}</h3><table class="res"><tr><th scope="col">#</th><th scope="col">Question</th><th scope="col">Answer</th></tr>${rows.map((r,i)=>`<tr><td>${i+1}</td><td>${r[0]}</td><td><b>${esc(r[1])}</b></td></tr>`).join("")}</table>`;
+  $("iOut").innerHTML = `<p><b>${esc(n)}</b> gets <b>${esc(V.biz.name)}</b> (Part 1) and <b>${esc(V.met.name)}</b> (Part 4).</p>`
+   + tbl("Part 1", V.p1.map(x=>[esc(x[0]),x[1]])) + tbl("Part 2", V.p2.map(x=>[esc(x[0]),x[1]]))
+   + tbl("Part 3", V.lect.map(x=>[esc(x.q),x.ans])) + tbl("Part 4", V.p4.map(x=>[esc(x[0]),x[1]]))
+   + tbl("Part 5", V.p5.map(x=>[x.q, x.kind==="num"? x.show : x.ans]))
+   + `<p class="hint">Versions depend only on the name, ignoring capitalization and extra spaces. If a PDF's questions or numbers don't match its name, it was likely copied from another student.</p>`;
+});
+$("iVerify").addEventListener("click",()=>{
+  const n=$("iName").value.trim(), sc=$("vScore").value.trim(), t=$("vTime").value.trim(), c=$("vCode").value.trim().toUpperCase();
+  if(!n||!sc||!t||!c){$("vOut").textContent="Fill in the student name above plus all three fields."; return;}
+  const ok = vcode(n, parseFloat(sc), t)===c;
+  $("vOut").innerHTML = ok?'<span class="ok">&#10003; Match. This PDF\'s name, score, and time are consistent.</span>':'<span class="bad">&#10007; No match. The name, score, or time was changed, or the PDF belongs to someone else.</span>';
+});
+$("iPreview").addEventListener("click",()=>{ previewMode=true; begin(($("iName").value.trim())||"Instructor Preview", "instructor@preview"); });
+})();
+</script>
+</body>
+</html>
